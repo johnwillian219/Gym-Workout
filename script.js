@@ -189,16 +189,25 @@ function mostrarDia(dia) {
           <p><strong>${ex.nome}:</strong> ${ex.series}</p>
           <div class="gif-container">
   <img src="${ex.gif}" alt="${ex.nome}" />
-  <div class="gif-cobertura"></div>
 </div>
 
         </div>
       `;
     });
   }
+  const gruposMuscularesSemana = {
+    segunda: "Peito, Ombro, Tríceps",
+    terca: "Costas, Bíceps",
+    quarta: "Peito, Core",
+    quinta: "Pernas, Glúteos",
+    sexta: "Corpo todo",
+    sabado: "Core, Ombro",
+  };
 
   if (musculacao.length) {
-    container.innerHTML += `<h2>Musculação</h2>`;
+    const grupoMuscular = gruposMuscularesSemana[dia] || "";
+    container.innerHTML += `<h2>Musculação: ${grupoMuscular}</h2>`;
+
     musculacao.forEach((ex) => {
       container.innerHTML += `
         <div class="exercicio">
@@ -206,7 +215,6 @@ function mostrarDia(dia) {
           <p><strong>${ex.nome}:</strong> ${ex.series}</p>
           <div class="gif-container">
   <img src="${ex.gif}" alt="${ex.nome}" />
-  <div class="gif-cobertura"></div>
 </div>
 
         </div>
