@@ -1,0 +1,183 @@
+/* style.css */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f0f4f8;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark {
+  background: #302f2f;
+  color: #eee;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  color: #1a73e8;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+body.dark h1,
+body.dark h2,
+body.dark h3 {
+  color: #90caf9;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.menu button {
+  width: 100px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.menu button:hover {
+  background: #8d0fd6;
+}
+
+.menu button.ativo {
+  background-color: #8d0fd6;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(97, 39, 163, 0.5);
+  border-radius: 8px;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+#toggle-dark-mode {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  filter: invert(0);
+  transition: filter 0.3s;
+}
+
+body.dark .icon {
+  filter: invert(1);
+}
+
+.conteudo {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark .conteudo {
+  background: #3c3d3d;
+}
+
+.conteudo h2 {
+  grid-column: 1 / -1;
+  color: #1a73e8;
+}
+
+.exercicio {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+body.dark .exercicio {
+  background: #2c2c2c;
+}
+
+.exercicio img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.466);
+  margin-top: 0.5rem;
+}
+
+.exercicio input[type="checkbox"] {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  transform: scale(1.5);
+}
+
+.gif-container {
+  position: relative;
+  display: inline-block;
+}
+
+.gif-container img {
+  display: block;
+  width: 500px;
+  height: 300px;
+}
+
+.gif-cobertura {
+  position: absolute;
+  bottom: 0;
+  left: 200px;
+  width: 170px;
+  height: 20px; /* ajuste conforme necessário */
+  background: white; /* cor da tarja */
+  pointer-events: none; /* não bloqueia cliques na imagem */
+  border-radius: 2px;
+}
+
+.exercicio.checked {
+  background-color: #d4edda; /* Verde claro */
+  border-radius: 8px;
+  padding: 8px;
+  transition: background-color 0.3s;
+}
+body.dark .exercicio.checked {
+  background-color: #8d0fd6; /* Verde claro */
+  border-radius: 8px;
+  padding: 8px;
+  transition: background-color 0.3s;
+}
+
+@media (max-width: 600px) {
+  .conteudo {
+    grid-template-columns: 1fr;
+  }
+}
+@media (min-width: 600px) {
+  .conteudo {
+    grid-template-columns: 1fr 1fr;
+  }
+}

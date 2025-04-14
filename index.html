@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Treino Semanal</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="top-bar">
+        <h1>Treino da Semana 🏋️‍♂️</h1>
+        <button id="toggle-dark-mode" title="Alternar modo claro/escuro">
+          <img src="icone/moon.svg" alt="Modo escuro" class="icon" />
+        </button>
+      </header>
+
+      <nav class="menu">
+        <button onclick="mostrarDia('segunda')">Segunda</button>
+        <button onclick="mostrarDia('terca')">Terça</button>
+        <button onclick="mostrarDia('quarta')">Quarta</button>
+        <button onclick="mostrarDia('quinta')">Quinta</button>
+        <button onclick="mostrarDia('sexta')">Sexta</button>
+        <button onclick="mostrarDia('sabado')">Sábado</button>
+      </nav>
+
+      <div id="conteudo-dia" class="conteudo"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
