@@ -89,16 +89,88 @@ const exerciciosSemana = {
   ],
   terca: [
     {
-      nome: "Flexão Diamante",
+      nome: "Puxada aberta",
       tipo: "musculacao",
-      series: "3x12",
-      gif: "gift/flexao_diamante.gif",
+      series: "4x12",
+      gif: "gift/puxada-aberta.webp",
     },
     {
-      nome: "Prancha",
+      nome: "Puxada Triângulo",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/puxada-triangulo.webp",
+    },
+    {
+      nome: "Remada baixa",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/remada-baixa.gif",
+    },
+    {
+      nome: "Remada curvada",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/remada-curvada.webp",
+    },
+    {
+      nome: "Crucifixo invertido",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/crucifixo-invertido.gif",
+    },
+    {
+      nome: "Rosca alternada sentada",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/rosca-alternada-sentado.gif",
+    },
+    {
+      nome: "Rosca direta polia",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/rosca-direta-polia.gif",
+    },
+    {
+      nome: "Rosca martelo",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/rosca-martelo.webp",
+    },
+    {
+      nome: "Elevação das pernas",
       tipo: "abdomen",
-      series: "3x30s",
-      gif: "gift/prancha.gif",
+      series: "4x12",
+      gif: "gift/elevacao-pernas.webp",
+    },
+    {
+      nome: "Russian twist",
+      tipo: "abdomen",
+      series: "4x12",
+      gif: "gift/russian-twist.webp",
+    },
+    {
+      nome: "Abdominal bicicleta",
+      tipo: "abdomen",
+      series: "4x12",
+      gif: "gift/abdominal-bicicleta.gif",
+    },
+    {
+      nome: "Prancha com toque no ombro",
+      tipo: "abdomen",
+      series: "4x12",
+      gif: "gift/prancha-toque-ombro.gif",
+    },
+    {
+      nome: "Butterfly Yoga Flaps",
+      tipo: "abdomen",
+      series: "4x12",
+      gif: "gift/butterfly-yoga-flaps.gif",
+    },
+    {
+      nome: "Frog Crunch",
+      tipo: "abdomen",
+      series: "4x12",
+      gif: "gift/frog-crunch.gif",
     },
   ],
   quarta: [
@@ -196,12 +268,12 @@ function mostrarDia(dia) {
     });
   }
   const gruposMuscularesSemana = {
-    segunda: "Peito, Ombro, Tríceps",
-    terca: "Costas, Bíceps",
-    quarta: "Peito, Core",
-    quinta: "Pernas, Glúteos",
-    sexta: "Corpo todo",
-    sabado: "Core, Ombro",
+    segunda: "(Push): Peito, Ombro e Tríceps",
+    terca: "(Pull): Costas e Bíceps",
+    quarta: "Pernas-Completo",
+    quinta: "(Upper): Superiores-completo",
+    sexta: "(Lower): Inferiores-completo",
+    sabado: "(Full): Total",
   };
 
   if (musculacao.length) {
