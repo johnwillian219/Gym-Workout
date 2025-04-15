@@ -110,7 +110,7 @@ const exerciciosSemana = {
       nome: "Remada curvada",
       tipo: "musculacao",
       series: "4x12",
-      gif: "gift/remada-curvada.webp",
+      gif: "gift/Remada-curvada.webp",
     },
     {
       nome: "Crucifixo invertido",
@@ -134,7 +134,7 @@ const exerciciosSemana = {
       nome: "Rosca martelo",
       tipo: "musculacao",
       series: "4x12",
-      gif: "gift/rosca-martelo.webp",
+      gif: "gift/Rosca-martelo.webp",
     },
     {
       nome: "Elevação das pernas",
@@ -158,7 +158,7 @@ const exerciciosSemana = {
       nome: "Prancha com toque no ombro",
       tipo: "abdomen",
       series: "4x12",
-      gif: "gift/prancha-toque-ombro.gif",
+      gif: "gift/Prancha-toque-ombro.gif",
     },
     {
       nome: "Butterfly Yoga Flaps",
@@ -175,10 +175,28 @@ const exerciciosSemana = {
   ],
   quarta: [
     {
-      nome: "Flexão com Toque no Ombro",
+      nome: " Agachamento no Smith",
       tipo: "musculacao",
-      series: "3x10 cada lado",
-      gif: "gift/flexao_ombro.gif",
+      series: "4x12",
+      gif: "gift/agachamento-smith.webp",
+    },
+    {
+      nome: "Leg Press",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/leg-press.gif",
+    },
+    {
+      nome: "Cadeira Extensora",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/cadeira-extensora.gif",
+    },
+    {
+      nome: "Mesa Flexora",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/mesa-flexora.gif",
     },
     {
       nome: "Afundo",
@@ -191,6 +209,25 @@ const exerciciosSemana = {
       tipo: "musculacao",
       series: "4x12 cada lado",
       gif: "gift/bulgaro.webp",
+    },
+    {
+      nome: "Levantamento terra",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/Levantamento-terra.webp",
+    },
+    {
+      nome: "Elevação de panturrilhas sentado",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/elevacao-panturrilhas-sentado.gif",
+    },
+
+    {
+      nome: "Adução de quadril na máquina",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/audutora.webp",
     },
     {
       nome: "Abdominal Bicicleta",

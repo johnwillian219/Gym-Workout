@@ -164,10 +164,6 @@ body.dark .exercicio.checked {
   .conteudo {
     grid-template-columns: 1fr;
   }
-  .conteudo {
-    background: white;
-    width: calc(100% - 2rem);
-  }
 }
 @media (min-width: 600px) {
   .conteudo {
