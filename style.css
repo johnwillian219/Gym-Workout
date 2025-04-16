@@ -12,10 +12,16 @@ main {
 }
 
 aside {
+  min-width: 320px;
+  max-width: 300px;
   background-color: var(--bg-aside, #ffffff);
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  height: fit-content;
 }
 
 aside h2,
@@ -251,4 +257,27 @@ body.dark .exercicio.checked {
 
 .barra .porcentagem {
   text-align: right;
+}
+
+/* Estilo para o botão de alternar progresso */
+.alternar-progresso {
+  background-color: var(--cor-botao, #f0f0f0);
+  color: var(--cor-texto-botao, #333);
+  border: none;
+  padding: 6px 12px;
+  margin-left: 10px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.alternar-progresso:hover {
+  background-color: var(--cor-hover-botao, #ddd);
+  transform: scale(1.05);
+}
+
+.alternar-progresso:active {
+  transform: scale(0.97);
 }

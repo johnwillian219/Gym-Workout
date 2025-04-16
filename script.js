@@ -368,15 +368,7 @@ function mostrarDia(dia) {
   if (btnAtivo) btnAtivo.classList.add("ativo");
 }
 
-const dias = [
-  "domingo",
-  "segunda",
-  "terca",
-  "quarta",
-  "quinta",
-  "sexta",
-  "sabado",
-];
+const dias = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta"];
 const hoje = new Date().getDay();
 const diaHoje = dias[hoje] === "domingo" ? "segunda" : dias[hoje];
 mostrarDia(diaHoje);
@@ -568,4 +560,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // localStorage.removeItem("historicoTreino");
 
   atualizarSemanasEMeses();
+});
+
+//botao semanal e mensal
+// Alternar entre progresso semanal e mensal
+document.addEventListener("DOMContentLoaded", () => {
+  const semanal = document.getElementById("progresso-semanal");
+  const mensal = document.getElementById("progresso-mensal");
+
+  const botaoSemanal = semanal.querySelector(".alternar-progresso");
+  const botaoMensal = mensal.querySelector(".alternar-progresso");
+
+  botaoSemanal.addEventListener("click", () => {
+    semanal.style.display = "none";
+    mensal.style.display = "block";
+  });
+
+  botaoMensal.addEventListener("click", () => {
+    mensal.style.display = "none";
+    semanal.style.display = "block";
+  });
 });
