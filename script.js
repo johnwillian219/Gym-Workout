@@ -230,10 +230,40 @@ const exerciciosSemana = {
       gif: "gift/audutora.webp",
     },
     {
-      nome: "Abdominal Bicicleta",
+      nome: "Flexão de braços",
       tipo: "abdomen",
-      series: "3x20",
-      gif: "gift/bicicleta.gif",
+      series: "4x20",
+      gif: "gift/flexao-de-bracos.webp",
+    },
+    {
+      nome: "Prancha lateral com elevação de perna",
+      tipo: "abdomen",
+      series: "4x20",
+      gif: "gift/prancha-lateral-com-elevacao-de-perna.webp",
+    },
+    {
+      nome: "Hollow Rock",
+      tipo: "abdomen",
+      series: "4x20",
+      gif: "gift/hollow-rock.webp",
+    },
+    {
+      nome: "Toque de torção de caranguejo",
+      tipo: "abdomen",
+      series: "4x20",
+      gif: "gift/caranguejo.gif",
+    },
+    {
+      nome: "Alongamento de sapo",
+      tipo: "abdomen",
+      series: "4x20",
+      gif: "gift/Alongamento-sapo.gif",
+    },
+    {
+      nome: "Ponte de abdução das pernas",
+      tipo: "abdomen",
+      series: "4x20",
+      gif: "gift/ponte-com-abducao-de-pernas.webp",
     },
   ],
   quinta: [
