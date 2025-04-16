@@ -1,4 +1,42 @@
-/* style.css */
+.layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+main {
+  background-color: var(--bg-main, #f9f9f9);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+aside {
+  background-color: var(--bg-aside, #ffffff);
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+aside h2,
+aside h3 {
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  color: #1a73e8;
+}
+
+aside ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+aside li {
+  margin-bottom: 0.5rem;
+  background-color: #eaeaea;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
@@ -169,4 +207,48 @@ body.dark .exercicio.checked {
   .conteudo {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+/*progress bar*/
+.barra {
+  position: relative;
+  height: 30px;
+  background-color: #ddd;
+  border-radius: 2px;
+  margin: 8px 0;
+  overflow: hidden;
+  padding: 0 10px;
+}
+
+.barra span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  font-weight: bold;
+  font-size: 14px;
+  color: #474444;
+  position: relative;
+  z-index: 1;
+}
+
+.barra::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--before-width, 0%);
+  background-color: #0be613; /* Verde */
+  border-radius: 8px;
+  transition: width 0.3s ease;
+  z-index: 0;
+}
+
+.barra .nome {
+  text-align: left;
+}
+
+.barra .porcentagem {
+  text-align: right;
 }

@@ -6,27 +6,136 @@
     <title>Treino Semanal</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div class="container">
-      <header class="top-bar">
-        <h1>Treino da Semana 🏋️‍♂️</h1>
-        <button id="toggle-dark-mode" title="Alternar modo claro/escuro">
-          <img src="icone/moon.svg" alt="Modo escuro" class="icon" />
-        </button>
-      </header>
 
-      <nav class="menu">
-        <button onclick="mostrarDia('segunda')">Segunda</button>
-        <button onclick="mostrarDia('terca')">Terça</button>
-        <button onclick="mostrarDia('quarta')">Quarta</button>
-        <button onclick="mostrarDia('quinta')">Quinta</button>
-        <button onclick="mostrarDia('sexta')">Sexta</button>
-        <button onclick="mostrarDia('sabado')">Sábado</button>
-      </nav>
+  <div class="layout">
+    <main>
+      <body>
+        <div class="container">
+          <header class="top-bar">
+            <h1>Treino da Semana 🏋️‍♂️</h1>
+            <button id="toggle-dark-mode" title="Alternar modo claro/escuro">
+              <img src="icone/moon.svg" alt="Modo escuro" class="icon" />
+            </button>
+          </header>
 
-      <div id="conteudo-dia" class="conteudo"></div>
-    </div>
+          <nav class="menu">
+            <button onclick="mostrarDia('segunda')">Segunda</button>
+            <button onclick="mostrarDia('terca')">Terça</button>
+            <button onclick="mostrarDia('quarta')">Quarta</button>
+            <button onclick="mostrarDia('quinta')">Quinta</button>
+            <button onclick="mostrarDia('sexta')">Sexta</button>
+            <button onclick="mostrarDia('sabado')">Sábado</button>
+          </nav>
 
-    <script src="script.js"></script>
-  </body>
+          <div id="conteudo-dia" class="conteudo"></div>
+        </div>
+
+        <script src="script.js"></script>
+      </body>
+    </main>
+    <aside>
+      <h2>📅 Progresso</h2>
+
+      <section class="progresso-dia">
+        <div class="barra" id="barra-segunda">
+          <span
+            ><span class="nome">Segunda-feira</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="barra-terca">
+          <span
+            ><span class="nome">Terça-feira</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="barra-quarta">
+          <span
+            ><span class="nome">Quarta-feira</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="barra-quinta">
+          <span
+            ><span class="nome">Quinta-feira</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="barra-sexta">
+          <span
+            ><span class="nome">Sexta-feira</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="barra-sabado">
+          <span
+            ><span class="nome">Sábado</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+      </section>
+
+      <section class="progresso-semanal">
+        <h3>Últimas 4 Semanas</h3>
+        <div class="barra" id="semana-1">
+          <span
+            ><span class="nome">Semana 1</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="semana-2">
+          <span
+            ><span class="nome">Semana 2</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="semana-3">
+          <span
+            ><span class="nome">Semana 3</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="semana-4">
+          <span
+            ><span class="nome">Semana 4</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+      </section>
+
+      <section class="progresso-mensal">
+        <h3>Últimos 5 Meses</h3>
+        <div class="barra" id="mes-1">
+          <span
+            ><span class="nome">Mês 1</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="mes-2">
+          <span
+            ><span class="nome">Mês 2</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="mes-3">
+          <span
+            ><span class="nome">Mês 3</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="mes-4">
+          <span
+            ><span class="nome">Mês 4</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+        <div class="barra" id="mes-5">
+          <span
+            ><span class="nome">Mês 5</span
+            ><span class="porcentagem">0%</span></span
+          >
+        </div>
+      </section>
+    </aside>
+  </div>
 </html>

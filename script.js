@@ -400,3 +400,172 @@ document
       }
     });
   });
+
+function atualizarProgressoDia(dia) {
+  const checkboxes = document.querySelectorAll(
+    "#conteudo-dia input[type='checkbox']"
+  );
+  const marcados = Array.from(checkboxes).filter((cb) => cb.checked).length;
+  const total = checkboxes.length;
+
+  const porcentagem = total ? Math.round((marcados / total) * 100) : 0;
+
+  const barra = document.getElementById(`barra-${dia}`);
+  if (barra) {
+    barra.style.setProperty("--before-width", `${porcentagem}%`);
+
+    const spanPorcentagem = barra.querySelector(".porcentagem");
+    if (spanPorcentagem) {
+      spanPorcentagem.textContent = `${porcentagem}%`;
+    }
+  }
+
+  const dataHoje = new Date().toISOString().split("T")[0];
+  let historico = JSON.parse(localStorage.getItem("historicoTreino")) || [];
+
+  historico.push({ data: dataHoje, dia, porcentagem });
+  historico = historico.slice(-150); // Mantém apenas os últimos 150 registros
+  localStorage.setItem("historicoTreino", JSON.stringify(historico));
+
+  atualizarSemanasEMeses();
+}
+
+// Event listener para mudanças nos checkboxes
+document.addEventListener("change", () => {
+  const btnAtivo = document.querySelector(".menu button.ativo");
+  if (btnAtivo) {
+    const dia = btnAtivo.getAttribute("onclick")?.match(/'([^']+)'/)?.[1];
+    if (dia) atualizarProgressoDia(dia);
+  }
+});
+
+// Atualiza as barras de progresso das semanas e meses
+function atualizarSemanasEMeses() {
+  const historico = JSON.parse(localStorage.getItem("historicoTreino")) || [];
+  const hoje = new Date();
+
+  // SEMANAS - cálculo preciso por período
+  const semanas = [
+    { inicio: 0, fim: 6, total: 0, count: 0 }, // Semana 1: últimos 7 dias (0-6 dias atrás)
+    { inicio: 7, fim: 13, total: 0, count: 0 }, // Semana 2: 7-13 dias atrás
+    { inicio: 14, fim: 20, total: 0, count: 0 }, // Semana 3: 14-20 dias atrás
+    { inicio: 21, fim: 27, total: 0, count: 0 }, // Semana 4: 21-27 dias atrás
+  ];
+
+  // MESES - cálculo por mês real
+  const meses = {};
+  const mesesOrdenados = [];
+
+  historico.forEach(({ data, porcentagem }) => {
+    const dataTreino = new Date(data);
+    const diasPassados = Math.floor(
+      (hoje - dataTreino) / (1000 * 60 * 60 * 24)
+    );
+
+    // Preenche semanas
+    semanas.forEach((semana) => {
+      if (diasPassados >= semana.inicio && diasPassados <= semana.fim) {
+        semana.total += porcentagem;
+        semana.count++;
+      }
+    });
+
+    // Preenche meses (últimos 5 meses)
+    if (diasPassados < 150) {
+      // ~5 meses
+      const chaveMes = `${dataTreino.getFullYear()}-${dataTreino.getMonth()}`;
+      if (!meses[chaveMes]) {
+        meses[chaveMes] = {
+          total: 0,
+          count: 0,
+          nome: dataTreino.toLocaleString("pt-BR", { month: "long" }),
+          diasPassados: diasPassados, // Para ordenação
+        };
+        mesesOrdenados.push(chaveMes);
+      }
+      meses[chaveMes].total += porcentagem;
+      meses[chaveMes].count++;
+    }
+  });
+
+  // Ordena meses do MAIS RECENTE para o MAIS ANTIGO
+  mesesOrdenados.sort((a, b) => meses[a].diasPassados - meses[b].diasPassados);
+
+  // ATUALIZA SEMANAS NA INTERFACE
+  semanas.forEach((semana, index) => {
+    const barra = document.getElementById(`semana-${index + 1}`);
+    if (!barra) return;
+
+    // Só mostra progresso se houver 3 ou mais registros
+    const media =
+      semana.count >= 3 ? Math.round(semana.total / semana.count) : 0;
+    barra.style.setProperty("--before-width", `${media}%`);
+
+    const span = barra.querySelector(".porcentagem");
+    if (span) {
+      span.textContent = semana.count >= 3 ? `${media}%` : "0%";
+    }
+  });
+
+  // ATUALIZA MESES NA INTERFACE (apenas 5 mais recentes)
+  for (let i = 0; i < 5; i++) {
+    const barra = document.getElementById(`mes-${i + 1}`);
+    if (!barra) continue;
+
+    const mesData = mesesOrdenados[i];
+    const mesInfo = mesData ? meses[mesData] : null;
+
+    // Nome do mês
+    const spanNome = barra.querySelector(".nome");
+    if (spanNome) {
+      spanNome.textContent = mesInfo?.nome || getNomeMes(i);
+    }
+
+    // Porcentagem
+    const spanPerc = barra.querySelector(".porcentagem");
+    const media =
+      mesInfo?.count >= 3 ? Math.round(mesInfo.total / mesInfo.count) : 0;
+    barra.style.setProperty("--before-width", `${media}%`);
+
+    if (spanPerc) {
+      spanPerc.textContent = mesInfo?.count >= 3 ? `${media}%` : "0%";
+    }
+  }
+}
+
+// Helper function para obter nome do mês com offset
+function getNomeMes(offset) {
+  const data = new Date();
+  data.setMonth(data.getMonth() - offset);
+  return data.toLocaleString("pt-BR", { month: "long" });
+}
+
+// Inicializa ao carregar a página com 0% em todas as barras
+document.addEventListener("DOMContentLoaded", () => {
+  // Força todas as barras a 0% inicialmente
+  for (let i = 1; i <= 4; i++) {
+    const barra = document.getElementById(`semana-${i}`);
+    if (barra) {
+      barra.style.setProperty("--before-width", "0%");
+      const span = barra.querySelector(".porcentagem");
+      if (span) span.textContent = "0%";
+    }
+  }
+
+  for (let i = 1; i <= 5; i++) {
+    const barra = document.getElementById(`mes-${i}`);
+    if (barra) {
+      barra.style.setProperty("--before-width", "0%");
+      const spanNome = barra.querySelector(".nome");
+      const spanPerc = barra.querySelector(".porcentagem");
+      if (spanNome) spanNome.textContent = getNomeMes(i - 1);
+      if (spanPerc) spanPerc.textContent = "0%";
+    }
+  }
+
+  // Limpa o histórico se necessário para testes
+  // Comente a linha abaixo após verificar que o problema foi resolvido
+  // localStorage.removeItem("historicoTreino");
+
+  atualizarSemanasEMeses();
+});
