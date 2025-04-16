@@ -281,3 +281,60 @@ body.dark .exercicio.checked {
 .alternar-progresso:active {
   transform: scale(0.97);
 }
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column !important; /* coloca o aside embaixo */
+  }
+
+  aside {
+    width: 100%; /* ocupa toda a largura no mobile */
+  }
+
+  .progresso-semanal,
+  .progresso-mensal {
+    display: block !important; /* força ambos aparecerem */
+  }
+
+  .alternar-progresso {
+    display: none; /* esconde os botões no mobile */
+  }
+}
+
+/* Layout padrão para desktop */
+.layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+/* Estilo do aside */
+aside {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+/* Título e botão lado a lado */
+.progresso-semanal h3,
+.progresso-mensal h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilo dos botões */
+.alternar-progresso {
+  background-color: #eee;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s;
+}
+
+.alternar-progresso:hover {
+  background-color: #ccc;
+}
