@@ -295,33 +295,41 @@ body.dark .exercicio.checked {
 
 /* ===== Dispositivos móveis (até 768px) ===== */
 @media (max-width: 768px) {
+  body {
+    background-color: white;
+  }
+  h1 {
+    font-size: 1rem;
+  }
   .conteudo {
     grid-template-columns: 1fr;
     padding: 0;
     margin: 0;
-    background-color: #f9f9f9;
+    background-color: white;
     border-radius: 0;
     box-shadow: none;
   }
 
   .exercicio {
-    background-color: #f9f9f9;
+    background-color: white;
     border-radius: 0;
     box-shadow: none;
     margin: 0;
     padding: 0;
   }
 
+  main {
+    background-color: white;
+  }
   .container {
     padding: 0;
     margin: 0;
   }
 
-  .exercicio img {
-    max-width: 100%;
+  .gif-container {
     border: none;
+    border-radius: 0;
     box-shadow: none;
-    margin-top: 0.5rem;
   }
 }
 
