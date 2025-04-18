@@ -305,6 +305,9 @@ body.dark .exercicio.checked {
   }
 
   .exercicio {
+    background-color: #f9f9f9;
+    border-radius: 0;
+    box-shadow: none;
     margin: 0;
     padding: 0;
   }
@@ -312,6 +315,13 @@ body.dark .exercicio.checked {
   .container {
     padding: 0;
     margin: 0;
+  }
+
+  .exercicio img {
+    max-width: 100%;
+    border: none;
+    box-shadow: none;
+    margin-top: 0.5rem;
   }
 }
 
