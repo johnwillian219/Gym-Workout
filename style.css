@@ -51,11 +51,113 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-body.dark {
-  background: #302f2f;
-  color: #eee;
+/**************fundo preto********************/
+#toggle-dark-mode {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
 }
 
+/* ===== MODO ESCURO ATUALIZADO - TONS MAIS SUAVES ===== */
+body.dark {
+  background: #2a2a2a; /* Fundo principal mais claro */
+  color: #e0e0e0; /* Texto ligeiramente mais suave */
+}
+
+body.dark .layout {
+  background: #2a2a2a;
+}
+
+body.dark main {
+  background-color: #383838; /* Container principal mais claro */
+  color: #e0e0e0;
+}
+
+body.dark aside {
+  background-color: #323232; /* Barra lateral mais clara */
+  color: #e0e0e0;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+}
+
+body.dark .conteudo {
+  background: #3f3f3f; /* Área de conteúdo mais clara */
+  color: #e0e0e0;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
+}
+
+body.dark .exercicio {
+  background: #474545;
+  color: #e0e0e0;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+body.dark .exercicio.checked {
+  background-color: #5a2d96; /* Roxo mais suave */
+  color: #fff;
+}
+
+body.dark .barra {
+  background-color: #807e7e; /* Fundo da barra mais claro */
+}
+
+body.dark .barra span {
+  color: black;
+}
+
+body.dark .menu button {
+  background: #4a4a4a;
+  color: #e0e0e0;
+  border: 1px solid #5a5a5a; /* Borda sutil para definição */
+}
+
+body.dark .menu button.ativo {
+  background-color: #5a2d96; /* Roxo mais claro para botão ativo */
+
+  color: #fff;
+}
+
+body.dark aside li {
+  background-color: #424242;
+  color: #e0e0e0;
+}
+
+body.dark .alternar-progresso {
+  background-color: #4d4d4d;
+  color: #e0e0e0;
+}
+
+body.dark .alternar-progresso:hover {
+  background-color: #5a5a5a;
+}
+body.dark .barra::before {
+  background-color: #68f00e; /* Verde mais suave e moderno */
+  font-weight: bold;
+}
+
+/* Cabeçalhos com azul mais suave */
+body.dark h1,
+body.dark h2,
+body.dark h3 {
+  color: rgb(188, 164, 245); /* Azul mais claro e suave */
+}
+
+/* Ícones com opacidade ajustada */
+body.dark .icon {
+  filter: invert(0.9) brightness(0.9);
+  opacity: 0.9;
+}
+
+/* Ajustes para elementos específicos */
+body.dark .gif-container {
+  border-radius: 8px;
+}
+
+body.dark input[type="checkbox"] {
+  filter: brightness(0.8);
+}
+
+/*--------------------------------------------*/
 .container {
   max-width: 900px;
   margin: auto;
@@ -73,12 +175,6 @@ h1 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
   text-align: center;
-}
-
-body.dark h1,
-body.dark h2,
-body.dark h3 {
-  color: #90caf9;
 }
 
 .menu {
@@ -115,23 +211,12 @@ body.dark h3 {
   transition: all 0.3s ease;
 }
 
-#toggle-dark-mode {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
 .icon {
   width: 30px;
   height: 30px;
   filter: invert(0);
   transition: filter 0.3s;
   transform: scale(1.1);
-}
-
-body.dark .icon {
-  filter: invert(1);
 }
 
 .conteudo {
@@ -146,10 +231,6 @@ body.dark .icon {
   transition: background 0.3s, color 0.3s;
 }
 
-body.dark .conteudo {
-  background: #3c3d3d;
-}
-
 .conteudo h2 {
   grid-column: 1 / -1;
   color: #1a73e8;
@@ -161,10 +242,6 @@ body.dark .conteudo {
   padding: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   position: relative;
-}
-
-body.dark .exercicio {
-  background: #2c2c2c;
 }
 
 .exercicio img {
@@ -472,7 +549,7 @@ header {
     width: 90%;
     max-height: 80vh;
     overflow-y: auto;
-    background: white;
+    background: rgb(191, 194, 194);
     border: 2px solid #ccc;
     padding: 1rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
