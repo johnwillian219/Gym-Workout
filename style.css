@@ -460,6 +460,8 @@ header {
 
   #botao-flutuante {
     display: block;
+    background-color: rgba(255, 255, 255, 0.3); /* fundo quase transparente */
+    backdrop-filter: blur(2px); /* efeito de vidro fosco */
   }
 
   aside {
