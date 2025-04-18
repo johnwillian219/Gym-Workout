@@ -204,17 +204,6 @@ body.dark .exercicio.checked {
   transition: background-color 0.3s;
 }
 
-@media (max-width: 600px) {
-  .conteudo {
-    grid-template-columns: 1fr;
-  }
-}
-@media (min-width: 600px) {
-  .conteudo {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 /*progress bar*/
 .barra {
   position: relative;
@@ -280,6 +269,50 @@ body.dark .exercicio.checked {
 
 .alternar-progresso:active {
   transform: scale(0.97);
+}
+/* ===== Desktop grande (maior que 1600px) ===== */
+@media (min-width: 1601px) {
+  .conteudo {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+/* ===== Laptops e desktops médios (até 1600px) ===== */
+@media (max-width: 1600px) {
+  .conteudo {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+/* ===== Tablets e pequenos laptops (até 1024px) ===== */
+@media (max-width: 1024px) {
+  .conteudo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ===== Dispositivos móveis (até 768px) ===== */
+@media (max-width: 768px) {
+  .conteudo {
+    grid-template-columns: 1fr;
+    padding: 0;
+    margin: 0;
+    background-color: #f9f9f9;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .exercicio {
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    padding: 0;
+    margin: 0;
+  }
 }
 
 @media (max-width: 768px) {
