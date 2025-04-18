@@ -123,10 +123,11 @@ body.dark h3 {
 }
 
 .icon {
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   filter: invert(0);
   transition: filter 0.3s;
+  transform: scale(1.1);
 }
 
 body.dark .icon {
@@ -388,4 +389,95 @@ aside {
 
 .alternar-progresso:hover {
   background-color: #ccc;
+}
+
+/*progresso botao*/
+
+#abrir-progresso {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.layout {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* aside visível */
+aside {
+  width: 300px;
+  transition: all 0.3s ease;
+}
+
+/* quando aside está oculto */
+aside.oculto {
+  display: none;
+}
+
+/* main ocupa toda largura quando aside some */
+.layout.sozinho main {
+  width: 100%;
+}
+
+header {
+  gap: 1rem;
+}
+
+#abrir-progresso img {
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
+    hue-rotate(184deg) brightness(96%) contrast(95%);
+}
+
+#abrir-progresso:hover,
+#botao-flutuante:hover {
+  transform: scale(1.1);
+}
+
+/* Botão flutuante */
+#botao-flutuante {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  background-color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  cursor: grab;
+}
+
+@media (max-width: 768px) {
+  #abrir-progresso {
+    display: none;
+  }
+
+  #botao-flutuante {
+    display: block;
+  }
+
+  aside {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: white;
+    border: 2px solid #ccc;
+    padding: 1rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: 998;
+  }
+
+  aside.mostrar {
+    display: block;
+  }
 }

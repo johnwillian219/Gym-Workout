@@ -581,3 +581,41 @@ document.addEventListener("DOMContentLoaded", () => {
     semanal.style.display = "block";
   });
 });
+
+//botao progresso
+const btnProgresso = document.getElementById("abrir-progresso");
+const aside = document.querySelector("aside");
+const layout = document.querySelector(".layout");
+
+btnProgresso.addEventListener("click", () => {
+  aside.classList.toggle("oculto");
+  layout.classList.toggle("sozinho");
+});
+
+//botao flutuante
+const botaoFlutuante = document.getElementById("botao-flutuante");
+
+botaoFlutuante.addEventListener("click", () => {
+  aside.classList.toggle("mostrar");
+});
+
+// Drag para mobile
+let offsetX, offsetY;
+
+botaoFlutuante.addEventListener("mousedown", (e) => {
+  offsetX = e.clientX - botaoFlutuante.getBoundingClientRect().left;
+  offsetY = e.clientY - botaoFlutuante.getBoundingClientRect().top;
+
+  function mouseMoveHandler(e) {
+    botaoFlutuante.style.left = `${e.clientX - offsetX}px`;
+    botaoFlutuante.style.top = `${e.clientY - offsetY}px`;
+  }
+
+  function mouseUpHandler() {
+    document.removeEventListener("mousemove", mouseMoveHandler);
+    document.removeEventListener("mouseup", mouseUpHandler);
+  }
+
+  document.addEventListener("mousemove", mouseMoveHandler);
+  document.addEventListener("mouseup", mouseUpHandler);
+});
