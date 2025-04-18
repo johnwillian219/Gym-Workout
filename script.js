@@ -1,4 +1,25 @@
-// script.js
+const GERENCIADOR_DIAS = {
+  getUltimaData(dia) {
+    const historico = JSON.parse(localStorage.getItem("historicoDias")) || {};
+    return historico[dia] || null;
+  },
+
+  registrarDiaAtual(dia) {
+    const hoje = new Date().toISOString().split("T")[0];
+    const historico = JSON.parse(localStorage.getItem("historicoDias")) || {};
+
+    // Se é um novo dia ou se já passou 24h desde o último registro
+    if (!historico[dia] || historico[dia].data !== hoje) {
+      historico[dia] = { data: hoje, zerado: true };
+      localStorage.setItem("historicoDias", JSON.stringify(historico));
+
+      // Zera os exercícios marcados para este dia
+      localStorage.removeItem(`exercicios-${dia}`);
+      return true;
+    }
+    return false;
+  },
+};
 
 const exerciciosSemana = {
   segunda: [
@@ -366,6 +387,26 @@ function mostrarDia(dia) {
   });
   const btnAtivo = document.querySelector(`.menu button[onclick*="${dia}"]`);
   if (btnAtivo) btnAtivo.classList.add("ativo");
+
+  setTimeout(() => {
+    restaurarCheckboxes(dia);
+    atualizarProgressoDia(dia); // Atualiza a barra de progresso
+  }, 0);
+
+  const deveZerar = GERENCIADOR_DIAS.registrarDiaAtual(dia);
+  if (deveZerar) {
+    setTimeout(() => {
+      document
+        .querySelectorAll(`#conteudo-dia input[type="checkbox"]`)
+        .forEach((cb) => {
+          cb.checked = false;
+          cb.closest(".exercicio").classList.remove("checked");
+        });
+      atualizarProgressoDia(dia);
+    }, 0);
+  } else {
+    restaurarCheckboxes(dia);
+  }
 }
 
 const dias = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta"];
@@ -395,11 +436,27 @@ document
 
 function atualizarProgressoDia(dia) {
   const checkboxes = document.querySelectorAll(
-    "#conteudo-dia input[type='checkbox']"
+    `#conteudo-dia input[type="checkbox"]`
   );
-  const marcados = Array.from(checkboxes).filter((cb) => cb.checked).length;
-  const total = checkboxes.length;
+  const exercicios = [];
 
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      exercicios.push(checkbox.id);
+    }
+  });
+
+  // Armazena apenas se for o dia atual
+  const hoje = new Date().toISOString().split("T")[0];
+  const historicoDias = JSON.parse(localStorage.getItem("historicoDias")) || {};
+
+  if (historicoDias[dia]?.data === hoje) {
+    localStorage.setItem(`exercicios-${dia}`, JSON.stringify(exercicios));
+  }
+
+  // Restante da função permanece igual...
+  const marcados = exercicios.length;
+  const total = checkboxes.length;
   const porcentagem = total ? Math.round((marcados / total) * 100) : 0;
 
   const barra = document.getElementById(`barra-${dia}`);
@@ -422,13 +479,59 @@ function atualizarProgressoDia(dia) {
   atualizarSemanasEMeses();
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  limparDiasAntigos();
+
+  const dias = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta"];
+  const hoje = new Date().getDay();
+  const diaHoje = dias[hoje] === "domingo" ? "segunda" : dias[hoje];
+
+  mostrarDia(diaHoje);
+  atualizarSemanasEMeses();
+});
+function restaurarCheckboxes(dia) {
+  const exerciciosMarcados =
+    JSON.parse(localStorage.getItem(`exercicios-${dia}`)) || [];
+  const checkboxes = document.querySelectorAll(
+    "#conteudo-dia input[type='checkbox']"
+  );
+
+  exerciciosMarcados.forEach((index) => {
+    if (checkboxes[index]) {
+      checkboxes[index].checked = true;
+      checkboxes[index].closest(".exercicio").classList.add("checked");
+    }
+  });
+}
+
 // Event listener para mudanças nos checkboxes
-document.addEventListener("change", () => {
-  const btnAtivo = document.querySelector(".menu button.ativo");
-  if (btnAtivo) {
-    const dia = btnAtivo.getAttribute("onclick")?.match(/'([^']+)'/)?.[1];
-    if (dia) atualizarProgressoDia(dia);
+document.addEventListener("change", (e) => {
+  if (e.target.matches('#conteudo-dia input[type="checkbox"]')) {
+    const exercicio = e.target.closest(".exercicio");
+    if (e.target.checked) {
+      exercicio.classList.add("checked");
+    } else {
+      exercicio.classList.remove("checked");
+    }
+
+    const btnAtivo = document.querySelector(".menu button.ativo");
+    if (btnAtivo) {
+      const dia = btnAtivo.getAttribute("onclick").match(/'([^']+)'/)[1];
+      atualizarProgressoDia(dia);
+    }
   }
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const diaAtual = new Date().getDay();
+  const dias = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta"];
+  const dia = dias[diaAtual] === "domingo" ? "segunda" : dias[diaAtual];
+
+  mostrarDia(dia);
+
+  // Restaura o estado do dia atual
+  setTimeout(() => {
+    restaurarCheckboxes(dia);
+  }, 100);
 });
 
 // Atualiza as barras de progresso das semanas e meses

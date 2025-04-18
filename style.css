@@ -428,6 +428,17 @@ body.dark .exercicio.checked {
   .alternar-progresso {
     display: none; /* esconde os botões no mobile */
   }
+  body.dark .conteudo {
+    background: #383838; /* Área de conteúdo mais clara */
+    border: none;
+    box-shadow: none;
+  }
+
+  body.dark .exercicio {
+    background: #383838; /* Área de conteúdo mais clara */
+    border: none;
+    box-shadow: none;
+  }
 }
 
 /* Layout padrão para desktop */
