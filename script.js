@@ -25,7 +25,7 @@ const exerciciosSemana = {
       gif: "gift/crossover.webp",
     },
     {
-      nome: "Desenvolvimento na máquina",
+      nome: "Desenvolvimento",
       tipo: "musculacao",
       series: "4x12",
       gif: "gift/desenvolvimento-maquina.gif",
@@ -67,7 +67,7 @@ const exerciciosSemana = {
       gif: "gift/abdominal_infra_solo.gif",
     },
     {
-      nome: "Prancha lateral oblíquo",
+      nome: "Prancha lateral",
       tipo: "abdomen",
       series: "3x side",
       gif: "gift/prancha-lateral.gif",
@@ -104,12 +104,7 @@ const exerciciosSemana = {
       series: "4x12",
       gif: "gift/remada-baixa.gif",
     },
-    {
-      nome: "Remada curvada",
-      tipo: "musculacao",
-      series: "4x12",
-      gif: "gift/Remada-curvada.webp",
-    },
+
     {
       nome: "Crucifixo invertido",
       tipo: "musculacao",
@@ -117,7 +112,7 @@ const exerciciosSemana = {
       gif: "gift/crucifixo-invertido.gif",
     },
     {
-      nome: "Rosca alternada sentada",
+      nome: "Rosca alternada",
       tipo: "musculacao",
       series: "4x12",
       gif: "gift/rosca-alternada-sentado.gif",
@@ -133,6 +128,12 @@ const exerciciosSemana = {
       tipo: "musculacao",
       series: "4x12",
       gif: "gift/Rosca-martelo.webp",
+    },
+    {
+      nome: "Remada curvada",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/Remada-curvada.webp",
     },
     {
       nome: "Elevação das pernas",
@@ -173,6 +174,12 @@ const exerciciosSemana = {
   ],
   quarta: [
     {
+      nome: "Cadeira Extensora",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/cadeira-extensora.gif",
+    },
+    {
       nome: "Agachamento no Smith",
       tipo: "musculacao",
       series: "4x12",
@@ -184,18 +191,7 @@ const exerciciosSemana = {
       series: "4x12",
       gif: "gift/leg-press.gif",
     },
-    {
-      nome: "Cadeira Extensora",
-      tipo: "musculacao",
-      series: "4x12",
-      gif: "gift/cadeira-extensora.gif",
-    },
-    {
-      nome: "Mesa Flexora",
-      tipo: "musculacao",
-      series: "4x12",
-      gif: "gift/mesa-flexora.gif",
-    },
+
     {
       nome: "Afundo",
       tipo: "musculacao",
@@ -203,29 +199,25 @@ const exerciciosSemana = {
       gif: "gift/afundo.webp",
     },
     {
-      nome: "Agachamento búlgaro",
-      tipo: "musculacao",
-      series: "4x12 cada lado",
-      gif: "gift/bulgaro.webp",
-    },
-    {
-      nome: "Levantamento terra",
-      tipo: "musculacao",
-      series: "4x12",
-      gif: "gift/Levantamento-terra.webp",
-    },
-    {
-      nome: "Elevação de panturrilhas sentado",
-      tipo: "musculacao",
-      series: "4x12",
-      gif: "gift/elevacao-panturrilhas-sentado.gif",
-    },
-    {
-      nome: "Adução de quadril na máquina",
+      nome: "Adução de quadril",
       tipo: "musculacao",
       series: "4x12",
       gif: "gift/audutora.webp",
     },
+    {
+      nome: "Mesa Flexora",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/mesa-flexora.gif",
+    },
+
+    {
+      nome: "Elevação de panturrilhas",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/elevacao-panturrilhas-sentado.gif",
+    },
+
     {
       nome: "Flexão de braços",
       tipo: "abdomen",
@@ -233,7 +225,7 @@ const exerciciosSemana = {
       gif: "gift/flexao-de-bracos.webp",
     },
     {
-      nome: "Prancha lateral com elevação de perna",
+      nome: "Prancha lateral perna",
       tipo: "abdomen",
       series: "4x20",
       gif: "gift/prancha-lateral-com-elevacao-de-perna.webp",
@@ -265,24 +257,117 @@ const exerciciosSemana = {
   ],
   quinta: [
     {
-      nome: "Flexão com os Pés Elevados",
+      nome: "Remada unilateral",
       tipo: "musculacao",
-      series: "3x10",
-      gif: "gift/flexao_pe_elevado.gif",
+      series: "4x20",
+      gif: "gift/remada-unilateral.webp",
     },
     {
-      nome: "Abdominal Invertido",
+      nome: "Fly inverso",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/fly-inverso.webp",
+    },
+
+    {
+      nome: "Cruxifixo",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/crucifixo.gif",
+    },
+    {
+      nome: "Supino vertical",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/supino-vertical.gif",
+    },
+    {
+      nome: "Desenvolvimento",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/desenvolvimento.gif",
+    },
+
+    {
+      nome: "Elevação lateral polia",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/elevacao-lateral-na-polia.gif",
+    },
+    {
+      nome: "Rosca francesa",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/rosca-francesa.gif",
+    },
+    {
+      nome: "Rosca Z Supinada",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/rosca-z-supinada.gif",
+    },
+    {
+      nome: "Prancha com flexão",
       tipo: "abdomen",
-      series: "3x15",
-      gif: "gift/invertido.gif",
+      series: "4 x 60s",
+      gif: "gift/prancha-com-flexao.webp",
+    },
+    {
+      nome: "Flexão de braços",
+      tipo: "abdomen",
+      series: "4x20",
+      gif: "gift/flexao-de-bracos.webp",
     },
   ],
   sexta: [
     {
-      nome: "Flexão Explosiva",
+      nome: "Agachamento búlgaro",
       tipo: "musculacao",
-      series: "3x8",
-      gif: "gift/flexao_explosiva.gif",
+      series: "4x12",
+      gif: "gift/bulgaro.webp",
+    },
+    {
+      nome: "Leg Press Horizontal",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/leg-press-horizontal.gif",
+    },
+    {
+      nome: "Cadeira Extensora",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/cadeira-extensora.gif",
+    },
+    {
+      nome: "Levantamento terra",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/Levantamento-terra.webp",
+    },
+
+    {
+      nome: "Levantamento stiff",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/levantamento-stiff.gif",
+    },
+    {
+      nome: "Mesa Flexora",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/mesa-flexora.gif",
+    },
+    {
+      nome: "Elevação de panturrilhas",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/elevacao-panturrilhas-sentado.gif",
+    },
+    {
+      nome: "Passada andando",
+      tipo: "musculacao",
+      series: "4x12",
+      gif: "gift/passada-andando.gif",
     },
     {
       nome: "Abdominal Canivete",
@@ -298,6 +383,7 @@ const exerciciosSemana = {
       series: "3x10 cada lado",
       gif: "gift/flexao_arqueada.gif",
     },
+
     {
       nome: "Prancha com Toque de Ombro",
       tipo: "abdomen",
