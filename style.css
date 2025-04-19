@@ -314,7 +314,7 @@ body.dark .exercicio.checked {
   height: 100%;
   width: var(--before-width, 0%);
   background-color: #0be613; /* Verde */
-  border-radius: 8px;
+  border-radius: 2px;
   transition: width 0.3s ease;
   z-index: 0;
 }
