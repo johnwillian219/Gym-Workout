@@ -173,7 +173,7 @@ const exerciciosSemana = {
   ],
   quarta: [
     {
-      nome: " Agachamento no Smith",
+      nome: "Agachamento no Smith",
       tipo: "musculacao",
       series: "4x12",
       gif: "gift/agachamento-smith.webp",
@@ -307,6 +307,15 @@ const exerciciosSemana = {
   ],
 };
 
+const gruposMuscularesSemana = {
+  segunda: "(Push): Peito, Ombro e Tríceps",
+  terca: "(Pull): Costas e Bíceps",
+  quarta: "Pernas-Completo",
+  quinta: "(Upper): Superiores-completo",
+  sexta: "(Lower): Inferiores-completo",
+  sabado: "(Full): Total",
+};
+
 function mostrarDia(dia) {
   const container = document.getElementById("conteudo-dia");
   const dados = exerciciosSemana[dia];
@@ -330,19 +339,10 @@ function mostrarDia(dia) {
       `;
     });
   }
-  const gruposMuscularesSemana = {
-    segunda: "(Push): Peito, Ombro e Tríceps",
-    terca: "(Pull): Costas e Bíceps",
-    quarta: "Pernas-Completo",
-    quinta: "(Upper): Superiores-completo",
-    sexta: "(Lower): Inferiores-completo",
-    sabado: "(Full): Total",
-  };
 
   if (musculacao.length) {
     const grupoMuscular = gruposMuscularesSemana[dia] || "";
     container.innerHTML += `<h2>Musculação: ${grupoMuscular}</h2>`;
-
     musculacao.forEach((ex, index) => {
       container.innerHTML += `
         <div class="exercicio">
@@ -381,7 +381,15 @@ function mostrarDia(dia) {
   atualizarProgressoDia(dia);
 }
 
-const dias = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta"];
+const dias = [
+  "domingo",
+  "segunda",
+  "terca",
+  "quarta",
+  "quinta",
+  "sexta",
+  "sabado",
+];
 const hoje = new Date().getDay();
 const diaHoje = dias[hoje] === "domingo" ? "segunda" : dias[hoje];
 mostrarDia(diaHoje);
@@ -392,7 +400,7 @@ botaoModoEscuro.addEventListener("click", () => {
   document.body.classList.toggle("dark");
 });
 
-// Ativar fundo verde ao marcar checkbox
+// Ativar fundo verde ao marcar checkbox e salvar estado
 document.addEventListener("change", (e) => {
   if (e.target.type === "checkbox") {
     const container = e.target.closest(".exercicio");
@@ -445,9 +453,100 @@ function atualizarProgressoDia(dia) {
   atualizarSemanasEMeses();
 }
 
+// Recupera o progresso de todos os dias com base no estado salvo
+function recuperarProgressoDias() {
+  const dias = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
+  const estadoCheckboxes = JSON.parse(
+    localStorage.getItem("checkboxesEstado") || "{}"
+  );
+  let historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
+
+  dias.forEach((dia) => {
+    // Carrega os exercícios do dia
+    const container = document.getElementById("conteudo-dia");
+    const dados = exerciciosSemana[dia];
+
+    const abdomen = dados.filter((ex) => ex.tipo === "abdomen");
+    const musculacao = dados.filter((ex) => ex.tipo === "musculacao");
+
+    container.innerHTML = "";
+
+    if (abdomen.length) {
+      abdomen.forEach((ex, index) => {
+        const id = `${dia}-abdomen-${index}`;
+        container.innerHTML += `
+          <div class="exercicio">
+            <input type="checkbox" id="${id}" ${
+          estadoCheckboxes[id] ? "checked" : ""
+        } />
+            <p><strong>${ex.nome}:</strong> ${ex.series}</p>
+            <div class="gif-container">
+              <img src="${ex.gif}" alt="${ex.nome}" />
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    if (musculacao.length) {
+      const grupoMuscular = gruposMuscularesSemana[dia] || "";
+      container.innerHTML += `<h2>Musculação: ${grupoMuscular}</h2>`;
+      musculacao.forEach((ex, index) => {
+        const id = `${dia}-musculacao-${index}`;
+        container.innerHTML += `
+          <div class="exercicio">
+            <input type="checkbox" id="${id}" ${
+          estadoCheckboxes[id] ? "checked" : ""
+        } />
+            <p><strong>${ex.nome}:</strong> ${ex.series}</p>
+            <div class="gif-container">
+              <img src="${ex.gif}" alt="${ex.nome}" />
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // Calcula o progresso do dia com base nos checkboxes
+    const checkboxes = document.querySelectorAll(
+      `#conteudo-dia input[type='checkbox']`
+    );
+    const marcados = Array.from(checkboxes).filter((cb) => cb.checked).length;
+    const total = checkboxes.length;
+    const porcentagem = total ? Math.round((marcados / total) * 100) : 0;
+
+    // Atualiza a barra de progresso do dia
+    const barra = document.getElementById(`barra-${dia}`);
+    if (barra) {
+      barra.style.setProperty("--before-width", `${porcentagem}%`);
+      const spanPorcentagem = barra.querySelector(".porcentagem");
+      if (spanPorcentagem) {
+        spanPorcentagem.textContent = `${porcentagem}%`;
+      }
+    }
+
+    // Atualiza o historicoTreino apenas se o progresso mudou
+    const dataHoje = new Date().toISOString().split("T")[0];
+    const ultimoRegistro = historico
+      .filter((r) => r.dia === dia)
+      .sort((a, b) => new Date(b.data) - new Date(a.data))[0];
+
+    if (!ultimoRegistro || ultimoRegistro.porcentagem !== porcentagem) {
+      historico = historico.filter(
+        (registro) => !(registro.data === dataHoje && registro.dia === dia)
+      );
+      historico.push({ data: dataHoje, dia, porcentagem });
+      localStorage.setItem("historicoTreino", JSON.stringify(historico));
+    }
+  });
+
+  // Volta a mostrar o dia atual
+  mostrarDia(diaHoje);
+}
+
 // Atualiza as barras de progresso das semanas e meses
 function atualizarSemanasEMeses() {
-  const historico = JSON.parse(localStorage.getItem("historicoTreino")) || [];
+  const historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
   const hoje = new Date();
 
   // SEMANAS - cálculo preciso por período
@@ -558,15 +657,17 @@ function getNomeMes(offset) {
 
 // SALVAR estado dos checkboxes no localStorage
 function salvarCheckboxes() {
+  const estadoAtual = JSON.parse(
+    localStorage.getItem("checkboxesEstado") || "{}"
+  );
   const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  const estado = {};
   checkboxes.forEach((checkbox) => {
-    estado[checkbox.id] = checkbox.checked;
+    estadoAtual[checkbox.id] = checkbox.checked;
   });
-  localStorage.setItem("checkboxesEstado", JSON.stringify(estado));
+  localStorage.setItem("checkboxesEstado", JSON.stringify(estadoAtual));
 }
 
-// CARREGAR estado dos checkboxes e atualizar progresso
+// CARREGAR estado dos checkboxes
 function carregarCheckboxes() {
   const estado = JSON.parse(localStorage.getItem("checkboxesEstado") || "{}");
   const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -575,41 +676,6 @@ function carregarCheckboxes() {
       checkbox.checked = estado[checkbox.id];
     }
   });
-}
-
-// Atualiza o progresso de todos os dias com base no estado salvo
-function atualizarTodosOsProgresso() {
-  const dias = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
-  const historico = JSON.parse(localStorage.getItem("historicoTreino")) || [];
-  const dataHoje = new Date().toISOString().split("T")[0];
-
-  dias.forEach((dia) => {
-    // Carrega os exercícios do dia
-    mostrarDia(dia);
-    const checkboxes = document.querySelectorAll(
-      `#conteudo-dia input[type='checkbox']`
-    );
-    const marcados = Array.from(checkboxes).filter((cb) => cb.checked).length;
-    const total = checkboxes.length;
-    const porcentagem = total ? Math.round((marcados / total) * 100) : 0;
-
-    // Atualiza a barra de progresso do dia
-    const barra = document.getElementById(`barra-${dia}`);
-    if (barra) {
-      barra.style.setProperty("--before-width", `${porcentagem}%`);
-      const spanPorcentagem = barra.querySelector(".porcentagem");
-      if (spanPorcentagem) {
-        spanPorcentagem.textContent = `${porcentagem}%`;
-      }
-    }
-
-    // Atualiza o histórico para o dia atual
-    historico.push({ data: dataHoje, dia, porcentagem });
-    localStorage.setItem("historicoTreino", JSON.stringify(historico));
-  });
-
-  // Volta a mostrar o dia atual
-  mostrarDia(diaHoje);
 }
 
 // Inicializa ao carregar a página
@@ -635,12 +701,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Carrega os checkboxes e atualiza o progresso
-  carregarCheckboxes();
-  atualizarTodosOsProgresso();
+  // Limpa objetos desconhecidos do localStorage
+  localStorage.removeItem("historicoDias");
+  localStorage.removeItem("exercicios-segunda");
+  localStorage.removeItem("exercicios-terca");
+  localStorage.removeItem("exercicios-quarta");
+  localStorage.removeItem("exercicios-quinta");
+  localStorage.removeItem("exercicios-sexta");
+
+  // Recupera o progresso de todos os dias
+  recuperarProgressoDias();
 
   // Verifica se há registros suficientes para atualizar semanas e meses
-  const historico = JSON.parse(localStorage.getItem("historicoTreino")) || [];
+  const historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
   const diasDistintos = new Set(historico.map((r) => `${r.data}-${r.dia}`));
   if (diasDistintos.size >= 3) {
     atualizarSemanasEMeses();

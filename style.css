@@ -133,6 +133,7 @@ body.dark .alternar-progresso:hover {
 body.dark .barra::before {
   background-color: #68f00e; /* Verde mais suave e moderno */
   font-weight: bold;
+  border-radius: 2px;
 }
 
 /* Cabeçalhos com azul mais suave */
