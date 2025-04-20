@@ -5,9 +5,11 @@
   gap: 2rem;
   padding: 1rem;
 }
+
 header {
   gap: 1rem;
 }
+
 main {
   background-color: var(--bg-main, #f9f9f9);
   padding: 1rem;
@@ -402,6 +404,22 @@ body.dark .exercicio.checked {
   transform: scale(1.1);
 }
 
+#botao-flutuante {
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  background-color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
 #botao-flutuante img.icon {
   width: 30px;
   height: 30px;
@@ -409,9 +427,11 @@ body.dark .exercicio.checked {
     hue-rotate(184deg) brightness(96%) contrast(95%);
 }
 
-#botao-flutuante img.icon:hover {
+#botao-flutuante:hover {
+  background-color: #444;
   transform: scale(1.1);
 }
+
 body.dark #botao-flutuante {
   background-color: #4a4a4a;
 }
@@ -599,8 +619,10 @@ body.dark .aside-btn .reset:active {
     display: none;
     position: fixed;
     bottom: 90px;
-    right: 20px;
-    width: 60%;
+    left: 20px;
+    width: calc(
+      100% - 40px
+    ); /* Ocupa quase toda a tela, com 20px de margem em cada lado */
     max-height: 80vh;
     overflow-y: auto;
     background: rgb(191, 194, 194);
@@ -608,6 +630,7 @@ body.dark .aside-btn .reset:active {
     padding: 1rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: 998;
+    box-sizing: border-box; /* Inclui padding e borda na largura */
   }
 
   aside.mostrar {
@@ -676,12 +699,10 @@ body.dark .aside-btn .reset:active {
   /* Botão flutuante */
   #botao-flutuante {
     position: fixed;
-    top: 50%;
-    right: 0.5rem;
-    transform: translateY(-50%);
+    right: 20px;
     display: block;
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(1px);
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(2px);
     border: none;
     border-radius: 50%;
     width: 60px;
@@ -689,10 +710,11 @@ body.dark .aside-btn .reset:active {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: transform 0.2s;
+    z-index: 999;
   }
 
   #botao-flutuante:hover {
-    transform: translateY(-50%) scale(1.1);
+    transform: scale(1.1);
   }
 
   body.dark #botao-flutuante {
@@ -701,8 +723,9 @@ body.dark .aside-btn .reset:active {
   }
 
   body.dark #botao-flutuante:hover {
-    transform: translateY(-50%) scale(1.1);
+    transform: scale(1.1);
   }
+
   .aside-btn {
     gap: 15px;
     flex-wrap: nowrap;
