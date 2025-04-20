@@ -104,7 +104,6 @@ const exerciciosSemana = {
       series: "4x12",
       gif: "gift/remada-baixa.gif",
     },
-
     {
       nome: "Crucifixo invertido",
       tipo: "musculacao",
@@ -191,7 +190,6 @@ const exerciciosSemana = {
       series: "4x12",
       gif: "gift/leg-press.gif",
     },
-
     {
       nome: "Afundo",
       tipo: "musculacao",
@@ -210,14 +208,12 @@ const exerciciosSemana = {
       series: "4x12",
       gif: "gift/mesa-flexora.gif",
     },
-
     {
       nome: "Elevação de panturrilhas",
       tipo: "musculacao",
       series: "4x12",
       gif: "gift/elevacao-panturrilhas-sentado.gif",
     },
-
     {
       nome: "Flexão de braços",
       tipo: "abdomen",
@@ -268,7 +264,6 @@ const exerciciosSemana = {
       series: "4x12",
       gif: "gift/fly-inverso.webp",
     },
-
     {
       nome: "Cruxifixo",
       tipo: "musculacao",
@@ -287,7 +282,6 @@ const exerciciosSemana = {
       series: "4x12",
       gif: "gift/desenvolvimento.gif",
     },
-
     {
       nome: "Elevação lateral polia",
       tipo: "musculacao",
@@ -368,7 +362,6 @@ const exerciciosSemana = {
       series: "4x12",
       gif: "gift/Levantamento-terra.webp",
     },
-
     {
       nome: "Levantamento stiff",
       tipo: "musculacao",
@@ -437,7 +430,6 @@ const exerciciosSemana = {
       series: "4x15",
       gif: "gift/remada-curvada-h.webp",
     },
-
     {
       nome: "Supino reto",
       tipo: "musculacao",
@@ -656,7 +648,7 @@ function atualizarProgressoDia(dia) {
   }
 
   const dataHoje = new Date().toISOString().split("T")[0];
-  let historico = JSON.parse(localStorage.getItem("historicoTreino")) || [];
+  let historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
 
   // Remove registros antigos do mesmo dia e mesmo 'dia'
   historico = historico.filter(
@@ -766,6 +758,7 @@ function recuperarProgressoDias() {
 function atualizarSemanasEMeses() {
   const historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
   const hoje = new Date();
+  const anoAtual = hoje.getFullYear();
 
   // SEMANAS - cálculo preciso por período
   const semanas = [
@@ -775,9 +768,24 @@ function atualizarSemanasEMeses() {
     { inicio: 21, fim: 27, total: 0, count: 0 }, // Semana 4
   ];
 
-  // MESES - cálculo por mês real
+  // MESES - cálculo por mês fixo (Janeiro a Dezembro)
   const meses = {};
   const mesesOrdenados = [];
+
+  // Inicializa os meses de Janeiro a Dezembro do ano atual
+  for (let i = 0; i < 12; i++) {
+    const chaveMes = `${anoAtual}-${i}`;
+    meses[chaveMes] = {
+      total: 0,
+      count: 0,
+      nome: new Date(anoAtual, i)
+        .toLocaleString("pt-BR", {
+          month: "long",
+        })
+        .replace(/^\w/, (c) => c.toUpperCase()),
+    };
+    mesesOrdenados.push(chaveMes);
+  }
 
   // Filtra registros para considerar apenas o mais recente por dia e 'dia'
   const registrosPorDia = {};
@@ -807,25 +815,13 @@ function atualizarSemanasEMeses() {
       }
     });
 
-    // Preenche meses (últimos 5 meses)
-    if (diasPassados < 150) {
-      const chaveMes = `${dataTreino.getFullYear()}-${dataTreino.getMonth()}`;
-      if (!meses[chaveMes]) {
-        meses[chaveMes] = {
-          total: 0,
-          count: 0,
-          nome: dataTreino.toLocaleString("pt-BR", { month: "long" }),
-          diasPassados: diasPassados,
-        };
-        mesesOrdenados.push(chaveMes);
-      }
+    // Preenche meses (considera apenas o ano atual)
+    const chaveMes = `${dataTreino.getFullYear()}-${dataTreino.getMonth()}`;
+    if (meses[chaveMes]) {
       meses[chaveMes].total += porcentagem;
       meses[chaveMes].count++;
     }
   });
-
-  // Ordena meses do MAIS RECENTE para o MAIS ANTIGO
-  mesesOrdenados.sort((a, b) => meses[a].diasPassados - meses[b].diasPassados);
 
   // ATUALIZA SEMANAS NA INTERFACE
   semanas.forEach((semana, index) => {
@@ -842,35 +838,46 @@ function atualizarSemanasEMeses() {
     }
   });
 
-  // ATUALIZA MESES NA INTERFACE (apenas 5 mais recentes)
-  for (let i = 0; i < 5; i++) {
+  // ATUALIZA MESES NA INTERFACE (Mês 1 = Janeiro, Mês 12 = Dezembro)
+  mesesOrdenados.forEach((mesData, i) => {
     const barra = document.getElementById(`mes-${i + 1}`);
-    if (!barra) continue;
+    if (!barra) return;
 
-    const mesData = mesesOrdenados[i];
-    const mesInfo = mesData ? meses[mesData] : null;
+    const mesInfo = meses[mesData];
 
     const spanNome = barra.querySelector(".nome");
     if (spanNome) {
-      spanNome.textContent = mesInfo?.nome || getNomeMes(i);
+      spanNome.textContent = mesInfo.nome;
     }
 
     const spanPerc = barra.querySelector(".porcentagem");
     const media =
-      mesInfo?.count >= 3 ? Math.round(mesInfo.total / mesInfo.count) : 0;
+      mesInfo.count >= 3 ? Math.round(mesInfo.total / mesInfo.count) : 0;
     barra.style.setProperty("--before-width", `${media}%`);
 
     if (spanPerc) {
-      spanPerc.textContent = mesInfo?.count >= 3 ? `${media}%` : "0%";
+      spanPerc.textContent = mesInfo.count >= 3 ? `${media}%` : "0%";
     }
-  }
+  });
 }
 
-// Helper function para obter nome do mês com offset
-function getNomeMes(offset) {
-  const data = new Date();
-  data.setMonth(data.getMonth() - offset);
-  return data.toLocaleString("pt-BR", { month: "long" });
+// Helper function para obter nome do mês
+function getNomeMes(mesIndex) {
+  const meses = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ];
+  return meses[mesIndex];
 }
 
 // SALVAR estado dos checkboxes no localStorage
@@ -908,7 +915,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 12; i++) {
     const barra = document.getElementById(`mes-${i}`);
     if (barra) {
       barra.style.setProperty("--before-width", "0%");
@@ -938,22 +945,39 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Alternar entre progresso semanal e mensal
 document.addEventListener("DOMContentLoaded", () => {
-  const semanal = document.getElementById("progresso-semanal");
-  const mensal = document.getElementById("progresso-mensal");
+  const progressoDia = document.getElementById("progresso-dia");
+  const progressoSemanal = document.getElementById("progresso-semanal");
+  const progressoMensal = document.getElementById("progresso-mensal");
 
-  const botaoSemanal = semanal.querySelector(".alternar-progresso");
-  const botaoMensal = mensal.querySelector(".alternar-progresso");
+  const botaoVerSemanal = document.getElementById("ver-semanal");
+  const botaoVerMensal = document.getElementById("ver-mensal");
+  const botaoVerDiario = document.getElementById("ver-diario");
 
-  botaoSemanal.addEventListener("click", () => {
-    semanal.style.display = "none";
-    mensal.style.display = "block";
+  // Inicialmente, exibe apenas o progresso diário
+  progressoDia.style.display = "block";
+  progressoSemanal.style.display = "none";
+  progressoMensal.style.display = "none";
+
+  // Alternar para progresso semanal
+  botaoVerSemanal.addEventListener("click", () => {
+    progressoDia.style.display = "none";
+    progressoSemanal.style.display = "block";
+    progressoMensal.style.display = "none";
   });
 
-  botaoMensal.addEventListener("click", () => {
-    mensal.style.display = "none";
-    semanal.style.display = "block";
+  // Alternar para progresso mensal
+  botaoVerMensal.addEventListener("click", () => {
+    progressoDia.style.display = "none";
+    progressoSemanal.style.display = "none";
+    progressoMensal.style.display = "block";
+  });
+
+  // Alternar para progresso diário
+  botaoVerDiario.addEventListener("click", () => {
+    progressoDia.style.display = "block";
+    progressoSemanal.style.display = "none";
+    progressoMensal.style.display = "none";
   });
 });
 

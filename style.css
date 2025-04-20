@@ -61,8 +61,8 @@ body {
 
 /* ===== MODO ESCURO ATUALIZADO - TONS MAIS SUAVES ===== */
 body.dark {
-  background: #2a2a2a; /* Fundo principal mais claro */
-  color: #e0e0e0; /* Texto ligeiramente mais suave */
+  background: #2a2a2a;
+  color: #e0e0e0;
 }
 
 body.dark .layout {
@@ -70,18 +70,18 @@ body.dark .layout {
 }
 
 body.dark main {
-  background-color: #383838; /* Container principal mais claro */
+  background-color: #383838;
   color: #e0e0e0;
 }
 
 body.dark aside {
-  background-color: #323232; /* Barra lateral mais clara */
+  background-color: #323232;
   color: #e0e0e0;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
 }
 
 body.dark .conteudo {
-  background: #3f3f3f; /* Área de conteúdo mais clara */
+  background: #3f3f3f;
   color: #e0e0e0;
   box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
 }
@@ -93,12 +93,12 @@ body.dark .exercicio {
 }
 
 body.dark .exercicio.checked {
-  background-color: #5a2d96; /* Roxo mais suave */
+  background-color: #5a2d96;
   color: #fff;
 }
 
 body.dark .barra {
-  background-color: #807e7e; /* Fundo da barra mais claro */
+  background-color: #807e7e;
 }
 
 body.dark .barra span {
@@ -108,12 +108,11 @@ body.dark .barra span {
 body.dark .menu button {
   background: #4a4a4a;
   color: #e0e0e0;
-  border: 1px solid #5a5a5a; /* Borda sutil para definição */
+  border: 1px solid #5a5a5a;
 }
 
 body.dark .menu button.ativo {
-  background-color: #5a2d96; /* Roxo mais claro para botão ativo */
-
+  background-color: #5a2d96;
   color: #fff;
 }
 
@@ -130,26 +129,24 @@ body.dark .alternar-progresso {
 body.dark .alternar-progresso:hover {
   background-color: #5a5a5a;
 }
+
 body.dark .barra::before {
-  background-color: #68f00e; /* Verde mais suave e moderno */
+  background-color: #68f00e;
   font-weight: bold;
   border-radius: 2px;
 }
 
-/* Cabeçalhos com azul mais suave */
 body.dark h1,
 body.dark h2,
 body.dark h3 {
-  color: rgb(188, 164, 245); /* Azul mais claro e suave */
+  color: rgb(188, 164, 245);
 }
 
-/* Ícones com opacidade ajustada */
 body.dark .icon {
   filter: invert(0.9) brightness(0.9);
   opacity: 0.9;
 }
 
-/* Ajustes para elementos específicos */
 body.dark .gif-container {
   border-radius: 8px;
 }
@@ -177,6 +174,7 @@ h1 {
   margin-bottom: 2rem;
   text-align: center;
 }
+
 h2 {
   font-size: clamp(1.2rem, 3.5vw, 1.6rem);
 }
@@ -184,6 +182,7 @@ h2 {
 h3 {
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
+
 .menu {
   display: flex;
   justify-content: space-around;
@@ -277,13 +276,14 @@ h3 {
 }
 
 .exercicio.checked {
-  background-color: #d4edda; /* Verde claro */
+  background-color: #d4edda;
   border-radius: 8px;
   padding: 8px;
   transition: background-color 0.3s;
 }
+
 body.dark .exercicio.checked {
-  background-color: #8d0fd6; /* Verde claro */
+  background-color: #8d0fd6;
   border-radius: 8px;
   padding: 8px;
   transition: background-color 0.3s;
@@ -319,7 +319,7 @@ body.dark .exercicio.checked {
   top: 0;
   height: 100%;
   width: var(--before-width, 0%);
-  background-color: #0be613; /* Verde */
+  background-color: #0be613;
   border-radius: 2px;
   transition: width 0.3s ease;
   z-index: 0;
@@ -355,6 +355,7 @@ body.dark .exercicio.checked {
 .alternar-progresso:active {
   transform: scale(0.97);
 }
+
 /* ===== Desktop grande (maior que 1600px) ===== */
 @media (min-width: 1601px) {
   .conteudo {
@@ -404,6 +405,7 @@ body.dark .exercicio.checked {
   main {
     background-color: white;
   }
+
   .container {
     padding: 0;
     margin: 0;
@@ -414,33 +416,73 @@ body.dark .exercicio.checked {
     border-radius: 0;
     box-shadow: none;
   }
-}
 
-@media (max-width: 768px) {
   .layout {
-    flex-direction: column !important; /* coloca o aside embaixo */
+    flex-direction: column !important;
   }
 
   aside {
-    width: 100%; /* ocupa toda a largura no mobile */
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: rgb(191, 194, 194);
+    border: 2px solid #ccc;
+    padding: 1rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: 998;
+  }
+
+  aside.mostrar {
+    display: block;
+  }
+
+  /* Exibir progresso diário por padrão no mobile */
+  .progresso-diario {
+    display: block;
   }
 
   .progresso-semanal,
   .progresso-mensal {
-    display: block !important; /* força ambos aparecerem */
+    display: none;
   }
 
+  /* Garantir que os botões de alternância sejam visíveis */
   .alternar-progresso {
-    display: none; /* esconde os botões no mobile */
+    display: inline-block;
+    background-color: #eee;
+    color: #333;
+    padding: 6px 12px;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
   }
+
+  .alternar-progresso:hover {
+    background-color: #ccc;
+    transform: scale(1.05);
+  }
+
+  body.dark .progresso-diario,
+  body.dark .progresso-semanal,
+  body.dark .progresso-mensal {
+    background: #323232;
+    color: #e0e0e0;
+  }
+
   body.dark .conteudo {
-    background: #383838; /* Área de conteúdo mais clara */
+    background: #383838;
     border: none;
     box-shadow: none;
   }
 
   body.dark .exercicio {
-    background: #383838; /* Área de conteúdo mais clara */
+    background: #383838;
     border: none;
     box-shadow: none;
   }
@@ -462,6 +504,7 @@ aside {
 }
 
 /* Título e botão lado a lado */
+.progresso-diario h3,
 .progresso-semanal h3,
 .progresso-mensal h3 {
   display: flex;
@@ -469,53 +512,12 @@ aside {
   align-items: center;
 }
 
-/* Estilo dos botões */
-.alternar-progresso {
-  background-color: #eee;
-  border: none;
-  padding: 4px 8px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.3s;
-}
-
-.alternar-progresso:hover {
-  background-color: #ccc;
-}
-
 /*progresso botao*/
-
 #abrir-progresso {
   background: none;
   border: none;
   cursor: pointer;
   margin-left: auto;
-}
-
-.layout {
-  display: flex;
-  align-items: flex-start;
-}
-
-/* aside visível */
-aside {
-  width: 300px;
-  transition: all 0.3s ease;
-}
-
-/* quando aside está oculto */
-aside.oculto {
-  display: none;
-}
-
-/* main ocupa toda largura quando aside some */
-.layout.sozinho main {
-  width: 100%;
-}
-
-header {
-  gap: 1rem;
 }
 
 #abrir-progresso img {
@@ -553,26 +555,7 @@ header {
 
   #botao-flutuante {
     display: block;
-    background-color: rgba(255, 255, 255, 0.3); /* fundo quase transparente */
-    backdrop-filter: blur(2px); /* efeito de vidro fosco */
-  }
-
-  aside {
-    display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    background: rgb(191, 194, 194);
-    border: 2px solid #ccc;
-    padding: 1rem;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    z-index: 998;
-  }
-
-  aside.mostrar {
-    display: block;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(2px);
   }
 }
