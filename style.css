@@ -242,6 +242,7 @@ h3 {
 .conteudo h2 {
   grid-column: 1 / -1;
   color: #1a73e8;
+  text-align: center;
 }
 
 .exercicio {
@@ -426,7 +427,7 @@ body.dark .exercicio.checked {
   aside {
     display: none;
     position: fixed;
-    bottom: 90px; /* um pouco acima do botão flutuante */
+    bottom: 5px; /* um pouco acima do botão flutuante */
     right: 20px;
     width: 90%;
     max-height: 70vh;
