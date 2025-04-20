@@ -766,6 +766,12 @@ function atualizarSemanasEMeses() {
     { inicio: 7, fim: 13, total: 0, count: 0 }, // Semana 2
     { inicio: 14, fim: 20, total: 0, count: 0 }, // Semana 3
     { inicio: 21, fim: 27, total: 0, count: 0 }, // Semana 4
+    { inicio: 28, fim: 34, total: 0, count: 0 }, // Semana 5
+    { inicio: 35, fim: 41, total: 0, count: 0 }, // Semana 6
+    { inicio: 42, fim: 48, total: 0, count: 0 }, // Semana 7
+    { inicio: 49, fim: 55, total: 0, count: 0 }, // Semana 8
+    { inicio: 56, fim: 62, total: 0, count: 0 }, // Semana 9
+    { inicio: 63, fim: 69, total: 0, count: 0 }, // Semana 10
   ];
 
   // MESES - cálculo por mês fixo (Janeiro a Dezembro)
@@ -906,7 +912,7 @@ function carregarCheckboxes() {
 // Inicializa ao carregar a página
 document.addEventListener("DOMContentLoaded", () => {
   // Inicializa todas as barras de semanas e meses a 0%
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= 10; i++) {
     const barra = document.getElementById(`semana-${i}`);
     if (barra) {
       barra.style.setProperty("--before-width", "0%");

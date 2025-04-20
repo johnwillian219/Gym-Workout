@@ -184,7 +184,9 @@ h3 {
 }
 
 .menu {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 1rem;
@@ -424,13 +426,14 @@ body.dark .exercicio.checked {
   aside {
     display: none;
     position: fixed;
-    bottom: 90px;
+    bottom: 90px; /* um pouco acima do botão flutuante */
     right: 20px;
     width: 90%;
-    max-height: 80vh;
+    max-height: 70vh;
     overflow-y: auto;
-    background: rgb(191, 194, 194);
+    background: rgb(255, 255, 255);
     border: 2px solid #ccc;
+    border-radius: 1rem;
     padding: 1rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: 998;
