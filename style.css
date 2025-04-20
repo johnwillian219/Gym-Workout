@@ -1,19 +1,29 @@
 .layout {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 2rem;
-  padding: 2rem;
+  padding: 1rem;
 }
-
+header {
+  gap: 1rem;
+}
 main {
   background-color: var(--bg-main, #f9f9f9);
   padding: 1rem;
   border-radius: 1rem;
+  flex-grow: 1; /* Permite que o main cresça para ocupar espaço disponível */
+}
+
+/* Quando o aside está oculto, o main ocupa toda a largura */
+.layout:has(aside.oculto) main {
+  width: 100%;
+  max-width: none; /* Remove qualquer restrição de largura máxima */
 }
 
 aside {
-  min-width: 320px;
-  max-width: 300px;
+  width: 380px;
+  min-width: 375px;
   background-color: var(--bg-aside, #ffffff);
   padding: 1rem;
   border-radius: 1rem;
@@ -22,6 +32,21 @@ aside {
   top: 1rem;
   align-self: start;
   height: fit-content;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Estado inicial no desktop: visível */
+aside.mostrar {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Estado oculto */
+aside.oculto {
+  display: none;
+  opacity: 0;
+  transform: translateX(100%);
 }
 
 aside h2,
@@ -357,6 +382,167 @@ body.dark .exercicio.checked {
   transform: scale(0.97);
 }
 
+/*progresso botao*/
+#abrir-progresso {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+#abrir-progresso img {
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
+    hue-rotate(184deg) brightness(96%) contrast(95%);
+}
+
+#abrir-progresso:hover,
+#botao-flutuante:hover {
+  transform: scale(1.1);
+}
+
+/* Botão flutuante */
+#botao-flutuante {
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  background-color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#botao-flutuante img.icon {
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
+    hue-rotate(184deg) brightness(96%) contrast(95%);
+}
+
+#botao-flutuante:hover {
+  background-color: #444;
+  transform: scale(1.1);
+}
+
+body.dark #botao-flutuante {
+  background-color: #4a4a4a;
+}
+
+body.dark #botao-flutuante:hover {
+  background-color: #5a5a5a;
+}
+
+/* Estilo para .aside-btn */
+.aside-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0.5rem 0;
+  flex-wrap: nowrap;
+}
+
+.aside-btn h3 {
+  margin: 0;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.aside-btn h3 .titulo-progresso {
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  color: #1a73e8;
+}
+
+.aside-btn .alternar-progresso {
+  background-color: #eee;
+  color: #333;
+  border: none;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.aside-btn .alternar-progresso:hover {
+  background-color: #ccc;
+  transform: scale(1.05);
+}
+
+.aside-btn .reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.aside-btn .reset img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
+    hue-rotate(184deg) brightness(96%) contrast(95%);
+  transition: filter 0.3s;
+}
+
+.aside-btn .reset:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.aside-btn .reset:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Modo escuro para .aside-btn */
+body.dark .aside-btn .titulo-progresso {
+  color: rgb(188, 164, 245);
+}
+
+body.dark .aside-btn .alternar-progresso {
+  background-color: #4d4d4d;
+  color: #e0e0e0;
+}
+
+body.dark .aside-btn .alternar-progresso:hover {
+  background-color: #5a5a5a;
+}
+
+body.dark .aside-btn .reset {
+  background: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .aside-btn .reset img {
+  filter: invert(0.9) brightness(0.9);
+}
+
+body.dark .aside-btn .reset:hover {
+  background-color: #5a5a5a;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+body.dark .aside-btn .reset:active {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 /* ===== Desktop grande (maior que 1600px) ===== */
 @media (min-width: 1601px) {
   .conteudo {
@@ -385,6 +571,7 @@ body.dark .exercicio.checked {
   body {
     background-color: white;
   }
+
   .menu {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -444,6 +631,14 @@ body.dark .exercicio.checked {
 
   aside.mostrar {
     display: block;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  aside.oculto {
+    display: none;
+    opacity: 0;
+    transform: translateX(100%);
   }
 
   /* Exibir progresso diário por padrão no mobile */
@@ -492,69 +687,7 @@ body.dark .exercicio.checked {
     border: none;
     box-shadow: none;
   }
-}
 
-/* Layout padrão para desktop */
-.layout {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 1rem;
-}
-
-/* Estilo do aside */
-aside {
-  width: 300px;
-  flex-shrink: 0;
-}
-
-/* Título e botão lado a lado */
-.progresso-diario h3,
-.progresso-semanal h3,
-.progresso-mensal h3 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/*progresso botao*/
-#abrir-progresso {
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-left: auto;
-}
-
-#abrir-progresso img {
-  width: 30px;
-  height: 30px;
-  filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
-    hue-rotate(184deg) brightness(96%) contrast(95%);
-}
-
-#abrir-progresso:hover,
-#botao-flutuante:hover {
-  transform: scale(1.1);
-}
-
-/* Botão flutuante */
-#botao-flutuante {
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 999;
-  background-color: #333;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  cursor: grab;
-}
-
-@media (max-width: 768px) {
   #abrir-progresso {
     display: none;
   }
@@ -567,5 +700,28 @@ aside {
     display: block;
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(2px);
+  }
+
+  .aside-btn {
+    gap: 15px;
+    flex-wrap: nowrap;
+  }
+
+  .aside-btn h3 .titulo-progresso {
+    font-size: 1rem;
+  }
+
+  .aside-btn .alternar-progresso {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+
+  .aside-btn .reset {
+    padding: 8px;
+  }
+
+  .aside-btn .reset img {
+    width: 20px;
+    height: 20px;
   }
 }
