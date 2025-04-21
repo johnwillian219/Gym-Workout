@@ -2,20 +2,38 @@
 html,
 body {
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
+
 * {
-  outline: 1px solid red; /* Temporário para depuração */
+  box-sizing: border-box; /* Garante que padding e bordas sejam incluídos na largura */
+  /* outline: 1px solid red; Removido para produção; descomente para depuração */
 }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f0f4f8;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+}
+
 .layout {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: center; /* Centraliza o conteúdo */
   gap: 2rem;
   padding: 1rem;
+  width: 100%;
+  max-width: 100vw; /* Limita à viewport */
+  overflow-x: hidden;
+  margin: 0 auto; /* Centraliza */
 }
 
 header {
   gap: 1rem;
+  width: 100%;
 }
 
 main {
@@ -23,12 +41,16 @@ main {
   padding: 1rem;
   border-radius: 1rem;
   flex-grow: 1;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
 }
 
 /* Quando o aside está oculto, o main ocupa toda a largura */
 .layout:has(aside.oculto) main {
   width: 100%;
-  max-width: none;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 aside {
@@ -76,14 +98,6 @@ aside li {
   background-color: #eaeaea;
   padding: 0.5rem;
   border-radius: 0.5rem;
-}
-
-body {
-  margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: #f0f4f8;
-  color: #333;
-  transition: background 0.3s, color 0.3s;
 }
 
 /* Botão de modo escuro */
@@ -193,16 +207,21 @@ body.dark input[type="checkbox"] {
 /* Container principal */
 .container {
   max-width: 900px;
-  margin: auto;
+  margin: 0 auto;
   padding: 2rem;
+  width: 100%;
+  max-width: 100%;
 }
 
+/* Top bar */
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
+/* Estilos de título */
 h1 {
   color: #1a73e8;
   font-size: clamp(1.4rem, 4vw, 2rem);
@@ -218,12 +237,14 @@ h3 {
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
+/* Menu de navegação */
 .menu {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 2rem;
+  width: 100%;
 }
 
 .menu button {
@@ -252,6 +273,7 @@ h3 {
   transition: all 0.3s ease;
 }
 
+/* Ícones */
 .icon {
   width: 30px;
   height: 30px;
@@ -260,6 +282,7 @@ h3 {
   transform: scale(1.1);
 }
 
+/* Conteúdo principal */
 .conteudo {
   background: white;
   padding: 2rem;
@@ -270,20 +293,18 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   transition: background 0.3s, color 0.3s;
+  width: 100%;
+  max-width: 100%;
 }
 
-.conteudo h2 {
-  grid-column: 1 / -1;
-  color: #1a73e8;
-  text-align: center;
-}
-
+/* Exercícios */
 .exercicio {
   background: #f9f9f9;
   border-radius: 10px;
   padding: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   position: relative;
+  width: 100%;
 }
 
 .exercicio img {
@@ -303,6 +324,7 @@ h3 {
 .gif-container {
   position: relative;
   display: inline-block;
+  width: 100%;
 }
 
 .gif-container img {
@@ -334,6 +356,7 @@ body.dark .exercicio.checked {
   margin: 8px 0;
   overflow: hidden;
   padding: 0 10px;
+  width: 100%;
 }
 
 .barra span {
@@ -398,7 +421,7 @@ body.dark .exercicio.checked {
   border: none;
   cursor: pointer;
   margin-left: auto;
-  display: block; /* Visível no desktop */
+  display: block;
 }
 
 #abrir-progresso img {
@@ -415,7 +438,7 @@ body.dark .exercicio.checked {
 
 /* Botão flutuante (mobile) */
 #botao-flutuante {
-  display: none !important; /* Oculto por padrão (desktop) */
+  display: none !important;
 }
 
 #botao-flutuante img.icon {
@@ -433,6 +456,7 @@ body.dark .exercicio.checked {
   gap: 10px;
   padding: 0.5rem 0;
   flex-wrap: nowrap;
+  width: 100%;
 }
 
 .aside-btn h3 {
@@ -558,25 +582,67 @@ body.dark .aside-btn .reset:active {
 @media (max-width: 768px) {
   body {
     background-color: white;
+    overflow-x: hidden;
   }
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
+
+  .layout {
+    flex-direction: column !important;
+    padding: 0;
+    width: 100vw;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    justify-content: flex-start;
+    align-items: center;
   }
-  .menu button {
-    width: 100%; /* Ajusta a largura dos botões para caberem no grid */
-    max-width: 100%; /* Garante que os botões não ultrapassem a largura */
-    box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura */
+
+  .container {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
   }
+
+  main {
+    background-color: white;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .layout:has(aside.oculto) main {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+  }
+
   .menu {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr; /* Mantém 3 colunas */
     grid-template-rows: repeat(2, 1fr);
-    gap: 1rem; /* Adicione espaçamento entre os itens */
-    max-width: 100%; /* Garante que a grade não ultrapasse a largura da viewport */
+    gap: 0.5rem; /* Reduzido de 1rem para economizar espaço */
+    width: 100%; /* Respeita a largura da viewport */
+    max-width: 100%; /* Evita overflow */
+    padding: 0.5rem; /* Padding mínimo */
+    margin: 0 auto; /* Centraliza o menu */
     overflow-x: hidden; /* Impede rolagem horizontal */
-    box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura */
+    box-sizing: border-box;
+    justify-items: center; /* Centraliza os botões nas colunas */
+  }
+
+  .menu button {
+    width: 90px; /* Reduzido de 100px */
+    max-width: 100%; /* Garante que não ultrapasse a coluna */
+    padding: 0.5rem 0.75rem; /* Reduzido de 0.75rem 1.5rem */
+    font-size: 0.8rem; /* Reduzido de 1rem */
+    line-height: 1.2; /* Melhora legibilidade */
+    text-align: center; /* Centraliza o texto */
+    border-radius: 8px; /* Levemente reduzido */
+    box-sizing: border-box;
   }
 
   .conteudo {
@@ -586,6 +652,8 @@ body.dark .aside-btn .reset:active {
     background-color: white;
     border-radius: 0;
     box-shadow: none;
+    width: 100%;
+    max-width: 100%;
   }
 
   .exercicio {
@@ -593,43 +661,37 @@ body.dark .aside-btn .reset:active {
     border-radius: 0;
     box-shadow: none;
     margin: 0;
-    padding: 0;
-  }
-
-  main {
-    background-color: white;
-  }
-
-  .container {
-    display: flex;
-    flex-wrap: wrap;
+    padding: 0.5rem;
+    width: 100%;
     max-width: 100%;
-    box-sizing: border-box;
   }
 
   .gif-container {
     border: none;
     border-radius: 0;
     box-shadow: none;
+    width: 100%;
+    max-width: 100%;
   }
 
-  .layout {
-    flex-direction: column !important;
+  .gif-container img {
+    width: 100%;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   aside {
     display: none !important;
     position: fixed;
     bottom: 90px;
-    left: 20px;
-    margin-right: 20px;
-    width: 100%; /* Substitua larguras fixas */
-    max-width: 380px; /* Limite a largura máxima */
+    left: 10px;
+    width: calc(100% - 20px); /* Ajustado para margens */
     max-height: 80vh;
     overflow-y: auto;
+    overflow-x: hidden;
     background: rgb(191, 194, 194);
     border: 2px solid #ccc;
-    padding: 1rem;
+    padding: 0.5rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: 998;
     box-sizing: border-box;
@@ -647,7 +709,6 @@ body.dark .aside-btn .reset:active {
     transform: translateX(100%);
   }
 
-  /* Exibir progresso diário por padrão no mobile */
   .progresso-diario {
     display: block;
   }
@@ -657,14 +718,13 @@ body.dark .aside-btn .reset:active {
     display: none;
   }
 
-  /* Garantir que os botões de alternância sejam visíveis */
   .alternar-progresso {
     display: inline-block;
     background-color: #eee;
     color: #333;
-    padding: 6px 12px;
-    margin-left: 10px;
-    font-size: 0.9rem;
+    padding: 5px 10px;
+    margin-left: 5px;
+    font-size: 0.8rem;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
@@ -695,24 +755,30 @@ body.dark .aside-btn .reset:active {
   }
 
   #abrir-progresso {
-    display: none !important; /* Oculto no mobile */
+    display: none !important;
   }
 
-  /* Botão flutuante no mobile */
   #botao-flutuante {
     position: fixed !important;
-    bottom: 80px !important; /* Posição inicial */
-    display: block !important; /* Forçar visibilidade no mobile */
+    right: 10px !important;
+    bottom: 10px !important;
+    display: block !important;
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(2px);
     border: none;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: transform 0.2s;
     z-index: 999;
+    box-sizing: border-box;
+  }
+
+  #botao-flutuante img.icon {
+    width: 25px;
+    height: 25px;
   }
 
   body.dark #botao-flutuante {
@@ -725,25 +791,26 @@ body.dark .aside-btn .reset:active {
   }
 
   .aside-btn {
-    gap: 15px;
+    gap: 10px;
     flex-wrap: nowrap;
+    width: 100%;
   }
 
   .aside-btn h3 .titulo-progresso {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .aside-btn .alternar-progresso {
-    padding: 5px 10px;
-    font-size: 0.8rem;
+    padding: 4px 8px;
+    font-size: 0.7rem;
   }
 
   .aside-btn .reset {
-    padding: 8px;
+    padding: 6px;
   }
 
   .aside-btn .reset img {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 }
