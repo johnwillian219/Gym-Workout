@@ -677,7 +677,6 @@ body.dark .aside-btn .reset:active {
   /* Botão flutuante no mobile */
   #botao-flutuante {
     position: fixed !important;
-    right: 20px !important;
     bottom: 80px !important; /* Posição inicial */
     display: block !important; /* Forçar visibilidade no mobile */
     background-color: rgba(255, 255, 255, 0.3);
