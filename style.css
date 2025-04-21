@@ -600,7 +600,8 @@ body.dark .aside-btn .reset:active {
     position: fixed;
     bottom: 90px;
     left: 20px;
-    width: calc(100% - 80px);
+    right: 20px;
+    width: calc(100% - 100px);
     max-height: 80vh;
     overflow-y: auto;
     background: rgb(191, 194, 194);
