@@ -559,11 +559,24 @@ body.dark .aside-btn .reset:active {
   body {
     background-color: white;
   }
-
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  .menu button {
+    width: 100%; /* Ajusta a largura dos botões para caberem no grid */
+    max-width: 100%; /* Garante que os botões não ultrapassem a largura */
+    box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura */
+  }
   .menu {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: repeat(2, 1fr);
+    gap: 1rem; /* Adicione espaçamento entre os itens */
+    max-width: 100%; /* Garante que a grade não ultrapasse a largura da viewport */
+    overflow-x: hidden; /* Impede rolagem horizontal */
+    box-sizing: border-box; /* Inclui padding e bordas no cálculo da largura */
   }
 
   .conteudo {
