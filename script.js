@@ -939,6 +939,12 @@ document.addEventListener("DOMContentLoaded", () => {
   progressoSemanal.style.display = "none";
   progressoMensal.style.display = "none";
 
+  // Inicializa aside como oculto no mobile
+  if (window.innerWidth <= 768) {
+    aside.classList.add("oculto");
+    aside.classList.remove("mostrar");
+  }
+
   // Função para posicionar o botão flutuante no mobile
   function posicionarBotaoFlutuante() {
     if (window.innerWidth <= 768) {
@@ -963,6 +969,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Função para alternar visibilidade do aside
   function alternarAside() {
+    console.log("Alternar aside chamado"); // Depuração
     aside.classList.toggle("mostrar");
     aside.classList.toggle("oculto");
     if (window.innerWidth > 768) {
@@ -972,30 +979,59 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Eventos para botões de progresso
-  btnProgresso.addEventListener("click", alternarAside);
-  botaoFlutuante.addEventListener("click", alternarAside);
+  if (btnProgresso) {
+    btnProgresso.addEventListener("click", () => {
+      console.log("Botão progresso (desktop) clicado"); // Depuração
+      alternarAside();
+    });
+  }
+
+  if (botaoFlutuante) {
+    // Evento click para desktops e mouses
+    botaoFlutuante.addEventListener("click", (e) => {
+      e.preventDefault(); // Evitar comportamento padrão
+      console.log("Botão flutuante clicado (click)"); // Depuração
+      alternarAside();
+    });
+
+    // Evento touchstart para dispositivos móveis
+    botaoFlutuante.addEventListener("touchstart", (e) => {
+      e.preventDefault(); // Evitar comportamento padrão (ex.: scroll)
+      console.log("Botão flutuante tocado (touchstart)"); // Depuração
+      alternarAside();
+    });
+  }
 
   // Eventos para alternar progresso
-  botaoVerSemanal.addEventListener("click", () => {
-    progressoDia.style.display = "none";
-    progressoSemanal.style.display = "block";
-    progressoMensal.style.display = "none";
-    posicionarBotaoFlutuante();
-  });
+  if (botaoVerSemanal) {
+    botaoVerSemanal.addEventListener("click", () => {
+      console.log("Ver semanal clicado"); // Depuração
+      progressoDia.style.display = "none";
+      progressoSemanal.style.display = "block";
+      progressoMensal.style.display = "none";
+      posicionarBotaoFlutuante();
+    });
+  }
 
-  botaoVerMensal.addEventListener("click", () => {
-    progressoDia.style.display = "none";
-    progressoSemanal.style.display = "none";
-    progressoMensal.style.display = "block";
-    posicionarBotaoFlutuante();
-  });
+  if (botaoVerMensal) {
+    botaoVerMensal.addEventListener("click", () => {
+      console.log("Ver mensal clicado"); // Depuração
+      progressoDia.style.display = "none";
+      progressoSemanal.style.display = "none";
+      progressoMensal.style.display = "block";
+      posicionarBotaoFlutuante();
+    });
+  }
 
-  botaoVerDiario.addEventListener("click", () => {
-    progressoDia.style.display = "block";
-    progressoSemanal.style.display = "none";
-    progressoMensal.style.display = "none";
-    posicionarBotaoFlutuante();
-  });
+  if (botaoVerDiario) {
+    botaoVerDiario.addEventListener("click", () => {
+      console.log("Ver diário clicado"); // Depuração
+      progressoDia.style.display = "block";
+      progressoSemanal.style.display = "none";
+      progressoMensal.style.display = "none";
+      posicionarBotaoFlutuante();
+    });
+  }
 
   // Inicializa posição do botão flutuante
   posicionarBotaoFlutuante();
