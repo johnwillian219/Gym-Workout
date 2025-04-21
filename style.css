@@ -1,4 +1,11 @@
 /* Estilos gerais */
+html,
+body {
+  overflow-x: hidden;
+}
+* {
+  outline: 1px solid red; /* Temporário para depuração */
+}
 .layout {
   display: flex;
   align-items: flex-start;
@@ -581,8 +588,10 @@ body.dark .aside-btn .reset:active {
   }
 
   .container {
-    padding: 0;
-    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .gif-container {
@@ -601,7 +610,8 @@ body.dark .aside-btn .reset:active {
     bottom: 90px;
     left: 20px;
     margin-right: 20px;
-    width: 300px;
+    width: 100%; /* Substitua larguras fixas */
+    max-width: 380px; /* Limite a largura máxima */
     max-height: 80vh;
     overflow-y: auto;
     background: rgb(191, 194, 194);
