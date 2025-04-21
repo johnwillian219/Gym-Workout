@@ -505,7 +505,7 @@ body.dark .aside-btn .alternar-progresso:hover {
 }
 
 body.dark .aside-btn .reset {
-  background: none;
+  background-color: #5a5a5a;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -514,7 +514,7 @@ body.dark .aside-btn .reset img {
 }
 
 body.dark .aside-btn .reset:hover {
-  background-color: #5a5a5a;
+  background-color: #7e7c7c;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
@@ -678,7 +678,7 @@ body.dark .aside-btn .reset:active {
   #botao-flutuante {
     position: fixed !important;
     right: 20px !important;
-    bottom: 20px !important; /* Posição inicial */
+    bottom: 80px !important; /* Posição inicial */
     display: block !important; /* Forçar visibilidade no mobile */
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(2px);
