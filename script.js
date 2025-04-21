@@ -883,7 +883,6 @@ function carregarCheckboxes() {
     }
   });
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   const aside = document.querySelector("aside");
   const botaoFlutuante = document.getElementById("botao-flutuante");
@@ -948,30 +947,34 @@ document.addEventListener("DOMContentLoaded", () => {
   // Função para posicionar o botão flutuante no mobile
   function posicionarBotaoFlutuante() {
     if (window.innerWidth <= 768) {
-      botaoFlutuante.style.display = "block"; // Forçar visibilidade
+      botaoFlutuante.style.display = "block";
       if (aside.classList.contains("mostrar")) {
         const asideRect = aside.getBoundingClientRect();
         const asideBottom = asideRect.bottom + window.scrollY;
         const windowHeight = window.innerHeight;
-        const buttonTop = Math.min(asideBottom + 10, windowHeight - 70);
+        const buttonTop = Math.min(asideBottom + 10, windowHeight - 60); // Ajustado para botão menor
         botaoFlutuante.style.top = `${buttonTop}px`;
         botaoFlutuante.style.bottom = "auto";
+        botaoFlutuante.style.right = "10px"; // Ajustado
       } else {
         botaoFlutuante.style.top = "auto";
-        botaoFlutuante.style.bottom = "20px";
+        botaoFlutuante.style.bottom = "10px"; // Ajustado
+        botaoFlutuante.style.right = "10px"; // Ajustado
       }
     } else {
-      botaoFlutuante.style.display = "none"; // Oculto no desktop
+      botaoFlutuante.style.display = "none";
       botaoFlutuante.style.top = "";
       botaoFlutuante.style.bottom = "";
+      botaoFlutuante.style.right = "";
     }
   }
 
   // Função para alternar visibilidade do aside
   function alternarAside() {
-    console.log("Alternar aside chamado"); // Depuração
+    console.log("Alternar aside chamado");
     aside.classList.toggle("mostrar");
     aside.classList.toggle("oculto");
+    console.log("Classes do aside:", aside.className);
     if (window.innerWidth > 768) {
       layout.classList.toggle("sozinho");
     }
@@ -981,23 +984,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // Eventos para botões de progresso
   if (btnProgresso) {
     btnProgresso.addEventListener("click", () => {
-      console.log("Botão progresso (desktop) clicado"); // Depuração
+      console.log("Botão progresso (desktop) clicado");
       alternarAside();
     });
   }
 
   if (botaoFlutuante) {
-    // Evento click para desktops e mouses
     botaoFlutuante.addEventListener("click", (e) => {
-      e.preventDefault(); // Evitar comportamento padrão
-      console.log("Botão flutuante clicado (click)"); // Depuração
+      e.preventDefault();
+      console.log("Botão flutuante clicado (click)");
       alternarAside();
     });
 
-    // Evento touchstart para dispositivos móveis
     botaoFlutuante.addEventListener("touchstart", (e) => {
-      e.preventDefault(); // Evitar comportamento padrão (ex.: scroll)
-      console.log("Botão flutuante tocado (touchstart)"); // Depuração
+      e.preventDefault();
+      console.log("Botão flutuante tocado (touchstart)");
       alternarAside();
     });
   }
@@ -1005,7 +1006,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Eventos para alternar progresso
   if (botaoVerSemanal) {
     botaoVerSemanal.addEventListener("click", () => {
-      console.log("Ver semanal clicado"); // Depuração
+      console.log("Ver semanal clicado");
       progressoDia.style.display = "none";
       progressoSemanal.style.display = "block";
       progressoMensal.style.display = "none";
@@ -1015,7 +1016,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (botaoVerMensal) {
     botaoVerMensal.addEventListener("click", () => {
-      console.log("Ver mensal clicado"); // Depuração
+      console.log("Ver mensal clicado");
       progressoDia.style.display = "none";
       progressoSemanal.style.display = "none";
       progressoMensal.style.display = "block";
@@ -1025,7 +1026,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (botaoVerDiario) {
     botaoVerDiario.addEventListener("click", () => {
-      console.log("Ver diário clicado"); // Depuração
+      console.log("Ver diário clicado");
       progressoDia.style.display = "block";
       progressoSemanal.style.display = "none";
       progressoMensal.style.display = "none";

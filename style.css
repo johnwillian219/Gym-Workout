@@ -1,28 +1,10 @@
 /* Estilos gerais */
-* {
-  box-sizing: border-box; /* Garante que padding e bordas sejam incluídos na largura */
-  margin: 0; /* Remove margens padrão */
-  padding: 0; /* Remove paddings padrão */
-}
-
-body {
-  margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: #f0f4f8;
-  color: #333;
-  transition: background 0.3s, color 0.3s;
-  overflow-x: hidden; /* Impede rolagem horizontal no body */
-}
-
 .layout {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 2rem;
   padding: 1rem;
-  width: 100%; /* Garante que o layout não exceda a viewport */
-  max-width: 100vw; /* Limita a largura à viewport */
-  overflow-x: hidden; /* Impede rolagem horizontal no layout */
 }
 
 header {
@@ -34,8 +16,6 @@ main {
   padding: 1rem;
   border-radius: 1rem;
   flex-grow: 1;
-  width: 100%; /* Garante que o main respeite a largura disponível */
-  max-width: 100%; /* Evita overflow */
 }
 
 /* Quando o aside está oculto, o main ocupa toda a largura */
@@ -89,6 +69,14 @@ aside li {
   background-color: #eaeaea;
   padding: 0.5rem;
   border-radius: 0.5rem;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f0f4f8;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
 }
 
 /* Botão de modo escuro */
@@ -198,20 +186,16 @@ body.dark input[type="checkbox"] {
 /* Container principal */
 .container {
   max-width: 900px;
-  margin: 0 auto; /* Centraliza sem ultrapassar a largura */
+  margin: auto;
   padding: 2rem;
-  width: 100%; /* Respeita a largura da viewport */
 }
 
-/* Top bar */
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%; /* Evita overflow */
 }
 
-/* Estilos de título */
 h1 {
   color: #1a73e8;
   font-size: clamp(1.4rem, 4vw, 2rem);
@@ -227,14 +211,12 @@ h3 {
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
-/* Menu de navegação */
 .menu {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 2rem;
-  width: 100%; /* Evita overflow */
 }
 
 .menu button {
@@ -263,7 +245,6 @@ h3 {
   transition: all 0.3s ease;
 }
 
-/* Ícones */
 .icon {
   width: 30px;
   height: 30px;
@@ -272,7 +253,6 @@ h3 {
   transform: scale(1.1);
 }
 
-/* Conteúdo principal */
 .conteudo {
   background: white;
   padding: 2rem;
@@ -283,8 +263,6 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   transition: background 0.3s, color 0.3s;
-  width: 100%; /* Evita overflow */
-  max-width: 100%; /* Limita à viewport */
 }
 
 .conteudo h2 {
@@ -293,14 +271,12 @@ h3 {
   text-align: center;
 }
 
-/* Exercícios */
 .exercicio {
   background: #f9f9f9;
   border-radius: 10px;
   padding: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   position: relative;
-  width: 100%; /* Evita overflow */
 }
 
 .exercicio img {
@@ -320,7 +296,6 @@ h3 {
 .gif-container {
   position: relative;
   display: inline-block;
-  width: 100%; /* Evita overflow */
 }
 
 .gif-container img {
@@ -352,7 +327,6 @@ body.dark .exercicio.checked {
   margin: 8px 0;
   overflow: hidden;
   padding: 0 10px;
-  width: 100%; /* Evita overflow */
 }
 
 .barra span {
@@ -396,7 +370,7 @@ body.dark .exercicio.checked {
   padding: 6px 12px;
   margin-left: 10px;
   font-size: 0.9rem;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -485,7 +459,7 @@ body.dark .exercicio.checked {
 }
 
 .aside-btn .reset {
-  background: none;
+  background-color: var(--cor-botao, #f0f0f0);
   border: none;
   cursor: pointer;
   padding: 6px;
@@ -531,7 +505,7 @@ body.dark .aside-btn .alternar-progresso:hover {
 }
 
 body.dark .aside-btn .reset {
-  background: none;
+  background-color: #5a5a5a;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -540,7 +514,7 @@ body.dark .aside-btn .reset img {
 }
 
 body.dark .aside-btn .reset:hover {
-  background-color: #5a5a5a;
+  background-color: #7e7c7c;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
@@ -577,56 +551,21 @@ body.dark .aside-btn .reset:active {
 @media (max-width: 768px) {
   body {
     background-color: white;
-    overflow-x: hidden; /* Impede rolagem horizontal */
-  }
-
-  .layout {
-    flex-direction: column !important;
-    padding: 0; /* Remove padding para evitar overflow */
-    width: 100vw; /* Força a largura da viewport */
-    max-width: 100%; /* Evita overflow */
-    overflow-x: hidden; /* Impede rolagem horizontal */
-  }
-
-  .container {
-    padding: 0; /* Remove padding para evitar overflow */
-    margin: 0; /* Remove margens */
-    width: 100%; /* Respeita a viewport */
-    max-width: 100%; /* Evita overflow */
-  }
-
-  main {
-    background-color: white;
-    padding: 0; /* Remove padding */
-    width: 100%; /* Respeita a viewport */
-    max-width: 100%; /* Evita overflow */
   }
 
   .menu {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: repeat(2, 1fr);
-    width: 100%; /* Respeita a viewport */
-    gap: 0.5rem; /* Reduz gap para economizar espaço */
-    padding: 0.5rem; /* Adiciona padding leve */
-    box-sizing: border-box; /* Inclui padding na largura */
-  }
-
-  .menu button {
-    width: 100%; /* Botões ocupam a largura disponível */
-    padding: 0.5rem; /* Reduz padding */
-    font-size: 0.9rem; /* Reduz tamanho da fonte */
   }
 
   .conteudo {
     grid-template-columns: 1fr;
-    padding: 0; /* Remove padding */
-    margin: 0; /* Remove margens */
+    padding: 0;
+    margin: 0;
     background-color: white;
     border-radius: 0;
     box-shadow: none;
-    width: 100%; /* Respeita a viewport */
-    max-width: 100%; /* Evita overflow */
   }
 
   .exercicio {
@@ -634,39 +573,42 @@ body.dark .aside-btn .reset:active {
     border-radius: 0;
     box-shadow: none;
     margin: 0;
-    padding: 0.5rem; /* Reduz padding */
-    width: 100%; /* Respeita a viewport */
-    max-width: 100%; /* Evita overflow */
+    padding: 0;
+  }
+
+  main {
+    background-color: white;
+  }
+
+  .container {
+    padding: 0;
+    margin: 0;
   }
 
   .gif-container {
     border: none;
     border-radius: 0;
     box-shadow: none;
-    width: 100%; /* Respeita a viewport */
-    max-width: 100%; /* Evita overflow */
   }
 
-  .gif-container img {
-    width: 100%;
-    max-width: 100%; /* Evita que imagens causem overflow */
+  .layout {
+    flex-direction: column !important;
   }
 
   aside {
     display: none !important;
     position: fixed;
     bottom: 90px;
-    left: 10px; /* Reduzido de 20px para evitar overflow */
-    width: calc(100% - 20px); /* Ajustado para incluir margens */
+    left: 20px;
+    width: calc(100% - 80px);
     max-height: 80vh;
     overflow-y: auto;
-    overflow-x: hidden; /* Impede rolagem horizontal no aside */
     background: rgb(191, 194, 194);
     border: 2px solid #ccc;
-    padding: 0.5rem; /* Reduz padding */
+    padding: 1rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: 998;
-    box-sizing: border-box; /* Inclui padding e bordas na largura */
+    box-sizing: border-box;
   }
 
   aside.mostrar {
@@ -696,9 +638,9 @@ body.dark .aside-btn .reset:active {
     display: inline-block;
     background-color: #eee;
     color: #333;
-    padding: 5px 10px; /* Reduz padding */
-    margin-left: 5px; /* Reduz margem */
-    font-size: 0.8rem; /* Reduz fonte */
+    padding: 6px 12px;
+    margin-left: 10px;
+    font-size: 0.9rem;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
@@ -735,25 +677,19 @@ body.dark .aside-btn .reset:active {
   /* Botão flutuante no mobile */
   #botao-flutuante {
     position: fixed !important;
-    right: 10px !important; /* Reduzido de 20px para evitar overflow */
-    bottom: 10px !important; /* Reduzido de 20px */
+    right: 20px !important;
+    bottom: 80px !important; /* Posição inicial */
     display: block !important; /* Forçar visibilidade no mobile */
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(2px);
     border: none;
     border-radius: 50%;
-    width: 50px; /* Reduzido de 60px */
-    height: 50px; /* Reduzido de 60px */
+    width: 60px;
+    height: 60px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: transform 0.2s;
     z-index: 999;
-    box-sizing: border-box; /* Inclui bordas na largura */
-  }
-
-  #botao-flutuante img.icon {
-    width: 25px; /* Reduzido para caber no botão menor */
-    height: 25px;
   }
 
   body.dark #botao-flutuante {
@@ -766,26 +702,25 @@ body.dark .aside-btn .reset:active {
   }
 
   .aside-btn {
-    gap: 10px; /* Reduz gap */
+    gap: 15px;
     flex-wrap: nowrap;
-    width: 100%; /* Respeita a largura do aside */
   }
 
   .aside-btn h3 .titulo-progresso {
-    font-size: 0.9rem; /* Reduz fonte */
+    font-size: 1rem;
   }
 
   .aside-btn .alternar-progresso {
-    padding: 4px 8px; /* Reduz padding */
-    font-size: 0.7rem; /* Reduz fonte */
+    padding: 5px 10px;
+    font-size: 0.8rem;
   }
 
   .aside-btn .reset {
-    padding: 6px; /* Reduz padding */
+    padding: 8px;
   }
 
   .aside-btn .reset img {
-    width: 18px; /* Reduz tamanho da imagem */
-    height: 18px;
+    width: 20px;
+    height: 20px;
   }
 }
