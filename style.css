@@ -22,13 +22,12 @@ body {
 .layout {
   display: flex;
   align-items: flex-start;
-  justify-content: center; /* Centraliza o conteúdo */
+  justify-content: space-between; /* Mantido para desktop */
   gap: 2rem;
   padding: 1rem;
   width: 100%;
-  max-width: 100vw; /* Limita à viewport */
+  max-width: 100vw;
   overflow-x: hidden;
-  margin: 0 auto; /* Centraliza */
 }
 
 header {
@@ -41,16 +40,12 @@ main {
   padding: 1rem;
   border-radius: 1rem;
   flex-grow: 1;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
 }
 
 /* Quando o aside está oculto, o main ocupa toda a largura */
 .layout:has(aside.oculto) main {
   width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
+  max-width: none;
 }
 
 aside {
@@ -207,10 +202,9 @@ body.dark input[type="checkbox"] {
 /* Container principal */
 .container {
   max-width: 900px;
-  margin: 0 auto;
+  margin: auto;
   padding: 2rem;
   width: 100%;
-  max-width: 100%;
 }
 
 /* Top bar */
@@ -294,7 +288,12 @@ h3 {
   gap: 1.5rem;
   transition: background 0.3s, color 0.3s;
   width: 100%;
-  max-width: 100%;
+}
+
+.conteudo h2 {
+  grid-column: 1 / -1;
+  color: #1a73e8;
+  text-align: center;
 }
 
 /* Exercícios */
@@ -611,6 +610,7 @@ body.dark .aside-btn .reset:active {
     width: 100%;
     max-width: 100%;
     margin: 0;
+    border-radius: 0;
   }
 
   .layout:has(aside.oculto) main {
@@ -624,24 +624,24 @@ body.dark .aside-btn .reset:active {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; /* Mantém 3 colunas */
     grid-template-rows: repeat(2, 1fr);
-    gap: 0.5rem; /* Reduzido de 1rem para economizar espaço */
-    width: 100%; /* Respeita a largura da viewport */
-    max-width: 100%; /* Evita overflow */
-    padding: 0.5rem; /* Padding mínimo */
-    margin: 0 auto; /* Centraliza o menu */
-    overflow-x: hidden; /* Impede rolagem horizontal */
+    gap: 0.5rem; /* Reduzido para economizar espaço */
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5rem;
+    margin: 0 auto;
+    overflow-x: hidden;
     box-sizing: border-box;
     justify-items: center; /* Centraliza os botões nas colunas */
   }
 
   .menu button {
     width: 90px; /* Reduzido de 100px */
-    max-width: 100%; /* Garante que não ultrapasse a coluna */
+    max-width: 100%;
     padding: 0.5rem 0.75rem; /* Reduzido de 0.75rem 1.5rem */
     font-size: 0.8rem; /* Reduzido de 1rem */
-    line-height: 1.2; /* Melhora legibilidade */
-    text-align: center; /* Centraliza o texto */
-    border-radius: 8px; /* Levemente reduzido */
+    line-height: 1.2;
+    text-align: center;
+    border-radius: 8px;
     box-sizing: border-box;
   }
 
@@ -685,7 +685,7 @@ body.dark .aside-btn .reset:active {
     position: fixed;
     bottom: 90px;
     left: 10px;
-    width: calc(100% - 20px); /* Ajustado para margens */
+    width: calc(100% - 20px);
     max-height: 80vh;
     overflow-y: auto;
     overflow-x: hidden;
