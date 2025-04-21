@@ -390,6 +390,7 @@ body.dark .exercicio.checked {
   border: none;
   cursor: pointer;
   margin-left: auto;
+  display: block; /* Visível no desktop */
 }
 
 #abrir-progresso img {
@@ -405,19 +406,7 @@ body.dark .exercicio.checked {
 }
 
 #botao-flutuante {
-  display: block;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 999;
-  background-color: #333;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  display: none; /* Oculto por padrão (desktop) */
 }
 
 #botao-flutuante img.icon {
@@ -425,19 +414,6 @@ body.dark .exercicio.checked {
   height: 30px;
   filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
     hue-rotate(184deg) brightness(96%) contrast(95%);
-}
-
-#botao-flutuante:hover {
-  background-color: #444;
-  transform: scale(1.1);
-}
-
-body.dark #botao-flutuante {
-  background-color: #4a4a4a;
-}
-
-body.dark #botao-flutuante:hover {
-  background-color: #5a5a5a;
 }
 
 /* Estilo para .aside-btn */
@@ -693,14 +669,14 @@ body.dark .aside-btn .reset:active {
   }
 
   #abrir-progresso {
-    display: none;
+    display: none; /* Oculto no mobile, já que usamos o botão flutuante */
   }
 
   /* Botão flutuante */
   #botao-flutuante {
-    position: fixed;
-    right: 20px;
-    display: block;
+    position: fixed !important;
+    right: 20px !important;
+    display: block !important; /* Forçar visibilidade no mobile */
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(2px);
     border: none;
