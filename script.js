@@ -566,10 +566,8 @@ function mostrarDia(dia) {
     });
   }
 
-  // Carrega o estado dos checkboxes após renderizar
   carregarCheckboxes();
 
-  // Atualiza a classe 'checked' para os checkboxes marcados
   document
     .querySelectorAll(".exercicio input[type='checkbox']")
     .forEach((checkbox) => {
@@ -587,7 +585,6 @@ function mostrarDia(dia) {
   const btnAtivo = document.querySelector(`.menu button[onclick*="${dia}"]`);
   if (btnAtivo) btnAtivo.classList.add("ativo");
 
-  // Atualiza o progresso do dia atual
   atualizarProgressoDia(dia);
 }
 
@@ -650,20 +647,17 @@ function atualizarProgressoDia(dia) {
   const dataHoje = new Date().toISOString().split("T")[0];
   let historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
 
-  // Remove registros antigos do mesmo dia e mesmo 'dia'
   historico = historico.filter(
     (registro) => !(registro.data === dataHoje && registro.dia === dia)
   );
 
-  // Adiciona o novo registro
   historico.push({ data: dataHoje, dia, porcentagem });
-  historico = historico.slice(-150); // Mantém apenas os últimos 150 registros
+  historico = historico.slice(-150);
   localStorage.setItem("historicoTreino", JSON.stringify(historico));
 
   atualizarSemanasEMeses();
 }
 
-// Recupera o progresso de todos os dias com base no estado salvo
 function recuperarProgressoDias() {
   const dias = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
   const estadoCheckboxes = JSON.parse(
@@ -672,7 +666,6 @@ function recuperarProgressoDias() {
   let historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
 
   dias.forEach((dia) => {
-    // Carrega os exercícios do dia
     const container = document.getElementById("conteudo-dia");
     const dados = exerciciosSemana[dia];
 
@@ -717,7 +710,6 @@ function recuperarProgressoDias() {
       });
     }
 
-    // Calcula o progresso do dia com base nos checkboxes
     const checkboxes = document.querySelectorAll(
       `#conteudo-dia input[type='checkbox']`
     );
@@ -725,7 +717,6 @@ function recuperarProgressoDias() {
     const total = checkboxes.length;
     const porcentagem = total ? Math.round((marcados / total) * 100) : 0;
 
-    // Atualiza a barra de progresso do dia
     const barra = document.getElementById(`barra-${dia}`);
     if (barra) {
       barra.style.setProperty("--before-width", `${porcentagem}%`);
@@ -735,7 +726,6 @@ function recuperarProgressoDias() {
       }
     }
 
-    // Atualiza o historicoTreino apenas se o progresso mudou
     const dataHoje = new Date().toISOString().split("T")[0];
     const ultimoRegistro = historico
       .filter((r) => r.dia === dia)
@@ -750,50 +740,42 @@ function recuperarProgressoDias() {
     }
   });
 
-  // Volta a mostrar o dia atual
   mostrarDia(diaHoje);
 }
 
-// Atualiza as barras de progresso das semanas e meses
 function atualizarSemanasEMeses() {
   const historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
   const hoje = new Date();
   const anoAtual = hoje.getFullYear();
 
-  // SEMANAS - cálculo preciso por período
   const semanas = [
-    { inicio: 0, fim: 6, total: 0, count: 0 }, // Semana 1: últimos 7 dias
-    { inicio: 7, fim: 13, total: 0, count: 0 }, // Semana 2
-    { inicio: 14, fim: 20, total: 0, count: 0 }, // Semana 3
-    { inicio: 21, fim: 27, total: 0, count: 0 }, // Semana 4
-    { inicio: 28, fim: 34, total: 0, count: 0 }, // Semana 5
-    { inicio: 35, fim: 41, total: 0, count: 0 }, // Semana 6
-    { inicio: 42, fim: 48, total: 0, count: 0 }, // Semana 7
-    { inicio: 49, fim: 55, total: 0, count: 0 }, // Semana 8
-    { inicio: 56, fim: 62, total: 0, count: 0 }, // Semana 9
-    { inicio: 63, fim: 69, total: 0, count: 0 }, // Semana 10
+    { inicio: 0, fim: 6, total: 0, count: 0 },
+    { inicio: 7, fim: 13, total: 0, count: 0 },
+    { inicio: 14, fim: 20, total: 0, count: 0 },
+    { inicio: 21, fim: 27, total: 0, count: 0 },
+    { inicio: 28, fim: 34, total: 0, count: 0 },
+    { inicio: 35, fim: 41, total: 0, count: 0 },
+    { inicio: 42, fim: 48, total: 0, count: 0 },
+    { inicio: 49, fim: 55, total: 0, count: 0 },
+    { inicio: 56, fim: 62, total: 0, count: 0 },
+    { inicio: 63, fim: 69, total: 0, count: 0 },
   ];
 
-  // MESES - cálculo por mês fixo (Janeiro a Dezembro)
   const meses = {};
   const mesesOrdenados = [];
 
-  // Inicializa os meses de Janeiro a Dezembro do ano atual
   for (let i = 0; i < 12; i++) {
     const chaveMes = `${anoAtual}-${i}`;
     meses[chaveMes] = {
       total: 0,
       count: 0,
       nome: new Date(anoAtual, i)
-        .toLocaleString("pt-BR", {
-          month: "long",
-        })
+        .toLocaleString("pt-BR", { month: "long" })
         .replace(/^\w/, (c) => c.toUpperCase()),
     };
     mesesOrdenados.push(chaveMes);
   }
 
-  // Filtra registros para considerar apenas o mais recente por dia e 'dia'
   const registrosPorDia = {};
   historico.forEach(({ data, dia, porcentagem }) => {
     const chave = `${data}-${dia}`;
@@ -813,7 +795,6 @@ function atualizarSemanasEMeses() {
       (hoje - dataTreino) / (1000 * 60 * 60 * 24)
     );
 
-    // Preenche semanas
     semanas.forEach((semana) => {
       if (diasPassados >= semana.inicio && diasPassados <= semana.fim) {
         semana.total += porcentagem;
@@ -821,7 +802,6 @@ function atualizarSemanasEMeses() {
       }
     });
 
-    // Preenche meses (considera apenas o ano atual)
     const chaveMes = `${dataTreino.getFullYear()}-${dataTreino.getMonth()}`;
     if (meses[chaveMes]) {
       meses[chaveMes].total += porcentagem;
@@ -829,7 +809,6 @@ function atualizarSemanasEMeses() {
     }
   });
 
-  // ATUALIZA SEMANAS NA INTERFACE
   semanas.forEach((semana, index) => {
     const barra = document.getElementById(`semana-${index + 1}`);
     if (!barra) return;
@@ -844,7 +823,6 @@ function atualizarSemanasEMeses() {
     }
   });
 
-  // ATUALIZA MESES NA INTERFACE (Mês 1 = Janeiro, Mês 12 = Dezembro)
   mesesOrdenados.forEach((mesData, i) => {
     const barra = document.getElementById(`mes-${i + 1}`);
     if (!barra) return;
@@ -867,7 +845,6 @@ function atualizarSemanasEMeses() {
   });
 }
 
-// Helper function para obter nome do mês
 function getNomeMes(mesIndex) {
   const meses = [
     "Janeiro",
@@ -886,7 +863,6 @@ function getNomeMes(mesIndex) {
   return meses[mesIndex];
 }
 
-// SALVAR estado dos checkboxes no localStorage
 function salvarCheckboxes() {
   const estadoAtual = JSON.parse(
     localStorage.getItem("checkboxesEstado") || "{}"
@@ -898,7 +874,6 @@ function salvarCheckboxes() {
   localStorage.setItem("checkboxesEstado", JSON.stringify(estadoAtual));
 }
 
-// CARREGAR estado dos checkboxes
 function carregarCheckboxes() {
   const estado = JSON.parse(localStorage.getItem("checkboxesEstado") || "{}");
   const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -909,9 +884,19 @@ function carregarCheckboxes() {
   });
 }
 
-// Inicializa ao carregar a página
 document.addEventListener("DOMContentLoaded", () => {
-  // Inicializa todas as barras de semanas e meses a 0%
+  const aside = document.querySelector("aside");
+  const botaoFlutuante = document.getElementById("botao-flutuante");
+  const btnProgresso = document.getElementById("abrir-progresso");
+  const layout = document.querySelector(".layout");
+  const progressoDia = document.getElementById("progresso-dia");
+  const progressoSemanal = document.getElementById("progresso-semanal");
+  const progressoMensal = document.getElementById("progresso-mensal");
+  const botaoVerSemanal = document.getElementById("ver-semanal");
+  const botaoVerMensal = document.getElementById("ver-mensal");
+  const botaoVerDiario = document.getElementById("ver-diario");
+
+  // Inicializa barras de semanas e meses a 0%
   for (let i = 1; i <= 10; i++) {
     const barra = document.getElementById(`semana-${i}`);
     if (barra) {
@@ -932,7 +917,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Limpa objetos desconhecidos do localStorage
+  // Limpa localStorage obsoleto
   localStorage.removeItem("historicoDias");
   localStorage.removeItem("exercicios-segunda");
   localStorage.removeItem("exercicios-terca");
@@ -940,87 +925,80 @@ document.addEventListener("DOMContentLoaded", () => {
   localStorage.removeItem("exercicios-quinta");
   localStorage.removeItem("exercicios-sexta");
 
-  // Recupera o progresso de todos os dias
+  // Recupera progresso
   recuperarProgressoDias();
 
-  // Verifica se há registros suficientes para atualizar semanas e meses
   const historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
   const diasDistintos = new Set(historico.map((r) => `${r.data}-${r.dia}`));
   if (diasDistintos.size >= 3) {
     atualizarSemanasEMeses();
   }
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-  const progressoDia = document.getElementById("progresso-dia");
-  const progressoSemanal = document.getElementById("progresso-semanal");
-  const progressoMensal = document.getElementById("progresso-mensal");
-
-  const botaoVerSemanal = document.getElementById("ver-semanal");
-  const botaoVerMensal = document.getElementById("ver-mensal");
-  const botaoVerDiario = document.getElementById("ver-diario");
-
-  // Inicialmente, exibe apenas o progresso diário
+  // Inicializa visibilidade do progresso
   progressoDia.style.display = "block";
   progressoSemanal.style.display = "none";
   progressoMensal.style.display = "none";
 
-  // Alternar para progresso semanal
+  // Função para posicionar o botão flutuante no mobile
+  function posicionarBotaoFlutuante() {
+    if (window.innerWidth <= 768) {
+      botaoFlutuante.style.display = "block"; // Forçar visibilidade
+      if (aside.classList.contains("mostrar")) {
+        const asideRect = aside.getBoundingClientRect();
+        const asideBottom = asideRect.bottom + window.scrollY;
+        const windowHeight = window.innerHeight;
+        const buttonTop = Math.min(asideBottom + 10, windowHeight - 70);
+        botaoFlutuante.style.top = `${buttonTop}px`;
+        botaoFlutuante.style.bottom = "auto";
+      } else {
+        botaoFlutuante.style.top = "auto";
+        botaoFlutuante.style.bottom = "20px";
+      }
+    } else {
+      botaoFlutuante.style.display = "none"; // Oculto no desktop
+      botaoFlutuante.style.top = "";
+      botaoFlutuante.style.bottom = "";
+    }
+  }
+
+  // Função para alternar visibilidade do aside
+  function alternarAside() {
+    aside.classList.toggle("mostrar");
+    aside.classList.toggle("oculto");
+    if (window.innerWidth > 768) {
+      layout.classList.toggle("sozinho");
+    }
+    posicionarBotaoFlutuante();
+  }
+
+  // Eventos para botões de progresso
+  btnProgresso.addEventListener("click", alternarAside);
+  botaoFlutuante.addEventListener("click", alternarAside);
+
+  // Eventos para alternar progresso
   botaoVerSemanal.addEventListener("click", () => {
     progressoDia.style.display = "none";
     progressoSemanal.style.display = "block";
     progressoMensal.style.display = "none";
+    posicionarBotaoFlutuante();
   });
 
-  // Alternar para progresso mensal
   botaoVerMensal.addEventListener("click", () => {
     progressoDia.style.display = "none";
     progressoSemanal.style.display = "none";
     progressoMensal.style.display = "block";
+    posicionarBotaoFlutuante();
   });
 
-  // Alternar para progresso diário
   botaoVerDiario.addEventListener("click", () => {
     progressoDia.style.display = "block";
     progressoSemanal.style.display = "none";
     progressoMensal.style.display = "none";
+    posicionarBotaoFlutuante();
   });
-});
 
-// Botão progresso
-const btnProgresso = document.getElementById("abrir-progresso");
-const aside = document.querySelector("aside");
-const layout = document.querySelector(".layout");
-
-btnProgresso.addEventListener("click", () => {
-  aside.classList.toggle("oculto");
-  layout.classList.toggle("sozinho");
-});
-
-// Botão flutuante
-const botaoFlutuante = document.getElementById("botao-flutuante");
-
-botaoFlutuante.addEventListener("click", () => {
-  aside.classList.toggle("mostrar");
-});
-
-// Drag para mobile
-let offsetX, offsetY;
-
-botaoFlutuante.addEventListener("mousedown", (e) => {
-  offsetX = e.clientX - botaoFlutuante.getBoundingClientRect().left;
-  offsetY = e.clientY - botaoFlutuante.getBoundingClientRect().top;
-
-  function mouseMoveHandler(e) {
-    botaoFlutuante.style.left = `${e.clientX - offsetX}px`;
-    botaoFlutuante.style.top = `${e.clientY - offsetY}px`;
-  }
-
-  function mouseUpHandler() {
-    document.removeEventListener("mousemove", mouseMoveHandler);
-    document.removeEventListener("mouseup", mouseUpHandler);
-  }
-
-  document.addEventListener("mousemove", mouseMoveHandler);
-  document.addEventListener("mouseup", mouseUpHandler);
+  // Inicializa posição do botão flutuante
+  posicionarBotaoFlutuante();
+  window.addEventListener("resize", posicionarBotaoFlutuante);
+  window.addEventListener("scroll", posicionarBotaoFlutuante);
 });
