@@ -1,3 +1,4 @@
+/* Estilos gerais */
 .layout {
   display: flex;
   align-items: flex-start;
@@ -14,13 +15,13 @@ main {
   background-color: var(--bg-main, #f9f9f9);
   padding: 1rem;
   border-radius: 1rem;
-  flex-grow: 1; /* Permite que o main cresça para ocupar espaço disponível */
+  flex-grow: 1;
 }
 
 /* Quando o aside está oculto, o main ocupa toda a largura */
 .layout:has(aside.oculto) main {
   width: 100%;
-  max-width: none; /* Remove qualquer restrição de largura máxima */
+  max-width: none;
 }
 
 aside {
@@ -78,7 +79,7 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-/**************fundo preto********************/
+/* Botão de modo escuro */
 #toggle-dark-mode {
   background: transparent;
   border: none;
@@ -86,7 +87,7 @@ body {
   padding: 0.5rem;
 }
 
-/* ===== MODO ESCURO ATUALIZADO - TONS MAIS SUAVES ===== */
+/* Modo escuro */
 body.dark {
   background: #2a2a2a;
   color: #e0e0e0;
@@ -182,7 +183,7 @@ body.dark input[type="checkbox"] {
   filter: brightness(0.8);
 }
 
-/*--------------------------------------------*/
+/* Container principal */
 .container {
   max-width: 900px;
   margin: auto;
@@ -317,7 +318,7 @@ body.dark .exercicio.checked {
   transition: background-color 0.3s;
 }
 
-/*progress bar*/
+/* Barra de progresso */
 .barra {
   position: relative;
   height: 30px;
@@ -361,7 +362,7 @@ body.dark .exercicio.checked {
   text-align: right;
 }
 
-/* Estilo para o botão de alternar progresso */
+/* Botão de alternar progresso */
 .alternar-progresso {
   background-color: var(--cor-botao, #f0f0f0);
   color: var(--cor-texto-botao, #333);
@@ -384,7 +385,7 @@ body.dark .exercicio.checked {
   transform: scale(0.97);
 }
 
-/*progresso botao*/
+/* Botão de progresso (desktop) */
 #abrir-progresso {
   background: none;
   border: none;
@@ -405,8 +406,9 @@ body.dark .exercicio.checked {
   transform: scale(1.1);
 }
 
+/* Botão flutuante (mobile) */
 #botao-flutuante {
-  display: none; /* Oculto por padrão (desktop) */
+  display: none !important; /* Oculto por padrão (desktop) */
 }
 
 #botao-flutuante img.icon {
@@ -520,7 +522,9 @@ body.dark .aside-btn .reset:active {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* ===== Desktop grande (maior que 1600px) ===== */
+/* Media queries */
+
+/* Desktop grande (> 1600px) */
 @media (min-width: 1601px) {
   .conteudo {
     display: grid;
@@ -528,7 +532,7 @@ body.dark .aside-btn .reset:active {
   }
 }
 
-/* ===== Laptops e desktops médios (até 1600px) ===== */
+/* Laptops e desktops médios (até 1600px) */
 @media (max-width: 1600px) {
   .conteudo {
     display: grid;
@@ -536,14 +540,14 @@ body.dark .aside-btn .reset:active {
   }
 }
 
-/* ===== Tablets e pequenos laptops (até 1024px) ===== */
+/* Tablets e pequenos laptops (até 1024px) */
 @media (max-width: 1024px) {
   .conteudo {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-/* ===== Dispositivos móveis (até 768px) ===== */
+/* Dispositivos móveis (≤ 768px) */
 @media (max-width: 768px) {
   body {
     background-color: white;
@@ -592,13 +596,11 @@ body.dark .aside-btn .reset:active {
   }
 
   aside {
-    display: none;
+    display: none !important;
     position: fixed;
     bottom: 90px;
     left: 20px;
-    width: calc(
-      100% - 40px
-    ); /* Ocupa quase toda a tela, com 20px de margem em cada lado */
+    width: calc(100% - 40px);
     max-height: 80vh;
     overflow-y: auto;
     background: rgb(191, 194, 194);
@@ -606,17 +608,17 @@ body.dark .aside-btn .reset:active {
     padding: 1rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: 998;
-    box-sizing: border-box; /* Inclui padding e borda na largura */
+    box-sizing: border-box;
   }
 
   aside.mostrar {
-    display: block;
+    display: block !important;
     opacity: 1;
     transform: translateX(0);
   }
 
   aside.oculto {
-    display: none;
+    display: none !important;
     opacity: 0;
     transform: translateX(100%);
   }
@@ -669,13 +671,14 @@ body.dark .aside-btn .reset:active {
   }
 
   #abrir-progresso {
-    display: none; /* Oculto no mobile, já que usamos o botão flutuante */
+    display: none !important; /* Oculto no mobile */
   }
 
-  /* Botão flutuante */
+  /* Botão flutuante no mobile */
   #botao-flutuante {
     position: fixed !important;
     right: 20px !important;
+    bottom: 20px !important; /* Posição inicial */
     display: block !important; /* Forçar visibilidade no mobile */
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(2px);
@@ -687,10 +690,6 @@ body.dark .aside-btn .reset:active {
     cursor: pointer;
     transition: transform 0.2s;
     z-index: 999;
-  }
-
-  #botao-flutuante:hover {
-    transform: scale(1.1);
   }
 
   body.dark #botao-flutuante {
