@@ -527,6 +527,7 @@ const gruposMuscularesSemana = {
 };
 
 function mostrarDia(dia) {
+  console.log(`Mostrando dia: ${dia}`);
   const container = document.getElementById("conteudo-dia");
   const dados = exerciciosSemana[dia];
 
@@ -605,6 +606,10 @@ mostrarDia(diaHoje);
 const botaoModoEscuro = document.getElementById("toggle-dark-mode");
 botaoModoEscuro.addEventListener("click", () => {
   document.body.classList.toggle("dark");
+  console.log(
+    "Modo escuro alternado:",
+    document.body.classList.contains("dark")
+  );
 });
 
 // Ativar fundo verde ao marcar checkbox e salvar estado
@@ -883,17 +888,24 @@ function carregarCheckboxes() {
     }
   });
 }
+
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM carregado");
+
   const aside = document.querySelector("aside");
   const botaoFlutuante = document.getElementById("botao-flutuante");
   const btnProgresso = document.getElementById("abrir-progresso");
-  const layout = document.querySelector(".layout");
   const progressoDia = document.getElementById("progresso-dia");
   const progressoSemanal = document.getElementById("progresso-semanal");
   const progressoMensal = document.getElementById("progresso-mensal");
   const botaoVerSemanal = document.getElementById("ver-semanal");
   const botaoVerMensal = document.getElementById("ver-mensal");
   const botaoVerDiario = document.getElementById("ver-diario");
+
+  // Verifica se os elementos existem
+  if (!aside) console.error("Elemento 'aside' não encontrado");
+  if (!btnProgresso) console.error("Botão '#abrir-progresso' não encontrado");
+  if (!botaoFlutuante) console.error("Botão '#botao-flutuante' não encontrado");
 
   // Inicializa barras de semanas e meses a 0%
   for (let i = 1; i <= 10; i++) {
@@ -934,32 +946,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Inicializa visibilidade do progresso
-  progressoDia.style.display = "block";
-  progressoSemanal.style.display = "none";
-  progressoMensal.style.display = "none";
+  if (progressoDia) progressoDia.style.display = "block";
+  if (progressoSemanal) progressoSemanal.style.display = "none";
+  if (progressoMensal) progressoMensal.style.display = "none";
 
-  // Inicializa aside como oculto no mobile
-  if (window.innerWidth <= 768) {
+  // Inicializa aside como oculto
+  if (aside) {
     aside.classList.add("oculto");
     aside.classList.remove("mostrar");
+    console.log("Aside inicializado como oculto:", aside.classList);
+  }
+
+  // Função para alternar visibilidade do aside
+  function alternarAside() {
+    if (!aside) return;
+    aside.classList.toggle("mostrar");
+    aside.classList.toggle("oculto");
+    console.log("Classes do aside após alternar:", aside.classList);
+    posicionarBotaoFlutuante();
   }
 
   // Função para posicionar o botão flutuante no mobile
   function posicionarBotaoFlutuante() {
+    if (!botaoFlutuante) return;
     if (window.innerWidth <= 768) {
       botaoFlutuante.style.display = "block";
-      if (aside.classList.contains("mostrar")) {
+      if (aside && aside.classList.contains("mostrar")) {
         const asideRect = aside.getBoundingClientRect();
         const asideBottom = asideRect.bottom + window.scrollY;
         const windowHeight = window.innerHeight;
-        const buttonTop = Math.min(asideBottom + 10, windowHeight - 60); // Ajustado para botão menor
+        const buttonTop = Math.min(asideBottom + 10, windowHeight - 60);
         botaoFlutuante.style.top = `${buttonTop}px`;
         botaoFlutuante.style.bottom = "auto";
-        botaoFlutuante.style.right = "10px"; // Ajustado
+        botaoFlutuante.style.right = "10px";
       } else {
         botaoFlutuante.style.top = "auto";
-        botaoFlutuante.style.bottom = "10px"; // Ajustado
-        botaoFlutuante.style.right = "10px"; // Ajustado
+        botaoFlutuante.style.bottom = "10px";
+        botaoFlutuante.style.right = "10px";
       }
     } else {
       botaoFlutuante.style.display = "none";
@@ -969,21 +992,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Função para alternar visibilidade do aside
-  function alternarAside() {
-    console.log("Alternar aside chamado");
-    aside.classList.toggle("mostrar");
-    aside.classList.toggle("oculto");
-    console.log("Classes do aside:", aside.className);
-    if (window.innerWidth > 768) {
-      layout.classList.toggle("sozinho");
-    }
-    posicionarBotaoFlutuante();
-  }
-
   // Eventos para botões de progresso
   if (btnProgresso) {
-    btnProgresso.addEventListener("click", () => {
+    btnProgresso.addEventListener("click", (e) => {
+      e.preventDefault();
       console.log("Botão progresso (desktop) clicado");
       alternarAside();
     });
@@ -1007,9 +1019,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (botaoVerSemanal) {
     botaoVerSemanal.addEventListener("click", () => {
       console.log("Ver semanal clicado");
-      progressoDia.style.display = "none";
-      progressoSemanal.style.display = "block";
-      progressoMensal.style.display = "none";
+      if (progressoDia) progressoDia.style.display = "none";
+      if (progressoSemanal) progressoSemanal.style.display = "block";
+      if (progressoMensal) progressoMensal.style.display = "none";
       posicionarBotaoFlutuante();
     });
   }
@@ -1017,9 +1029,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (botaoVerMensal) {
     botaoVerMensal.addEventListener("click", () => {
       console.log("Ver mensal clicado");
-      progressoDia.style.display = "none";
-      progressoSemanal.style.display = "none";
-      progressoMensal.style.display = "block";
+      if (progressoDia) progressoDia.style.display = "none";
+      if (progressoSemanal) progressoSemanal.style.display = "none";
+      if (progressoMensal) progressoMensal.style.display = "block";
       posicionarBotaoFlutuante();
     });
   }
@@ -1027,9 +1039,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (botaoVerDiario) {
     botaoVerDiario.addEventListener("click", () => {
       console.log("Ver diário clicado");
-      progressoDia.style.display = "block";
-      progressoSemanal.style.display = "none";
-      progressoMensal.style.display = "none";
+      if (progressoDia) progressoDia.style.display = "block";
+      if (progressoSemanal) progressoSemanal.style.display = "none";
+      if (progressoMensal) progressoMensal.style.display = "none";
       posicionarBotaoFlutuante();
     });
   }
