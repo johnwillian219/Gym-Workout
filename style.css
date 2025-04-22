@@ -498,7 +498,8 @@ body.dark .exercicio.checked {
   border: none;
   padding: 6px 12px;
   font-size: 0.9rem;
-  border-radius: 8px;
+  border-radius: 3px;
+  height: 35px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
   white-space: nowrap;
@@ -708,7 +709,7 @@ body.dark .aside-btn .top img {
     position: fixed;
     bottom: 70px;
     left: 10px;
-    width: calc(100% - 20px);
+    width: calc(100% - 200px);
     max-height: 80vh;
     overflow-y: auto;
     overflow-x: hidden;
