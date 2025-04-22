@@ -7,7 +7,7 @@ body {
 }
 
 * {
-  box-sizing: border-box; /* Garante que padding e bordas sejam incluídos na largura */
+  box-sizing: border-box;
   /* outline: 1px solid red; Removido para produção; descomente para depuração */
 }
 
@@ -22,12 +22,24 @@ body {
 .layout {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between; /* Mantido para desktop */
+  justify-content: space-between;
   gap: 2rem;
   padding: 1rem;
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
+}
+
+/* Ajusta o main quando o aside está visível para evitar sobreposição */
+.layout:has(aside.mostrar) main {
+  margin-right: 400px; /* Espaço para o aside (380px + margem) */
+}
+
+/* Quando o aside está oculto, o main ocupa toda a largura */
+.layout:has(aside.oculto) main {
+  width: 100%;
+  max-width: none;
+  margin-right: 0;
 }
 
 header {
@@ -42,12 +54,6 @@ main {
   flex-grow: 1;
 }
 
-/* Quando o aside está oculto, o main ocupa toda a largura */
-.layout:has(aside.oculto) main {
-  width: 100%;
-  max-width: none;
-}
-
 aside {
   width: 380px;
   min-width: 375px;
@@ -55,23 +61,33 @@ aside {
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: sticky;
+  position: fixed;
   top: 1rem;
-  align-self: start;
+  right: 1rem;
   height: fit-content;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 998;
+  display: none; /* Estado inicial: oculto */
+  opacity: 0;
+  transform: translateX(100%);
 }
 
-/* Estado inicial no desktop: visível */
+aside:not(.mostrar) {
+  display: none !important; /* Fallback para garantir ocultação */
+  opacity: 0;
+  transform: translateX(100%);
+}
+
 aside.mostrar {
-  display: block;
+  display: block !important;
   opacity: 1;
   transform: translateX(0);
 }
 
-/* Estado oculto */
 aside.oculto {
-  display: none;
+  display: none !important;
   opacity: 0;
   transform: translateX(100%);
 }
@@ -95,7 +111,6 @@ aside li {
   border-radius: 0.5rem;
 }
 
-/* Botão de modo escuro */
 #toggle-dark-mode {
   background: transparent;
   border: none;
@@ -103,7 +118,6 @@ aside li {
   padding: 0.5rem;
 }
 
-/* Modo escuro */
 body.dark {
   background: #2a2a2a;
   color: #e0e0e0;
@@ -199,7 +213,6 @@ body.dark input[type="checkbox"] {
   filter: brightness(0.8);
 }
 
-/* Container principal */
 .container {
   max-width: 900px;
   margin: auto;
@@ -207,7 +220,6 @@ body.dark input[type="checkbox"] {
   width: 100%;
 }
 
-/* Top bar */
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -215,7 +227,6 @@ body.dark input[type="checkbox"] {
   width: 100%;
 }
 
-/* Estilos de título */
 h1 {
   color: #1a73e8;
   font-size: clamp(1.4rem, 4vw, 2rem);
@@ -231,7 +242,6 @@ h3 {
   font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
-/* Menu de navegação */
 .menu {
   display: flex;
   justify-content: space-around;
@@ -267,7 +277,6 @@ h3 {
   transition: all 0.3s ease;
 }
 
-/* Ícones */
 .icon {
   width: 30px;
   height: 30px;
@@ -276,7 +285,6 @@ h3 {
   transform: scale(1.1);
 }
 
-/* Conteúdo principal */
 .conteudo {
   background: white;
   padding: 2rem;
@@ -296,7 +304,6 @@ h3 {
   text-align: center;
 }
 
-/* Exercícios */
 .exercicio {
   background: #f9f9f9;
   border-radius: 10px;
@@ -346,7 +353,6 @@ body.dark .exercicio.checked {
   transition: background-color 0.3s;
 }
 
-/* Barra de progresso */
 .barra {
   position: relative;
   height: 30px;
@@ -391,7 +397,6 @@ body.dark .exercicio.checked {
   text-align: right;
 }
 
-/* Botão de alternar progresso */
 .alternar-progresso {
   background-color: var(--cor-botao, #f0f0f0);
   color: var(--cor-texto-botao, #333);
@@ -414,13 +419,15 @@ body.dark .exercicio.checked {
   transform: scale(0.97);
 }
 
-/* Botão de progresso (desktop) */
 #abrir-progresso {
   background: none;
   border: none;
   cursor: pointer;
   margin-left: auto;
-  display: block;
+  display: block !important;
+  padding: 0.5rem;
+  transition: transform 0.2s;
+  z-index: 1000; /* Garante que o botão seja clicável */
 }
 
 #abrir-progresso img {
@@ -435,7 +442,6 @@ body.dark .exercicio.checked {
   transform: scale(1.1);
 }
 
-/* Botão flutuante (mobile) */
 #botao-flutuante {
   display: none !important;
 }
@@ -447,7 +453,6 @@ body.dark .exercicio.checked {
     hue-rotate(184deg) brightness(96%) contrast(95%);
 }
 
-/* Estilo para .aside-btn */
 .aside-btn {
   display: flex;
   align-items: center;
@@ -458,12 +463,28 @@ body.dark .exercicio.checked {
   width: 100%;
 }
 
-.aside-btn h3 {
+.aside-btn .top {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: auto;
+}
+
+.aside-btn .top h3 {
   margin: 0;
-  flex-grow: 1;
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.aside-btn .top img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
+    hue-rotate(184deg) brightness(96%) contrast(95%);
 }
 
 .aside-btn h3 .titulo-progresso {
@@ -520,7 +541,6 @@ body.dark .exercicio.checked {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Modo escuro para .aside-btn */
 body.dark .aside-btn .titulo-progresso {
   color: rgb(188, 164, 245);
 }
@@ -552,9 +572,11 @@ body.dark .aside-btn .reset:active {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Media queries */
+body.dark .aside-btn .top img {
+  filter: invert(0.9) brightness(0.9);
+}
 
-/* Desktop grande (> 1600px) */
+/* Media queries */
 @media (min-width: 1601px) {
   .conteudo {
     display: grid;
@@ -562,7 +584,6 @@ body.dark .aside-btn .reset:active {
   }
 }
 
-/* Laptops e desktops médios (até 1600px) */
 @media (max-width: 1600px) {
   .conteudo {
     display: grid;
@@ -570,14 +591,12 @@ body.dark .aside-btn .reset:active {
   }
 }
 
-/* Tablets e pequenos laptops (até 1024px) */
 @media (max-width: 1024px) {
   .conteudo {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-/* Dispositivos móveis (≤ 768px) */
 @media (max-width: 768px) {
   body {
     background-color: white;
@@ -586,7 +605,7 @@ body.dark .aside-btn .reset:active {
 
   .layout {
     flex-direction: column !important;
-    padding: 0;
+    padding: 0.5rem;
     width: 100vw;
     max-width: 100%;
     overflow-x: hidden;
@@ -595,10 +614,14 @@ body.dark .aside-btn .reset:active {
     align-items: center;
   }
 
+  .layout:has(aside.mostrar) main {
+    margin-right: 0; /* Remove margem extra no mobile */
+  }
+
   .container {
-    padding: 0;
-    margin: 0;
-    width: 100%;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    width: calc(100% - 1rem);
     max-width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -606,39 +629,39 @@ body.dark .aside-btn .reset:active {
 
   main {
     background-color: white;
-    padding: 0;
-    width: 100%;
+    padding: 0.5rem;
+    width: calc(100% - 1rem);
     max-width: 100%;
-    margin: 0;
+    margin: 0 0.5rem;
     border-radius: 0;
   }
 
   .layout:has(aside.oculto) main {
-    width: 100%;
+    width: calc(100% - 1rem);
     max-width: 100%;
-    margin: 0 auto;
-    padding: 0;
+    margin: 0 0.5rem;
+    padding: 0.5rem;
   }
 
   .menu {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Mantém 3 colunas */
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: repeat(2, 1fr);
-    gap: 0.5rem; /* Reduzido para economizar espaço */
-    width: 100%;
+    gap: 0.5rem;
+    width: calc(100% - 1rem);
     max-width: 100%;
     padding: 0.5rem;
-    margin: 0 auto;
+    margin: 0 0.5rem;
     overflow-x: hidden;
     box-sizing: border-box;
-    justify-items: center; /* Centraliza os botões nas colunas */
+    justify-items: center;
   }
 
   .menu button {
-    width: 90px; /* Reduzido de 100px */
+    width: 90px;
     max-width: 100%;
-    padding: 0.5rem 0.75rem; /* Reduzido de 0.75rem 1.5rem */
-    font-size: 0.8rem; /* Reduzido de 1rem */
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
     line-height: 1.2;
     text-align: center;
     border-radius: 8px;
@@ -647,12 +670,12 @@ body.dark .aside-btn .reset:active {
 
   .conteudo {
     grid-template-columns: 1fr;
-    padding: 0;
-    margin: 0;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
     background-color: white;
     border-radius: 0;
     box-shadow: none;
-    width: 100%;
+    width: calc(100% - 1rem);
     max-width: 100%;
   }
 
@@ -683,7 +706,7 @@ body.dark .aside-btn .reset:active {
   aside {
     display: none !important;
     position: fixed;
-    bottom: 90px;
+    bottom: 70px;
     left: 10px;
     width: calc(100% - 20px);
     max-height: 80vh;
@@ -695,6 +718,7 @@ body.dark .aside-btn .reset:active {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: 998;
     box-sizing: border-box;
+    border-radius: 8px;
   }
 
   aside.mostrar {
