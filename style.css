@@ -8,7 +8,6 @@ body {
 
 * {
   box-sizing: border-box;
-  /* outline: 1px solid red; */
 }
 
 body {
@@ -69,25 +68,16 @@ aside {
   overflow-y: auto;
   transition: transform 0.3s ease, opacity 0.3s ease;
   z-index: 998;
-  display: none; /* Estado inicial: oculto */
-  opacity: 0;
-  transform: translateX(100%);
-}
-
-aside:not(.mostrar) {
-  display: none !important; /* Fallback para garantir ocultação */
-  opacity: 0;
-  transform: translateX(100%);
 }
 
 aside.mostrar {
-  display: block !important;
+  display: block;
   opacity: 1;
   transform: translateX(0);
 }
 
 aside.oculto {
-  display: none !important;
+  display: none;
   opacity: 0;
   transform: translateX(100%);
 }
@@ -424,10 +414,9 @@ body.dark .exercicio.checked {
   border: none;
   cursor: pointer;
   margin-left: auto;
-  display: block !important;
+  display: block;
   padding: 0.5rem;
   transition: transform 0.2s;
-  z-index: 1000; /* Garante que o botão seja clicável */
 }
 
 #abrir-progresso img {
@@ -437,20 +426,33 @@ body.dark .exercicio.checked {
     hue-rotate(184deg) brightness(96%) contrast(95%);
 }
 
-#abrir-progresso:hover,
-#botao-flutuante:hover {
+#abrir-progresso:hover {
   transform: scale(1.1);
 }
 
-#botao-flutuante {
-  display: none !important;
+#abrir-conteudo {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: transform 0.2s;
+  display: none; /* Escondido por padrão */
 }
 
-#botao-flutuante img.icon {
+#abrir-conteudo img {
   width: 30px;
   height: 30px;
   filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
     hue-rotate(184deg) brightness(96%) contrast(95%);
+}
+
+#abrir-conteudo:hover {
+  transform: scale(1.1);
+}
+
+body.dark #abrir-progresso img,
+body.dark #abrir-conteudo img {
+  filter: invert(0.9) brightness(0.9);
 }
 
 .aside-btn {
@@ -527,7 +529,6 @@ body.dark .exercicio.checked {
   height: 24px;
   filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
     hue-rotate(184deg) brightness(96%) contrast(95%);
-  transition: filter 0.3s;
 }
 
 .aside-btn .reset:hover {
@@ -576,6 +577,26 @@ body.dark .aside-btn .top img {
   filter: invert(0.9) brightness(0.9);
 }
 
+/* Progresso */
+.progresso-dia,
+.progresso-semanal,
+.progresso-mensal {
+  display: none;
+}
+
+.progresso-dia[style*="block"],
+.progresso-semanal[style*="block"],
+.progresso-mensal[style*="block"] {
+  display: block;
+}
+
+body.dark .progresso-dia,
+body.dark .progresso-semanal,
+body.dark .progresso-mensal {
+  background: #323232;
+  color: #e0e0e0;
+}
+
 /* Media queries */
 @media (min-width: 1601px) {
   .conteudo {
@@ -599,12 +620,12 @@ body.dark .aside-btn .top img {
 
 @media (max-width: 768px) {
   body {
-    background-color: white;
+    background-color: #f0f4f8;
     overflow-x: hidden;
   }
 
   .layout {
-    flex-direction: column !important;
+    flex-direction: column;
     padding: 0.5rem;
     width: 100vw;
     max-width: 100%;
@@ -615,12 +636,12 @@ body.dark .aside-btn .top img {
   }
 
   .layout:has(aside.mostrar) main {
-    margin-right: 0; /* Remove margem extra no mobile */
+    margin-right: 0; /* Remove margem no mobile, pois aside cobre a tela */
   }
 
   .container {
     padding: 0.5rem;
-    margin: 0 0.5rem;
+    margin: 0 auto;
     width: calc(100% - 1rem);
     max-width: 100%;
     display: flex;
@@ -628,30 +649,62 @@ body.dark .aside-btn .top img {
   }
 
   main {
-    background-color: white;
-
+    background-color: var(--bg-main, #f9f9f9);
+    padding: 0.5rem;
+    border-radius: 1rem;
     width: calc(100% - 1rem);
     max-width: 100%;
-    margin: 0;
-    border-radius: 0;
+    margin: 0 auto;
   }
 
-  .layout:has(aside.oculto) main {
-    width: calc(100% - 1rem);
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
+  .top-bar {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Inicialmente, apenas #abrir-progresso é visível */
+  #abrir-progresso {
+    display: block;
+  }
+
+  #abrir-conteudo {
+    display: none;
+  }
+
+  /* Quando aside.mostrar, ocultar #conteudo-dia e #abrir-progresso, mostrar #abrir-conteudo */
+  .layout:has(aside.mostrar) #conteudo-dia {
+    display: none;
+  }
+
+  .layout:has(aside.mostrar) #abrir-progresso {
+    display: none;
+  }
+
+  .layout:has(aside.mostrar) #abrir-conteudo {
+    display: block;
+  }
+
+  /* Quando aside.oculto, mostrar #conteudo-dia e #abrir-progresso, ocultar #abrir-conteudo */
+  .layout:has(aside.oculto) #conteudo-dia {
+    display: grid;
+  }
+
+  .layout:has(aside.oculto) #abrir-progresso {
+    display: block;
+  }
+
+  .layout:has(aside.oculto) #abrir-conteudo {
+    display: none;
   }
 
   .menu {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
     width: calc(100% - 1rem);
     max-width: 100%;
     padding: 0.5rem;
-    margin: 0 0.5rem;
+    margin: 0 auto;
     overflow-x: hidden;
     box-sizing: border-box;
     justify-items: center;
@@ -659,42 +712,40 @@ body.dark .aside-btn .top img {
 
   .menu button {
     width: 90px;
-    max-width: 100%;
     padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
     line-height: 1.2;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 10px;
     box-sizing: border-box;
   }
+
   .menu button.ativo {
-    border-radius: 5px;
+    border-radius: 10px;
   }
+
   .conteudo {
     grid-template-columns: 1fr;
-    padding: 0.5rem;
-    margin: 0 0.5rem;
-    background-color: white;
-    border-radius: 0;
-    box-shadow: none;
+    padding: 1rem;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: calc(100% - 1rem);
     max-width: 100%;
   }
 
   .exercicio {
-    background-color: white;
-    border-radius: 0;
-    box-shadow: none;
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     margin: 0;
-    padding: 0.5rem 0;
     width: 100%;
     max-width: 100%;
   }
 
   .gif-container {
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
     width: 100%;
     max-width: 100%;
   }
@@ -705,65 +756,59 @@ body.dark .aside-btn .top img {
     object-fit: contain;
   }
 
-  .aside-btn {
-    gap: 5px;
-    padding: 0.5rem;
-    flex-wrap: nowrap;
-    width: 60%;
-    max-width: 100%;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
   aside {
-    display: none !important;
+    width: 380px;
+    min-width: 320px;
+    background-color: var(--bg-aside, #ffffff);
+    padding: 1rem;
+    border-radius: 0;
+    box-shadow: none;
     position: fixed;
-    bottom: 70px;
-    left: 10px;
-    width: 100px;
-    max-height: 80vh;
-
+    top: 0;
+    right: 0;
+    height: 100vh;
+    max-height: 100%;
     overflow-y: auto;
-    overflow-x: hidden;
-    background: rgb(191, 194, 194);
-    border: 2px solid #ccc;
-    padding: 0.5rem;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, opacity 0.3s ease;
     z-index: 998;
-    box-sizing: border-box;
-    border-radius: 8px;
   }
 
   aside.mostrar {
-    display: block !important;
+    display: block;
     opacity: 1;
     transform: translateX(0);
   }
 
   aside.oculto {
-    display: none !important;
+    display: none;
     opacity: 0;
     transform: translateX(100%);
   }
 
-  .progresso-diario {
-    display: block;
+  aside h2,
+  aside h3 {
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    color: #1a73e8;
+    font-size: 0.9rem;
   }
 
-  .progresso-semanal,
-  .progresso-mensal {
-    display: none;
+  aside li {
+    margin-bottom: 0.5rem;
+    background-color: #eaeaea;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
   }
 
   .alternar-progresso {
-    display: inline-block;
     background-color: #eee;
     color: #333;
-    padding: 5px 10px;
-    margin-left: 5px;
-    font-size: 0.8rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
+    padding: 6px 12px;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    height: auto;
   }
 
   .alternar-progresso:hover {
@@ -771,74 +816,15 @@ body.dark .aside-btn .top img {
     transform: scale(1.05);
   }
 
-  body.dark .progresso-diario,
-  body.dark .progresso-semanal,
-  body.dark .progresso-mensal {
-    background: #323232;
-    color: #e0e0e0;
-  }
-
-  body.dark .conteudo {
-    background: #383838;
-    border: none;
-    box-shadow: none;
-  }
-
-  body.dark .exercicio {
-    background: #383838;
-    border: none;
-    box-shadow: none;
-  }
-
-  #abrir-progresso {
-    display: none !important;
-  }
-
-  #botao-flutuante {
-    position: fixed !important;
-    right: 10px !important;
-    bottom: 10px !important;
-    display: block !important;
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(2px);
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: transform 0.2s;
-    z-index: 999;
-    box-sizing: border-box;
-  }
-
-  #botao-flutuante img.icon {
-    width: 25px;
-    height: 25px;
-  }
-
-  body.dark #botao-flutuante {
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(2px);
-  }
-
-  body.dark #botao-flutuante:hover {
-    transform: scale(1.1);
-  }
-
-  .aside-btn {
-    gap: 10px;
-    flex-wrap: nowrap;
-    width: 100%;
-  }
-
   .aside-btn h3 .titulo-progresso {
     font-size: 0.9rem;
   }
 
   .aside-btn .alternar-progresso {
-    padding: 4px 8px;
-    font-size: 0.7rem;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    border-radius: 3px;
+    height: 35px;
   }
 
   .aside-btn .reset {
@@ -846,7 +832,38 @@ body.dark .aside-btn .top img {
   }
 
   .aside-btn .reset img {
-    width: 26px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .aside-btn .top img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (min-width: 769px) {
+  #abrir-conteudo {
+    display: none; /* Oculta o botão de treino no desktop */
+  }
+}
+
+@media (max-width: 400px) {
+  aside {
+    width: calc(100% - 2rem);
+    min-width: unset;
+  }
+
+  .container {
+    padding: 0.25rem;
+  }
+
+  .menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .menu button {
+    width: 80px;
+    font-size: 0.75rem;
   }
 }

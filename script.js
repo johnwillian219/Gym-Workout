@@ -159,7 +159,7 @@ const exerciciosSemana = {
       gif: "gift/Prancha-toque-ombro.gif",
     },
     {
-      nome: "Butterfly Yoga Flaps",
+      nome: "Butterfly Yoga Fl aps",
       tipo: "abdomen",
       series: "4x20",
       gif: "gift/butterfly-yoga-flaps.gif",
@@ -893,8 +893,10 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM carregado");
 
   const aside = document.querySelector("aside");
-  const botaoFlutuante = document.getElementById("botao-flutuante");
+  const main = document.querySelector("main");
   const btnProgresso = document.getElementById("abrir-progresso");
+  const btnConteudo = document.getElementById("abrir-conteudo");
+  const conteudoDia = document.getElementById("conteudo-dia");
   const progressoDia = document.getElementById("progresso-dia");
   const progressoSemanal = document.getElementById("progresso-semanal");
   const progressoMensal = document.getElementById("progresso-mensal");
@@ -904,8 +906,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Verifica se os elementos existem
   if (!aside) console.error("Elemento 'aside' não encontrado");
+  if (!main) console.error("Elemento 'main' não encontrado");
   if (!btnProgresso) console.error("Botão '#abrir-progresso' não encontrado");
-  if (!botaoFlutuante) console.error("Botão '#botao-flutuante' não encontrado");
+  if (!btnConteudo) console.error("Botão '#abrir-conteudo' não encontrado");
+  if (!conteudoDia) console.error("Elemento '#conteudo-dia' não encontrado");
 
   // Inicializa barras de semanas e meses a 0%
   for (let i = 1; i <= 10; i++) {
@@ -959,58 +963,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Função para alternar visibilidade do aside
   function alternarAside() {
-    if (!aside) return;
+    if (!aside || !main || !btnProgresso || !btnConteudo || !conteudoDia)
+      return;
+
+    const isMobile = window.innerWidth <= 768;
+
     aside.classList.toggle("mostrar");
     aside.classList.toggle("oculto");
-    console.log("Classes do aside após alternar:", aside.classList);
-    posicionarBotaoFlutuante();
-  }
 
-  // Função para posicionar o botão flutuante no mobile
-  function posicionarBotaoFlutuante() {
-    if (!botaoFlutuante) return;
-    if (window.innerWidth <= 768) {
-      botaoFlutuante.style.display = "block";
-      if (aside && aside.classList.contains("mostrar")) {
-        const asideRect = aside.getBoundingClientRect();
-        const asideBottom = asideRect.bottom + window.scrollY;
-        const windowHeight = window.innerHeight;
-        const buttonTop = Math.min(asideBottom + 10, windowHeight - 60);
-        botaoFlutuante.style.top = `${buttonTop}px`;
-        botaoFlutuante.style.bottom = "auto";
-        botaoFlutuante.style.right = "10px";
+    if (isMobile) {
+      if (aside.classList.contains("mostrar")) {
+        // Oculta apenas o conteúdo dos exercícios
+        conteudoDia.style.display = "none";
+        // Troca os botões
+        btnProgresso.style.display = "none";
+        btnConteudo.style.display = "block";
       } else {
-        botaoFlutuante.style.top = "auto";
-        botaoFlutuante.style.bottom = "10px";
-        botaoFlutuante.style.right = "10px";
+        // Mostra o conteúdo dos exercícios
+        conteudoDia.style.display = "grid";
+        // Troca os botões
+        btnProgresso.style.display = "block";
+        btnConteudo.style.display = "none";
       }
     } else {
-      botaoFlutuante.style.display = "none";
-      botaoFlutuante.style.top = "";
-      botaoFlutuante.style.bottom = "";
-      botaoFlutuante.style.right = "";
+      // No desktop, main e conteudoDia sempre visíveis
+      conteudoDia.style.display = "grid";
+      btnConteudo.style.display = "none"; // Garante que #abrir-conteudo esteja oculto
     }
+
+    console.log("Classes do aside após alternar:", aside.classList);
+    console.log("Visibilidade de conteudoDia:", conteudoDia.style.display);
+    console.log("Visibilidade de btnProgresso:", btnProgresso.style.display);
+    console.log("Visibilidade de btnConteudo:", btnConteudo.style.display);
   }
 
-  // Eventos para botões de progresso
+  // Eventos para os botões
   if (btnProgresso) {
     btnProgresso.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("Botão progresso (desktop) clicado");
+      console.log("Botão progresso clicado");
       alternarAside();
     });
   }
 
-  if (botaoFlutuante) {
-    botaoFlutuante.addEventListener("click", (e) => {
+  if (btnConteudo) {
+    btnConteudo.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("Botão flutuante clicado (click)");
-      alternarAside();
-    });
-
-    botaoFlutuante.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      console.log("Botão flutuante tocado (touchstart)");
+      console.log("Botão conteúdo clicado");
       alternarAside();
     });
   }
@@ -1022,7 +1021,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (progressoDia) progressoDia.style.display = "none";
       if (progressoSemanal) progressoSemanal.style.display = "block";
       if (progressoMensal) progressoMensal.style.display = "none";
-      posicionarBotaoFlutuante();
     });
   }
 
@@ -1032,7 +1030,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (progressoDia) progressoDia.style.display = "none";
       if (progressoSemanal) progressoSemanal.style.display = "none";
       if (progressoMensal) progressoMensal.style.display = "block";
-      posicionarBotaoFlutuante();
     });
   }
 
@@ -1042,12 +1039,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (progressoDia) progressoDia.style.display = "block";
       if (progressoSemanal) progressoSemanal.style.display = "none";
       if (progressoMensal) progressoMensal.style.display = "none";
-      posicionarBotaoFlutuante();
     });
   }
-
-  // Inicializa posição do botão flutuante
-  posicionarBotaoFlutuante();
-  window.addEventListener("resize", posicionarBotaoFlutuante);
-  window.addEventListener("scroll", posicionarBotaoFlutuante);
 });
