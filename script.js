@@ -79,7 +79,7 @@ const exerciciosSemana = {
       gif: "gift/original.webp",
     },
     {
-      nome: "cat cow pose",
+      nome: "Cat cow pose",
       tipo: "abdomen",
       series: "4x20",
       gif: "gift/cat-cow.gif",
@@ -159,7 +159,7 @@ const exerciciosSemana = {
       gif: "gift/Prancha-toque-ombro.gif",
     },
     {
-      nome: "Butterfly Yoga Fl aps",
+      nome: "Butterfly Yoga Flaps",
       tipo: "abdomen",
       series: "4x20",
       gif: "gift/butterfly-yoga-flaps.gif",
@@ -526,11 +526,24 @@ const gruposMuscularesSemana = {
   sabado: "(Full): Total",
 };
 
-function mostrarDia(dia) {
-  console.log(`Mostrando dia: ${dia}`);
-  const container = document.getElementById("conteudo-dia");
-  const dados = exerciciosSemana[dia];
+const dias = [
+  "domingo",
+  "segunda",
+  "terca",
+  "quarta",
+  "quinta",
+  "sexta",
+  "sabado",
+];
 
+// Funções de Manipulação de DOM
+function mostrarDia(dia) {
+  const container = document.getElementById("conteudo-dia");
+  if (!container)
+    return console.error("Elemento '#conteudo-dia' não encontrado");
+
+  console.log(`Mostrando exercícios para ${dia}`);
+  const dados = exerciciosSemana[dia] || [];
   const abdomen = dados.filter((ex) => ex.tipo === "abdomen");
   const musculacao = dados.filter((ex) => ex.tipo === "musculacao");
 
@@ -539,9 +552,10 @@ function mostrarDia(dia) {
   if (abdomen.length) {
     container.innerHTML += `<h2>Abdômen & Elevação</h2>`;
     abdomen.forEach((ex, index) => {
+      const id = `${dia}-abdomen-${index}`;
       container.innerHTML += `
         <div class="exercicio">
-          <input type="checkbox" id="${dia}-abdomen-${index}" />
+          <input type="checkbox" id="${id}" />
           <p><strong>${ex.nome}:</strong> ${ex.series}</p>
           <div class="gif-container">
             <img src="${ex.gif}" alt="${ex.nome}" />
@@ -555,9 +569,10 @@ function mostrarDia(dia) {
     const grupoMuscular = gruposMuscularesSemana[dia] || "";
     container.innerHTML += `<h2>Musculação: ${grupoMuscular}</h2>`;
     musculacao.forEach((ex, index) => {
+      const id = `${dia}-musculacao-${index}`;
       container.innerHTML += `
         <div class="exercicio">
-          <input type="checkbox" id="${dia}-musculacao-${index}" />
+          <input type="checkbox" id="${id}" />
           <p><strong>${ex.nome}:</strong> ${ex.series}</p>
           <div class="gif-container">
             <img src="${ex.gif}" alt="${ex.nome}" />
@@ -568,184 +583,58 @@ function mostrarDia(dia) {
   }
 
   carregarCheckboxes();
+  atualizarEstadoExercicios();
+  atualizarMenuAtivo(dia);
+  atualizarProgressoDia(dia);
+}
 
+function atualizarEstadoExercicios() {
   document
     .querySelectorAll(".exercicio input[type='checkbox']")
     .forEach((checkbox) => {
       const container = checkbox.closest(".exercicio");
-      if (checkbox.checked) {
-        container.classList.add("checked");
-      } else {
-        container.classList.remove("checked");
-      }
+      container.classList.toggle("checked", checkbox.checked);
     });
+}
 
+function atualizarMenuAtivo(dia) {
   document.querySelectorAll(".menu button").forEach((btn) => {
     btn.classList.remove("ativo");
   });
   const btnAtivo = document.querySelector(`.menu button[onclick*="${dia}"]`);
   if (btnAtivo) btnAtivo.classList.add("ativo");
-
-  atualizarProgressoDia(dia);
 }
 
-const dias = [
-  "domingo",
-  "segunda",
-  "terca",
-  "quarta",
-  "quinta",
-  "sexta",
-  "sabado",
-];
-const hoje = new Date().getDay();
-const diaHoje = dias[hoje] === "domingo" ? "segunda" : dias[hoje];
-mostrarDia(diaHoje);
-
-// Modo escuro
-const botaoModoEscuro = document.getElementById("toggle-dark-mode");
-botaoModoEscuro.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  console.log(
-    "Modo escuro alternado:",
-    document.body.classList.contains("dark")
-  );
-});
-
-// Ativar fundo verde ao marcar checkbox e salvar estado
-document.addEventListener("change", (e) => {
-  if (e.target.type === "checkbox") {
-    const container = e.target.closest(".exercicio");
-    if (e.target.checked) {
-      container.classList.add("checked");
-    } else {
-      container.classList.remove("checked");
-    }
-    salvarCheckboxes();
-    const btnAtivo = document.querySelector(".menu button.ativo");
-    if (btnAtivo) {
-      const dia = btnAtivo.getAttribute("onclick")?.match(/'([^']+)'/)?.[1];
-      if (dia) atualizarProgressoDia(dia);
-    }
-  }
-});
-
+// Funções de Progresso
 function atualizarProgressoDia(dia) {
   const checkboxes = document.querySelectorAll(
-    `#conteudo-dia input[type='checkbox']`
+    "#conteudo-dia input[type='checkbox']"
   );
   const marcados = Array.from(checkboxes).filter((cb) => cb.checked).length;
   const total = checkboxes.length;
-
   const porcentagem = total ? Math.round((marcados / total) * 100) : 0;
 
   const barra = document.getElementById(`barra-${dia}`);
   if (barra) {
     barra.style.setProperty("--before-width", `${porcentagem}%`);
-
     const spanPorcentagem = barra.querySelector(".porcentagem");
-    if (spanPorcentagem) {
-      spanPorcentagem.textContent = `${porcentagem}%`;
-    }
+    if (spanPorcentagem) spanPorcentagem.textContent = `${porcentagem}%`;
   }
 
+  salvarProgressoDia(dia, porcentagem);
+  atualizarSemanasEMeses();
+}
+
+function salvarProgressoDia(dia, porcentagem) {
   const dataHoje = new Date().toISOString().split("T")[0];
   let historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
 
   historico = historico.filter(
     (registro) => !(registro.data === dataHoje && registro.dia === dia)
   );
-
   historico.push({ data: dataHoje, dia, porcentagem });
-  historico = historico.slice(-150);
+  historico = historico.slice(-150); // Limita a 150 registros
   localStorage.setItem("historicoTreino", JSON.stringify(historico));
-
-  atualizarSemanasEMeses();
-}
-
-function recuperarProgressoDias() {
-  const dias = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
-  const estadoCheckboxes = JSON.parse(
-    localStorage.getItem("checkboxesEstado") || "{}"
-  );
-  let historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
-
-  dias.forEach((dia) => {
-    const container = document.getElementById("conteudo-dia");
-    const dados = exerciciosSemana[dia];
-
-    const abdomen = dados.filter((ex) => ex.tipo === "abdomen");
-    const musculacao = dados.filter((ex) => ex.tipo === "musculacao");
-
-    container.innerHTML = "";
-
-    if (abdomen.length) {
-      abdomen.forEach((ex, index) => {
-        const id = `${dia}-abdomen-${index}`;
-        container.innerHTML += `
-          <div class="exercicio">
-            <input type="checkbox" id="${id}" ${
-          estadoCheckboxes[id] ? "checked" : ""
-        } />
-            <p><strong>${ex.nome}:</strong> ${ex.series}</p>
-            <div class="gif-container">
-              <img src="${ex.gif}" alt="${ex.nome}" />
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    if (musculacao.length) {
-      const grupoMuscular = gruposMuscularesSemana[dia] || "";
-      container.innerHTML += `<h2>Musculação: ${grupoMuscular}</h2>`;
-      musculacao.forEach((ex, index) => {
-        const id = `${dia}-musculacao-${index}`;
-        container.innerHTML += `
-          <div class="exercicio">
-            <input type="checkbox" id="${id}" ${
-          estadoCheckboxes[id] ? "checked" : ""
-        } />
-            <p><strong>${ex.nome}:</strong> ${ex.series}</p>
-            <div class="gif-container">
-              <img src="${ex.gif}" alt="${ex.nome}" />
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    const checkboxes = document.querySelectorAll(
-      `#conteudo-dia input[type='checkbox']`
-    );
-    const marcados = Array.from(checkboxes).filter((cb) => cb.checked).length;
-    const total = checkboxes.length;
-    const porcentagem = total ? Math.round((marcados / total) * 100) : 0;
-
-    const barra = document.getElementById(`barra-${dia}`);
-    if (barra) {
-      barra.style.setProperty("--before-width", `${porcentagem}%`);
-      const spanPorcentagem = barra.querySelector(".porcentagem");
-      if (spanPorcentagem) {
-        spanPorcentagem.textContent = `${porcentagem}%`;
-      }
-    }
-
-    const dataHoje = new Date().toISOString().split("T")[0];
-    const ultimoRegistro = historico
-      .filter((r) => r.dia === dia)
-      .sort((a, b) => new Date(b.data) - new Date(a.data))[0];
-
-    if (!ultimoRegistro || ultimoRegistro.porcentagem !== porcentagem) {
-      historico = historico.filter(
-        (registro) => !(registro.data === dataHoje && registro.dia === dia)
-      );
-      historico.push({ data: dataHoje, dia, porcentagem });
-      localStorage.setItem("historicoTreino", JSON.stringify(historico));
-    }
-  });
-
-  mostrarDia(diaHoje);
 }
 
 function atualizarSemanasEMeses() {
@@ -753,33 +642,21 @@ function atualizarSemanasEMeses() {
   const hoje = new Date();
   const anoAtual = hoje.getFullYear();
 
-  const semanas = [
-    { inicio: 0, fim: 6, total: 0, count: 0 },
-    { inicio: 7, fim: 13, total: 0, count: 0 },
-    { inicio: 14, fim: 20, total: 0, count: 0 },
-    { inicio: 21, fim: 27, total: 0, count: 0 },
-    { inicio: 28, fim: 34, total: 0, count: 0 },
-    { inicio: 35, fim: 41, total: 0, count: 0 },
-    { inicio: 42, fim: 48, total: 0, count: 0 },
-    { inicio: 49, fim: 55, total: 0, count: 0 },
-    { inicio: 56, fim: 62, total: 0, count: 0 },
-    { inicio: 63, fim: 69, total: 0, count: 0 },
-  ];
+  const semanas = Array.from({ length: 10 }, (_, i) => ({
+    inicio: i * 7,
+    fim: i * 7 + 6,
+    total: 0,
+    count: 0,
+  }));
 
-  const meses = {};
-  const mesesOrdenados = [];
-
-  for (let i = 0; i < 12; i++) {
-    const chaveMes = `${anoAtual}-${i}`;
-    meses[chaveMes] = {
-      total: 0,
-      count: 0,
-      nome: new Date(anoAtual, i)
-        .toLocaleString("pt-BR", { month: "long" })
-        .replace(/^\w/, (c) => c.toUpperCase()),
-    };
-    mesesOrdenados.push(chaveMes);
-  }
+  const meses = Array.from({ length: 12 }, (_, i) => ({
+    chave: `${anoAtual}-${i}`,
+    total: 0,
+    count: 0,
+    nome: new Date(anoAtual, i)
+      .toLocaleString("pt-BR", { month: "long" })
+      .replace(/^\w/, (c) => c.toUpperCase()),
+  }));
 
   const registrosPorDia = {};
   historico.forEach(({ data, dia, porcentagem }) => {
@@ -792,9 +669,7 @@ function atualizarSemanasEMeses() {
     }
   });
 
-  const historicoFiltrado = Object.values(registrosPorDia);
-
-  historicoFiltrado.forEach(({ data, porcentagem, dia }) => {
+  Object.values(registrosPorDia).forEach(({ data, porcentagem }) => {
     const dataTreino = new Date(data);
     const diasPassados = Math.floor(
       (hoje - dataTreino) / (1000 * 60 * 60 * 24)
@@ -808,110 +683,110 @@ function atualizarSemanasEMeses() {
     });
 
     const chaveMes = `${dataTreino.getFullYear()}-${dataTreino.getMonth()}`;
-    if (meses[chaveMes]) {
-      meses[chaveMes].total += porcentagem;
-      meses[chaveMes].count++;
+    const mes = meses.find((m) => m.chave === chaveMes);
+    if (mes) {
+      mes.total += porcentagem;
+      mes.count++;
     }
   });
 
-  semanas.forEach((semana, index) => {
-    const barra = document.getElementById(`semana-${index + 1}`);
-    if (!barra) return;
-
-    const media =
-      semana.count >= 3 ? Math.round(semana.total / semana.count) : 0;
-    barra.style.setProperty("--before-width", `${media}%`);
-
-    const span = barra.querySelector(".porcentagem");
-    if (span) {
-      span.textContent = semana.count >= 3 ? `${media}%` : "0%";
+  semanas.forEach((semana, i) => {
+    const barra = document.getElementById(`semana-${i + 1}`);
+    if (barra) {
+      const media =
+        semana.count >= 3 ? Math.round(semana.total / semana.count) : 0;
+      barra.style.setProperty("--before-width", `${media}%`);
+      const span = barra.querySelector(".porcentagem");
+      if (span) span.textContent = semana.count >= 3 ? `${media}%` : "0%";
     }
   });
 
-  mesesOrdenados.forEach((mesData, i) => {
+  meses.forEach((mes, i) => {
     const barra = document.getElementById(`mes-${i + 1}`);
-    if (!barra) return;
-
-    const mesInfo = meses[mesData];
-
-    const spanNome = barra.querySelector(".nome");
-    if (spanNome) {
-      spanNome.textContent = mesInfo.nome;
-    }
-
-    const spanPerc = barra.querySelector(".porcentagem");
-    const media =
-      mesInfo.count >= 3 ? Math.round(mesInfo.total / mesInfo.count) : 0;
-    barra.style.setProperty("--before-width", `${media}%`);
-
-    if (spanPerc) {
-      spanPerc.textContent = mesInfo.count >= 3 ? `${media}%` : "0%";
+    if (barra) {
+      const media = mes.count >= 3 ? Math.round(mes.total / mes.count) : 0;
+      barra.style.setProperty("--before-width", `${media}%`);
+      const spanNome = barra.querySelector(".nome");
+      const spanPerc = barra.querySelector(".porcentagem");
+      if (spanNome) spanNome.textContent = mes.nome;
+      if (spanPerc) spanPerc.textContent = mes.count >= 3 ? `${media}%` : "0%";
     }
   });
 }
 
-function getNomeMes(mesIndex) {
-  const meses = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
-  ];
-  return meses[mesIndex];
-}
-
+// Funções de Estado
 function salvarCheckboxes() {
-  const estadoAtual = JSON.parse(
-    localStorage.getItem("checkboxesEstado") || "{}"
-  );
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach((checkbox) => {
-    estadoAtual[checkbox.id] = checkbox.checked;
+  const estado = {};
+  document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+    estado[checkbox.id] = checkbox.checked;
   });
-  localStorage.setItem("checkboxesEstado", JSON.stringify(estadoAtual));
+  localStorage.setItem("checkboxesEstado", JSON.stringify(estado));
 }
 
 function carregarCheckboxes() {
   const estado = JSON.parse(localStorage.getItem("checkboxesEstado") || "{}");
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach((checkbox) => {
+  document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
     if (estado[checkbox.id] !== undefined) {
       checkbox.checked = estado[checkbox.id];
     }
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM carregado");
+// Funções de Reset
+function resetarProgresso(tipo) {
+  if (tipo === "dias") {
+    dias.slice(1).forEach((dia) => {
+      const barra = document.getElementById(`barra-${dia}`);
+      if (barra) {
+        barra.style.setProperty("--before-width", "0%");
+        const span = barra.querySelector(".porcentagem");
+        if (span) span.textContent = "0%";
+      }
+    });
+    localStorage.removeItem("historicoTreino");
+    localStorage.removeItem("checkboxesEstado");
+  } else if (tipo === "semanas") {
+    for (let i = 1; i <= 10; i++) {
+      const barra = document.getElementById(`semana-${i}`);
+      if (barra) {
+        barra.style.setProperty("--before-width", "0%");
+        const span = barra.querySelector(".porcentagem");
+        if (span) span.textContent = "0%";
+      }
+    }
+    localStorage.removeItem("historicoTreino");
+  } else if (tipo === "meses") {
+    for (let i = 1; i <= 12; i++) {
+      const barra = document.getElementById(`mes-${i}`);
+      if (barra) {
+        barra.style.setProperty("--before-width", "0%");
+        const span = barra.querySelector(".porcentagem");
+        if (span) span.textContent = "0%";
+      }
+    }
+    localStorage.removeItem("historicoTreino");
+  }
+  atualizarSemanasEMeses();
+}
 
-  const aside = document.querySelector("aside");
-  const main = document.querySelector("main");
-  const btnProgresso = document.getElementById("abrir-progresso");
-  const btnConteudo = document.getElementById("abrir-conteudo");
-  const conteudoDia = document.getElementById("conteudo-dia");
-  const progressoDia = document.getElementById("progresso-dia");
-  const progressoSemanal = document.getElementById("progresso-semanal");
-  const progressoMensal = document.getElementById("progresso-mensal");
-  const botaoVerSemanal = document.getElementById("ver-semanal");
-  const botaoVerMensal = document.getElementById("ver-mensal");
-  const botaoVerDiario = document.getElementById("ver-diario");
+// Inicialização
+function inicializarApp() {
+  const hoje = new Date().getDay();
+  const diaHoje = dias[hoje] === "domingo" ? "segunda" : dias[hoje];
 
-  // Verifica se os elementos existem
-  if (!aside) console.error("Elemento 'aside' não encontrado");
-  if (!main) console.error("Elemento 'main' não encontrado");
-  if (!btnProgresso) console.error("Botão '#abrir-progresso' não encontrado");
-  if (!btnConteudo) console.error("Botão '#abrir-conteudo' não encontrado");
-  if (!conteudoDia) console.error("Elemento '#conteudo-dia' não encontrado");
+  // Limpar localStorage obsoleto
+  [
+    "historicoDias",
+    "exercicios-segunda",
+    "exercicios-terca",
+    "exercicios-quarta",
+    "exercicios-quinta",
+    "exercicios-sexta",
+  ].forEach((key) => {
+    localStorage.removeItem(key);
+  });
 
-  // Inicializa barras de semanas e meses a 0%
+  // Inicializar barras de progresso
   for (let i = 1; i <= 10; i++) {
     const barra = document.getElementById(`semana-${i}`);
     if (barra) {
@@ -927,163 +802,217 @@ document.addEventListener("DOMContentLoaded", () => {
       barra.style.setProperty("--before-width", "0%");
       const spanNome = barra.querySelector(".nome");
       const spanPerc = barra.querySelector(".porcentagem");
-      if (spanNome) spanNome.textContent = getNomeMes(i - 1);
+      if (spanNome)
+        spanNome.textContent = new Date(2025, i - 1)
+          .toLocaleString("pt-BR", { month: "long" })
+          .replace(/^\w/, (c) => c.toUpperCase());
       if (spanPerc) spanPerc.textContent = "0%";
     }
   }
 
-  // Limpa localStorage obsoleto
-  localStorage.removeItem("historicoDias");
-  localStorage.removeItem("exercicios-segunda");
-  localStorage.removeItem("exercicios-terca");
-  localStorage.removeItem("exercicios-quarta");
-  localStorage.removeItem("exercicios-quinta");
-  localStorage.removeItem("exercicios-sexta");
-
-  // Recupera progresso
-  recuperarProgressoDias();
-
+  // Carregar progresso inicial
   const historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
-  const diasDistintos = new Set(historico.map((r) => `${r.data}-${r.dia}`));
-  if (diasDistintos.size >= 3) {
+  if (new Set(historico.map((r) => `${r.data}-${r.dia}`)).size >= 3) {
     atualizarSemanasEMeses();
   }
 
-  // Inicializa visibilidade do progresso
-  if (progressoDia) progressoDia.style.display = "block";
-  if (progressoSemanal) progressoSemanal.style.display = "none";
-  if (progressoMensal) progressoMensal.style.display = "none";
+  // Mostrar dia inicial
+  mostrarDia(diaHoje);
+}
 
-  // Inicializa aside como oculto
-  if (aside) {
-    aside.classList.add("oculto");
-    aside.classList.remove("mostrar");
-    console.log("Aside inicializado como oculto:", aside.classList);
+// Eventos
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM carregado");
+
+  const elements = {
+    aside: document.querySelector("aside"),
+    btnProgresso: document.getElementById("abrir-progresso"),
+    btnConteudo: document.getElementById("abrir-conteudo"),
+    conteudoDia: document.getElementById("conteudo-dia"),
+    progressoDia: document.getElementById("progresso-dia"),
+    progressoSemanal: document.getElementById("progresso-semanal"),
+    progressoMensal: document.getElementById("progresso-mensal"),
+    botaoVerDiario: document.getElementById("ver-diario"),
+    botaoVerSemanal: document.getElementById("ver-semanal"),
+    botaoVerMensal: document.getElementById("ver-mensal"),
+    botaoModoEscuro: document.getElementById("toggle-dark-mode"),
+    btnResetDias: document.getElementById("btn-reset-dias"),
+    btnResetSemana: document.getElementById("btn-reset-semana"),
+    btnResetMes: document.getElementById("btn-reset-mes"),
+  };
+
+  // Validação de elementos
+  Object.entries(elements).forEach(([key, el]) => {
+    if (!el) console.warn(`Elemento '${key}' não encontrado`);
+  });
+
+  // Inicializar aside
+  if (elements.aside) {
+    elements.aside.classList.add("oculto");
+    elements.aside.classList.remove("mostrar");
+    console.log("Aside inicializado como oculto");
   }
 
-  // Função para alternar visibilidade do aside
+  // Modo escuro
+  if (elements.botaoModoEscuro) {
+    elements.botaoModoEscuro.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      console.log("Modo escuro:", document.body.classList.contains("dark"));
+    });
+  }
+
+  // Alternar aside
   function alternarAside() {
-    if (!aside || !main || !btnProgresso || !btnConteudo || !conteudoDia)
+    if (
+      !elements.aside ||
+      !elements.btnProgresso ||
+      !elements.btnConteudo ||
+      !elements.conteudoDia
+    ) {
+      console.error(
+        "Elementos necessários não encontrados para alternar aside"
+      );
       return;
-
-    const isMobile = window.innerWidth <= 768;
-
-    aside.classList.toggle("mostrar");
-    aside.classList.toggle("oculto");
-
-    if (isMobile) {
-      if (aside.classList.contains("mostrar")) {
-        // Mostra o progresso e troca o ícone para treino
-        progressoDia.style.display = "block";
-        conteudoDia.style.display = "none";
-        btnProgresso.style.display = "none";
-        btnConteudo.style.display = "block";
-        btnConteudo.innerHTML = `<i class="icone-treino"></i>`; // Ícone de treino
-      } else {
-        // Mostra os exercícios e troca o ícone para progresso
-        progressoDia.style.display = "none";
-        conteudoDia.style.display = "grid";
-        btnProgresso.style.display = "block";
-        btnConteudo.style.display = "none";
-        btnProgresso.innerHTML = `<i class="icone-progresso"></i>`; // Ícone de progresso
-      }
-    } else {
-      // No desktop, main e conteudoDia sempre visíveis
-      conteudoDia.style.display = "grid";
-      progressoDia.style.display = "block";
-      btnConteudo.style.display = "none"; // Garante que #abrir-conteudo esteja oculto
     }
 
-    console.log("Classes do aside após alternar:", aside.classList);
-    console.log("Visibilidade de conteudoDia:", conteudoDia.style.display);
-    console.log("Visibilidade de progressoDia:", progressoDia.style.display);
-    console.log("Visibilidade de btnProgresso:", btnProgresso.style.display);
-    console.log("Visibilidade de btnConteudo:", btnConteudo.style.display);
+    console.log(
+      "Alternando aside, classes atuais:",
+      elements.aside.classList.toString()
+    );
+    elements.aside.classList.toggle("mostrar");
+    elements.aside.classList.toggle("oculto");
+    console.log("Novas classes do aside:", elements.aside.classList.toString());
+
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      if (elements.aside.classList.contains("mostrar")) {
+        elements.conteudoDia.style.display = "none";
+        elements.btnProgresso.style.display = "none";
+        elements.btnConteudo.style.display = "block";
+        if (elements.progressoDia)
+          elements.progressoDia.style.display = "block";
+        if (elements.progressoSemanal)
+          elements.progressoSemanal.style.display = "none";
+        if (elements.progressoMensal)
+          elements.progressoMensal.style.display = "none";
+        console.log("Mobile: Aside mostrado, conteudo-dia oculto");
+      } else {
+        elements.conteudoDia.style.display = "grid";
+        elements.btnProgresso.style.display = "block";
+        elements.btnConteudo.style.display = "none";
+        console.log("Mobile: Aside oculto, conteudo-dia mostrado");
+      }
+    } else {
+      elements.conteudoDia.style.display = "grid";
+      elements.btnProgresso.style.display = "block";
+      elements.btnConteudo.style.display = "none";
+      console.log("Desktop: Aside alternado, conteudo-dia mantido visível");
+
+      // Garantir que o dia atual esteja renderizado
+      const btnAtivo = document.querySelector(".menu button.ativo");
+      if (btnAtivo) {
+        const dia = btnAtivo.getAttribute("onclick")?.match(/'([^']+)'/)?.[1];
+        if (dia) {
+          console.log(`Re-renderizando ${dia} no desktop`);
+          mostrarDia(dia);
+        } else {
+          console.warn("Nenhum dia ativo encontrado");
+        }
+      } else {
+        console.warn("Nenhum botão ativo encontrado no menu");
+      }
+    }
   }
 
-  // Eventos para os botões
-  if (btnProgresso) {
-    btnProgresso.addEventListener("click", (e) => {
+  if (elements.btnProgresso) {
+    elements.btnProgresso.addEventListener("click", (e) => {
       e.preventDefault();
       console.log("Botão progresso clicado");
       alternarAside();
     });
+  } else {
+    console.error("Botão #abrir-progresso não encontrado");
   }
 
-  if (btnConteudo) {
-    btnConteudo.addEventListener("click", (e) => {
+  if (elements.btnConteudo) {
+    elements.btnConteudo.addEventListener("click", (e) => {
       e.preventDefault();
       console.log("Botão conteúdo clicado");
       alternarAside();
     });
+  } else {
+    console.error("Botão #abrir-conteudo não encontrado");
   }
 
-  // Eventos para alternar progresso
-  if (botaoVerSemanal) {
-    botaoVerSemanal.addEventListener("click", () => {
-      console.log("Ver semanal clicado");
-      if (progressoDia) progressoDia.style.display = "none";
-      if (progressoSemanal) progressoSemanal.style.display = "block";
-      if (progressoMensal) progressoMensal.style.display = "none";
-    });
-  }
-
-  if (botaoVerMensal) {
-    botaoVerMensal.addEventListener("click", () => {
-      console.log("Ver mensal clicado");
-      if (progressoDia) progressoDia.style.display = "none";
-      if (progressoSemanal) progressoSemanal.style.display = "none";
-      if (progressoMensal) progressoMensal.style.display = "block";
-    });
-  }
-
-  if (botaoVerDiario) {
-    botaoVerDiario.addEventListener("click", () => {
+  // Alternar progresso
+  if (elements.botaoVerDiario) {
+    elements.botaoVerDiario.addEventListener("click", () => {
       console.log("Ver diário clicado");
-      if (progressoDia) progressoDia.style.display = "block";
-      if (progressoSemanal) progressoSemanal.style.display = "none";
-      if (progressoMensal) progressoMensal.style.display = "none";
+      if (elements.progressoDia) elements.progressoDia.style.display = "block";
+      if (elements.progressoSemanal)
+        elements.progressoSemanal.style.display = "none";
+      if (elements.progressoMensal)
+        elements.progressoMensal.style.display = "none";
     });
   }
-});
 
-function alternarConteudoMobile() {
-  const isMobile = window.innerWidth <= 768;
-  const conteudoDia = document.getElementById("conteudo-dia");
-  const aside = document.querySelector("aside");
-  const btnProgresso = document.getElementById("abrir-progresso");
-  const btnConteudo = document.getElementById("abrir-conteudo");
-  const header = document.querySelector("header.top-bar");
-  const menu = document.querySelector("nav.menu");
-
-  if (isMobile) {
-    if (conteudoDia.style.display !== "none") {
-      // Substituir conteúdo-dia pelo aside
-      conteudoDia.style.display = "none";
-      aside.style.display = "block";
-      btnProgresso.style.display = "none";
-      btnConteudo.style.display = "block";
-      header.style.display = "block"; // Garantir que o header permaneça visível
-      menu.style.display = "block"; // Garantir que o menu permaneça visível
-    } else {
-      // Voltar a exibir conteúdo-dia
-      conteudoDia.style.display = "block";
-      aside.style.display = "none";
-      btnProgresso.style.display = "block";
-      btnConteudo.style.display = "none";
-      header.style.display = "block"; // Garantir que o header permaneça visível
-      menu.style.display = "block"; // Garantir que o menu permaneça visível
-    }
+  if (elements.botaoVerSemanal) {
+    elements.botaoVerSemanal.addEventListener("click", () => {
+      console.log("Ver semanal clicado");
+      if (elements.progressoDia) elements.progressoDia.style.display = "none";
+      if (elements.progressoSemanal)
+        elements.progressoSemanal.style.display = "block";
+      if (elements.progressoMensal)
+        elements.progressoMensal.style.display = "none";
+    });
   }
-}
 
-// Eventos para alternar entre progresso e exercícios
-document.getElementById("abrir-progresso").addEventListener("click", (e) => {
-  e.preventDefault();
-  alternarConteudoMobile();
-});
+  if (elements.botaoVerMensal) {
+    elements.botaoVerMensal.addEventListener("click", () => {
+      console.log("Ver mensal clicado");
+      if (elements.progressoDia) elements.progressoDia.style.display = "none";
+      if (elements.progressoSemanal)
+        elements.progressoSemanal.style.display = "none";
+      if (elements.progressoMensal)
+        elements.progressoMensal.style.display = "block";
+    });
+  }
 
-document.getElementById("abrir-conteudo").addEventListener("click", (e) => {
-  e.preventDefault();
-  alternarConteudoMobile();
+  // Reset
+  if (elements.btnResetDias) {
+    elements.btnResetDias.addEventListener("click", () => {
+      console.log("Reset dias clicado");
+      resetarProgresso("dias");
+    });
+  }
+
+  if (elements.btnResetSemana) {
+    elements.btnResetSemana.addEventListener("click", () => {
+      console.log("Reset semanas clicado");
+      resetarProgresso("semanas");
+    });
+  }
+
+  if (elements.btnResetMes) {
+    elements.btnResetMes.addEventListener("click", () => {
+      console.log("Reset meses clicado");
+      resetarProgresso("meses");
+    });
+  }
+
+  // Checkboxes
+  document.addEventListener("change", (e) => {
+    if (e.target.type === "checkbox") {
+      const container = e.target.closest(".exercicio");
+      container.classList.toggle("checked", e.target.checked);
+      salvarCheckboxes();
+      const btnAtivo = document.querySelector(".menu button.ativo");
+      if (btnAtivo) {
+        const dia = btnAtivo.getAttribute("onclick")?.match(/'([^']+)'/)?.[1];
+        if (dia) atualizarProgressoDia(dia);
+      }
+    }
+  });
+
+  inicializarApp();
 });
