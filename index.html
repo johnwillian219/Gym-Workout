@@ -3,10 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Treino Semanal</title>
+    <title>Treino da Semana</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-
   <body>
     <div class="layout">
       <!-- CONTEÚDO PRINCIPAL -->
@@ -14,19 +13,22 @@
         <div class="container">
           <header class="top-bar">
             <h1>Treino da Semana 🏋️‍♂️</h1>
+
+            <!-- Botão para abrir o progresso -->
             <button id="abrir-progresso" title="Mostrar progresso">
               <img
                 src="icone/progresso.svg"
                 alt="Ícone de Progresso"
                 class="icon"
               />
-              <button id="abrir-conteudo" title="Mostrar progresso">
-              <img
-                src="icone/treino.svg"
-                alt="Ícone de Treino"
-                class="icon"
-              />
             </button>
+
+            <!-- Botão para abrir o conteúdo -->
+            <button id="abrir-conteudo" title="Mostrar conteúdo">
+              <img src="icone/treino.svg" alt="Ícone de Treino" class="icon" />
+            </button>
+
+            <!-- Botão para alternar o modo claro/escuro -->
             <button id="toggle-dark-mode" title="Alternar modo claro/escuro">
               <img src="icone/moon.svg" alt="Modo escuro" class="icon" />
             </button>
@@ -42,256 +44,255 @@
           </nav>
 
           <div id="conteudo-dia" class="conteudo"></div>
-      
 
-      <!-- ASIDE FIXO COM PROGRESSO -->
-      <aside>
-        <section class="progresso-dia" id="progresso-dia">
-          <div class="aside-btn">
-            <button class="top">
-              <h3>
-                <span class="titulo-progresso"> Diário</span>
-              </h3>
-              <img src="icone/progresso.svg" alt="Reiniciar dias" />
-            </button>
-            <button
-              class="alternar-progresso"
-              id="ver-semanal"
-              title="Ver progresso semanal"
-            >
-              📅 Ver Semanal
-            </button>
-            <button
-              id="btn-reset-dias"
-              class="reset"
-              title="Reiniciar dias da semana"
-            >
-              <img src="icone/reset.svg" alt="Reiniciar dias" />
-            </button>
-          </div>
+          <!-- ASIDE FIXO COM PROGRESSO -->
+          <aside>
+            <section class="progresso-dia" id="progresso-dia">
+              <div class="aside-btn">
+                <button class="top">
+                  <h3>
+                    <span class="titulo-progresso"> Diário</span>
+                  </h3>
+                  <img src="icone/progresso.svg" alt="Reiniciar dias" />
+                </button>
+                <button
+                  class="alternar-progresso"
+                  id="ver-semanal"
+                  title="Ver progresso semanal"
+                >
+                  📅 Ver Semanal
+                </button>
+                <button
+                  id="btn-reset-dias"
+                  class="reset"
+                  title="Reiniciar dias da semana"
+                >
+                  <img src="icone/reset.svg" alt="Reiniciar dias" />
+                </button>
+              </div>
 
-          <!-- barras de progresso do dia -->
-          <div class="barra" id="barra-segunda">
-            <span
-              ><span class="nome">Segunda-feira</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="barra-terca">
-            <span
-              ><span class="nome">Terça-feira</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="barra-quarta">
-            <span
-              ><span class="nome">Quarta-feira</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="barra-quinta">
-            <span
-              ><span class="nome">Quinta-feira</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="barra-sexta">
-            <span
-              ><span class="nome">Sexta-feira</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="barra-sabado">
-            <span
-              ><span class="nome">Sabado</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-        </section>
+              <!-- barras de progresso do dia -->
+              <div class="barra" id="barra-segunda">
+                <span
+                  ><span class="nome">Segunda-feira</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="barra-terca">
+                <span
+                  ><span class="nome">Terça-feira</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="barra-quarta">
+                <span
+                  ><span class="nome">Quarta-feira</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="barra-quinta">
+                <span
+                  ><span class="nome">Quinta-feira</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="barra-sexta">
+                <span
+                  ><span class="nome">Sexta-feira</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="barra-sabado">
+                <span
+                  ><span class="nome">Sabado</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+            </section>
 
-        <section class="progresso-semanal" id="progresso-semanal">
-          <div class="aside-btn">
-            <button class="top">
-              <h3>
-                <span class="titulo-progresso"> Semanal</span>
-              </h3>
-              <img src="icone/progresso.svg" alt="Reiniciar dias" />
-            </button>
-            <button
-              class="alternar-progresso"
-              id="ver-mensal"
-              title="Ver progresso mensal"
-            >
-              📅 Ver Mensal
-            </button>
-            <button
-              id="btn-reset-semana"
-              class="reset"
-              title="Reiniciar semana"
-            >
-              <img src="icone/reset.svg" alt="Reiniciar semana" />
-            </button>
-          </div>
+            <section class="progresso-semanal" id="progresso-semanal">
+              <div class="aside-btn">
+                <button class="top">
+                  <h3>
+                    <span class="titulo-progresso"> Semanal</span>
+                  </h3>
+                  <img src="icone/progresso.svg" alt="Reiniciar dias" />
+                </button>
+                <button
+                  class="alternar-progresso"
+                  id="ver-mensal"
+                  title="Ver progresso mensal"
+                >
+                  📅 Ver Mensal
+                </button>
+                <button
+                  id="btn-reset-semana"
+                  class="reset"
+                  title="Reiniciar semana"
+                >
+                  <img src="icone/reset.svg" alt="Reiniciar semana" />
+                </button>
+              </div>
 
-          <div class="barra" id="semana-1">
-            <span
-              ><span class="nome">Semana 1</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="semana-2">
-            <span
-              ><span class="nome">Semana 2</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="semana-3">
-            <span
-              ><span class="nome">Semana 3</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="semana-4">
-            <span
-              ><span class="nome">Semana 4</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="semana-5">
-            <span
-              ><span class="nome">Semana 5</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="semana-6">
-            <span
-              ><span class="nome">Semana 6</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="semana-7">
-            <span
-              ><span class="nome">Semana 7</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="semana-8">
-            <span
-              ><span class="nome">Semana 8</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="semana-9">
-            <span
-              ><span class="nome">Semana 9</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="semana-10">
-            <span
-              ><span class="nome">Semana 10</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-        </section>
+              <div class="barra" id="semana-1">
+                <span
+                  ><span class="nome">Semana 1</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="semana-2">
+                <span
+                  ><span class="nome">Semana 2</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="semana-3">
+                <span
+                  ><span class="nome">Semana 3</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="semana-4">
+                <span
+                  ><span class="nome">Semana 4</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="semana-5">
+                <span
+                  ><span class="nome">Semana 5</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="semana-6">
+                <span
+                  ><span class="nome">Semana 6</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="semana-7">
+                <span
+                  ><span class="nome">Semana 7</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="semana-8">
+                <span
+                  ><span class="nome">Semana 8</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="semana-9">
+                <span
+                  ><span class="nome">Semana 9</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="semana-10">
+                <span
+                  ><span class="nome">Semana 10</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+            </section>
 
-        <section
-          class="progresso-mensal"
-          id="progresso-mensal"
-          style="display: none"
-        >
-          <div class="aside-btn">
-            <button class="top">
-              <h3>
-                <span class="titulo-progresso"> Mensal </span>
-              </h3>
-              <img src="icone/progresso.svg" alt="Reiniciar dias" />
-            </button>
-            <button
-              class="alternar-progresso"
-              id="ver-diario"
-              title="Ver progresso diário"
+            <section
+              class="progresso-mensal"
+              id="progresso-mensal"
+              style="display: none"
             >
-              📅 Ver Diário
-            </button>
-            <button id="btn-reset-mes" class="reset" title="Reiniciar mês">
-              <img src="icone/reset.svg" alt="Reiniciar mês" />
-            </button>
-          </div>
-          <div class="barra" id="mes-1">
-            <span
-              ><span class="nome">Mês 1</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-2">
-            <span
-              ><span class="nome">Mês 2</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-3">
-            <span
-              ><span class="nome">Mês 3</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-4">
-            <span
-              ><span class="nome">Mês 4</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-5">
-            <span
-              ><span class="nome">Mês 5</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-6">
-            <span
-              ><span class="nome">Mês 6</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-7">
-            <span
-              ><span class="nome">Mês 7</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-8">
-            <span
-              ><span class="nome">Mês 8</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-9">
-            <span
-              ><span class="nome">Mês 9</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-10">
-            <span
-              ><span class="nome">Mês 10</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-11">
-            <span
-              ><span class="nome">Mês 11</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-          <div class="barra" id="mes-12">
-            <span
-              ><span class="nome">Mês 12</span
-              ><span class="porcentagem">0%</span></span
-            >
-          </div>
-        </section>
-      </aside>
+              <div class="aside-btn">
+                <button class="top">
+                  <h3>
+                    <span class="titulo-progresso"> Mensal </span>
+                  </h3>
+                  <img src="icone/progresso.svg" alt="Reiniciar dias" />
+                </button>
+                <button
+                  class="alternar-progresso"
+                  id="ver-diario"
+                  title="Ver progresso diário"
+                >
+                  📅 Ver Diário
+                </button>
+                <button id="btn-reset-mes" class="reset" title="Reiniciar mês">
+                  <img src="icone/reset.svg" alt="Reiniciar mês" />
+                </button>
+              </div>
+              <div class="barra" id="mes-1">
+                <span
+                  ><span class="nome">Mês 1</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-2">
+                <span
+                  ><span class="nome">Mês 2</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-3">
+                <span
+                  ><span class="nome">Mês 3</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-4">
+                <span
+                  ><span class="nome">Mês 4</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-5">
+                <span
+                  ><span class="nome">Mês 5</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-6">
+                <span
+                  ><span class="nome">Mês 6</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-7">
+                <span
+                  ><span class="nome">Mês 7</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-8">
+                <span
+                  ><span class="nome">Mês 8</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-9">
+                <span
+                  ><span class="nome">Mês 9</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-10">
+                <span
+                  ><span class="nome">Mês 10</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-11">
+                <span
+                  ><span class="nome">Mês 11</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+              <div class="barra" id="mes-12">
+                <span
+                  ><span class="nome">Mês 12</span
+                  ><span class="porcentagem">0%</span></span
+                >
+              </div>
+            </section>
+          </aside>
         </div>
       </main>
     </div>
