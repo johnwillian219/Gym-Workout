@@ -973,26 +973,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (isMobile) {
       if (aside.classList.contains("mostrar")) {
-        // Oculta apenas o conteúdo dos exercícios
+        // Mostra o progresso e troca o ícone para treino
+        progressoDia.style.display = "block";
         conteudoDia.style.display = "none";
-        // Troca os botões
         btnProgresso.style.display = "none";
         btnConteudo.style.display = "block";
+        btnConteudo.innerHTML = `<i class="icone-treino"></i>`; // Ícone de treino
       } else {
-        // Mostra o conteúdo dos exercícios
+        // Mostra os exercícios e troca o ícone para progresso
+        progressoDia.style.display = "none";
         conteudoDia.style.display = "grid";
-        // Troca os botões
         btnProgresso.style.display = "block";
         btnConteudo.style.display = "none";
+        btnProgresso.innerHTML = `<i class="icone-progresso"></i>`; // Ícone de progresso
       }
     } else {
       // No desktop, main e conteudoDia sempre visíveis
       conteudoDia.style.display = "grid";
+      progressoDia.style.display = "block";
       btnConteudo.style.display = "none"; // Garante que #abrir-conteudo esteja oculto
     }
 
     console.log("Classes do aside após alternar:", aside.classList);
     console.log("Visibilidade de conteudoDia:", conteudoDia.style.display);
+    console.log("Visibilidade de progressoDia:", progressoDia.style.display);
     console.log("Visibilidade de btnProgresso:", btnProgresso.style.display);
     console.log("Visibilidade de btnConteudo:", btnConteudo.style.display);
   }
@@ -1041,4 +1045,45 @@ document.addEventListener("DOMContentLoaded", () => {
       if (progressoMensal) progressoMensal.style.display = "none";
     });
   }
+});
+
+function alternarConteudoMobile() {
+  const isMobile = window.innerWidth <= 768;
+  const conteudoDia = document.getElementById("conteudo-dia");
+  const aside = document.querySelector("aside");
+  const btnProgresso = document.getElementById("abrir-progresso");
+  const btnConteudo = document.getElementById("abrir-conteudo");
+  const header = document.querySelector("header.top-bar");
+  const menu = document.querySelector("nav.menu");
+
+  if (isMobile) {
+    if (conteudoDia.style.display !== "none") {
+      // Substituir conteúdo-dia pelo aside
+      conteudoDia.style.display = "none";
+      aside.style.display = "block";
+      btnProgresso.style.display = "none";
+      btnConteudo.style.display = "block";
+      header.style.display = "block"; // Garantir que o header permaneça visível
+      menu.style.display = "block"; // Garantir que o menu permaneça visível
+    } else {
+      // Voltar a exibir conteúdo-dia
+      conteudoDia.style.display = "block";
+      aside.style.display = "none";
+      btnProgresso.style.display = "block";
+      btnConteudo.style.display = "none";
+      header.style.display = "block"; // Garantir que o header permaneça visível
+      menu.style.display = "block"; // Garantir que o menu permaneça visível
+    }
+  }
+}
+
+// Eventos para alternar entre progresso e exercícios
+document.getElementById("abrir-progresso").addEventListener("click", (e) => {
+  e.preventDefault();
+  alternarConteudoMobile();
+});
+
+document.getElementById("abrir-conteudo").addEventListener("click", (e) => {
+  e.preventDefault();
+  alternarConteudoMobile();
 });

@@ -757,20 +757,30 @@ body.dark .progresso-mensal {
   }
 
   aside {
-    width: 380px;
-    min-width: 320px;
+    width: 100%; /* Ocupar toda a largura */
     background-color: var(--bg-aside, #ffffff);
     padding: 1rem;
     border-radius: 0;
     box-shadow: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    max-height: 100%;
-    overflow-y: auto;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    z-index: 998;
+    position: relative; /* Remover o posicionamento fixo */
+    top: 0; /* Garantir que ele fique no fluxo normal */
+    height: auto; /* Ajustar a altura automaticamente */
+    max-height: none; /* Permitir que o conteúdo defina a altura */
+    overflow-y: auto; /* Habilitar rolagem se necessário */
+    z-index: auto; /* Remover o z-index para evitar sobreposição */
+  }
+
+  header.top-bar,
+  nav.menu {
+    display: block; /* Garantir que header e menu sejam exibidos */
+  }
+
+  aside {
+    display: none; /* Ocultar aside por padrão em dispositivos móveis */
+  }
+
+  #conteudo-dia {
+    display: block; /* Exibir conteúdo-dia por padrão */
   }
 
   aside.mostrar {
