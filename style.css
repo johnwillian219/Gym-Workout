@@ -433,7 +433,7 @@ main {
     overflow-y: auto;
     transform: translateY(20px);
     opacity: 0;
-    padding: 0.75rem; /* Mantido para reduzir espaços laterais */
+    padding: 0.75rem;
   }
   #aside-progresso.mostrar {
     display: flex;
@@ -460,12 +460,32 @@ main {
 }
 
 @media (max-width: 768px) {
-  .menu-mobile {
-    display: block;
-    background: var(--card-bg-light);
-    padding: 1rem;
-    border-bottom: 1px solid #e9ecef;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  .menu-mobile .top-bar h1 {
+    margin: 0;
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .menu-mobile .top-bar div {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .menu-mobile .top-bar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  .menu-mobile .top-bar button img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
+      hue-rotate(184deg) brightness(96%) contrast(95%);
+    transition: var(--transition);
+  }
+  .menu-mobile .top-bar button:hover img {
+    transform: scale(1.1);
   }
   #aside-progresso.mostrar .menu-mobile {
     display: block;
@@ -615,14 +635,20 @@ main {
 }
 
 @media (max-width: 768px) {
+  .aside-btn .alternar-progresso,
   .aside-btn .reset {
-    display: none; /* Oculta .reset no .aside-btn no mobile */
+    display: none;
+  }
+  .aside-btn {
+    align-items: center;
+    justify-content: center;
   }
 }
 
 @media (min-width: 769px) {
+  .aside-btn .alternar-progresso,
   .aside-btn .reset {
-    display: block; /* Mantém .reset visível no desktop */
+    display: block;
   }
 }
 
@@ -662,13 +688,53 @@ main {
     padding: 1rem;
     box-sizing: border-box;
   }
-  .aside-btn {
-    align-items: center;
-    justify-content: center;
+}
+
+/* Botão Alternar Progresso Mobile */
+.progresso-dia .alternar-progresso-mobile,
+.progresso-semanal .alternar-progresso-mobile,
+.progresso-mensal .alternar-progresso-mobile {
+  background: linear-gradient(135deg, #e8ecef, #dfe6e9);
+  color: var(--text-light);
+  border: none;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  display: block;
+  margin: 1rem auto 0;
+  width: 100%;
+}
+
+.progresso-dia .alternar-progresso-mobile:hover,
+.progresso-semanal .alternar-progresso-mobile:hover,
+.progresso-mensal .alternar-progresso-mobile:hover {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: white;
+  transform: scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+@media (max-width: 768px) {
+  .progresso-dia .alternar-progresso-mobile,
+  .progresso-semanal .alternar-progresso-mobile,
+  .progresso-mensal .alternar-progresso-mobile {
+    display: block;
   }
 }
 
-/* Botão Reset Mobile (após barras) */
+@media (min-width: 769px) {
+  .progresso-dia .alternar-progresso-mobile,
+  .progresso-semanal .alternar-progresso-mobile,
+  .progresso-mensal .alternar-progresso-mobile {
+    display: none;
+  }
+}
+
+/* Botão Reset Mobile */
 .progresso-dia .reset-mobile,
 .progresso-semanal .reset-mobile,
 .progresso-mensal .reset-mobile {
@@ -713,7 +779,7 @@ main {
   .progresso-dia .reset-mobile,
   .progresso-semanal .reset-mobile,
   .progresso-mensal .reset-mobile {
-    display: block; /* Visível no mobile */
+    display: block;
   }
 }
 
@@ -721,19 +787,27 @@ main {
   .progresso-dia .reset-mobile,
   .progresso-semanal .reset-mobile,
   .progresso-mensal .reset-mobile {
-    display: none; /* Oculto no desktop */
+    display: none;
   }
 }
 
-/* Modo Escuro para Reset */
+/* Modo Escuro */
+body.dark .aside-btn .alternar-progresso,
 body.dark .aside-btn .reset,
+body.dark .progresso-dia .alternar-progresso-mobile,
+body.dark .progresso-semanal .alternar-progresso-mobile,
+body.dark .progresso-mensal .alternar-progresso-mobile,
 body.dark .progresso-dia .reset-mobile,
 body.dark .progresso-semanal .reset-mobile,
 body.dark .progresso-mensal .reset-mobile {
   background: linear-gradient(135deg, #4b5464, #353b48);
 }
 
+body.dark .aside-btn .alternar-progresso:hover,
 body.dark .aside-btn .reset:hover,
+body.dark .progresso-dia .alternar-progresso-mobile:hover,
+body.dark .progresso-semanal .alternar-progresso-mobile:hover,
+body.dark .progresso-mensal .alternar-progresso-mobile:hover,
 body.dark .progresso-dia .reset-mobile:hover,
 body.dark .progresso-semanal .reset-mobile:hover,
 body.dark .progresso-mensal .reset-mobile:hover {

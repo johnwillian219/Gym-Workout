@@ -910,64 +910,71 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Alternar visualização de progresso
-  const verDiario = document.getElementById("ver-diario");
-  const verSemanal = document.getElementById("ver-semanal");
-  const verMensal = document.getElementById("ver-mensal");
   const progressoDia = document.getElementById("progresso-dia");
   const progressoSemanal = document.getElementById("progresso-semanal");
   const progressoMensal = document.getElementById("progresso-mensal");
 
-  if (verDiario) {
-    verDiario.addEventListener("click", () => {
-      console.log("Ver diário clicado");
-      if (progressoDia) progressoDia.style.display = "block";
-      if (progressoSemanal) progressoSemanal.style.display = "none";
-      if (progressoMensal) progressoMensal.style.display = "none";
-    });
-  }
+  const alternarProgressoButtons = [
+    { id: "ver-diario", mobileId: "ver-diario-mobile", view: "dia" },
+    { id: "ver-semanal", mobileId: "ver-semanal-mobile", view: "semanal" },
+    { id: "ver-mensal", mobileId: "ver-mensal-mobile", view: "mensal" },
+  ];
 
-  if (verSemanal) {
-    verSemanal.addEventListener("click", () => {
-      console.log("Ver semanal clicado");
-      if (progressoDia) progressoDia.style.display = "none";
-      if (progressoSemanal) progressoSemanal.style.display = "block";
-      if (progressoMensal) progressoMensal.style.display = "none";
+  alternarProgressoButtons.forEach(({ id, mobileId, view }) => {
+    const buttons = [
+      document.getElementById(id),
+      document.getElementById(mobileId),
+    ].filter(Boolean);
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        console.log(`Ver ${view} clicado`);
+        if (progressoDia)
+          progressoDia.style.display = view === "dia" ? "block" : "none";
+        if (progressoSemanal)
+          progressoSemanal.style.display =
+            view === "semanal" ? "block" : "none";
+        if (progressoMensal)
+          progressoMensal.style.display = view === "mensal" ? "block" : "none";
+        buttons.forEach((b) => b.classList.add("active"));
+        alternarProgressoButtons
+          .filter((other) => other.view !== view)
+          .forEach(({ id, mobileId }) => {
+            [document.getElementById(id), document.getElementById(mobileId)]
+              .filter(Boolean)
+              .forEach((b) => b.classList.remove("active"));
+          });
+      });
     });
-  }
-
-  if (verMensal) {
-    verMensal.addEventListener("click", () => {
-      console.log("Ver mensal clicado");
-      if (progressoDia) progressoDia.style.display = "none";
-      if (progressoSemanal) progressoSemanal.style.display = "none";
-      if (progressoMensal) progressoMensal.style.display = "block";
-    });
-  }
+  });
 
   // Reset de progresso
-  const btnResetDias = document.getElementById("btn-reset-dias");
-  const btnResetSemana = document.getElementById("btn-reset-semana");
-  const btnResetMes = document.getElementById("btn-reset-mes");
+  const resetButtons = [
+    { id: "btn-reset-dias", mobileId: "btn-reset-dias-mobile", tipo: "dias" },
+    {
+      id: "btn-reset-semana",
+      mobileId: "btn-reset-semana-mobile",
+      tipo: "semanas",
+    },
+    { id: "btn-reset-mes", mobileId: "btn-reset-mes-mobile", tipo: "meses" },
+  ];
 
-  if (btnResetDias) {
-    btnResetDias.addEventListener("click", () => {
-      console.log("Reset dias clicado");
-      resetarProgresso("dias");
+  resetButtons.forEach(({ id, mobileId, tipo }) => {
+    const buttons = [
+      document.getElementById(id),
+      document.getElementById(mobileId),
+    ].filter(Boolean);
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        console.log(`Reset ${tipo} clicado`);
+        resetarProgresso(tipo);
+      });
     });
-  }
+  });
 
-  if (btnResetSemana) {
-    btnResetSemana.addEventListener("click", () => {
-      console.log("Reset semanas clicado");
-      resetarProgresso("semanas");
-    });
-  }
-
-  if (btnResetMes) {
-    btnResetMes.addEventListener("click", () => {
-      console.log("Reset meses clicado");
-      resetarProgresso("meses");
-    });
+  // Definir visualização padrão
+  const btnSemanal = document.getElementById("ver-semanal");
+  if (btnSemanal) {
+    btnSemanal.click(); // Simula clique para abrir progresso semanal
   }
 
   inicializarApp();
