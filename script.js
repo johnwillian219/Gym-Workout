@@ -586,6 +586,17 @@ function mostrarDia(dia) {
   atualizarEstadoExercicios();
   atualizarMenuAtivo(dia);
   atualizarProgressoDia(dia);
+
+  // Adicionar eventos aos checkboxes
+  document
+    .querySelectorAll("#conteudo-dia input[type='checkbox']")
+    .forEach((checkbox) => {
+      checkbox.addEventListener("change", () => {
+        salvarCheckboxes();
+        atualizarEstadoExercicios();
+        atualizarProgressoDia(dia);
+      });
+    });
 }
 
 function atualizarEstadoExercicios() {
@@ -601,7 +612,9 @@ function atualizarMenuAtivo(dia) {
   document.querySelectorAll(".menu button").forEach((btn) => {
     btn.classList.remove("ativo");
   });
-  const btnAtivo = document.querySelector(`.menu button[onclick*="${dia}"]`);
+  const btnAtivo = document.querySelector(
+    `.menu button[onclick="mostrarDia('${dia}')"]`
+  );
   if (btnAtivo) btnAtivo.classList.add("ativo");
 }
 
@@ -633,7 +646,7 @@ function salvarProgressoDia(dia, porcentagem) {
     (registro) => !(registro.data === dataHoje && registro.dia === dia)
   );
   historico.push({ data: dataHoje, dia, porcentagem });
-  historico = historico.slice(-150); // Limita a 150 registros
+  historico = historico.slice(-150);
   localStorage.setItem("historicoTreino", JSON.stringify(historico));
 }
 
@@ -767,6 +780,54 @@ function resetarProgresso(tipo) {
     localStorage.removeItem("historicoTreino");
   }
   atualizarSemanasEMeses();
+  const btnAtivo = document.querySelector(".menu button.ativo");
+  if (btnAtivo) {
+    const dia = btnAtivo.getAttribute("onclick")?.match(/'([^']+)'/)?.[1];
+    if (dia) mostrarDia(dia);
+  }
+}
+
+// Função para Alternar Aside
+function alternarAside() {
+  const aside = document.getElementById("aside-progresso");
+  const conteudo = document.getElementById("conteudo-dia");
+  const abrirProgressoBtns = document.querySelectorAll(".abrir-progresso");
+  const abrirConteudoBtns = document.querySelectorAll(".abrir-conteudo");
+
+  if (!aside || !conteudo) {
+    console.error(
+      "Elementos '#aside-progresso' ou '#conteudo-dia' não encontrados"
+    );
+    return;
+  }
+
+  if (aside.classList.contains("oculta")) {
+    aside.classList.remove("oculta");
+    aside.classList.add("mostrar");
+    conteudo.classList.remove("mostrar");
+    conteudo.classList.add("oculta");
+    abrirProgressoBtns.forEach((btn) => {
+      btn.classList.remove("mostrar");
+      btn.classList.add("oculta");
+    });
+    abrirConteudoBtns.forEach((btn) => {
+      btn.classList.remove("oculta");
+      btn.classList.add("mostrar");
+    });
+  } else {
+    aside.classList.remove("mostrar");
+    aside.classList.add("oculta");
+    conteudo.classList.remove("oculta");
+    conteudo.classList.add("mostrar");
+    abrirProgressoBtns.forEach((btn) => {
+      btn.classList.remove("oculta");
+      btn.classList.add("mostrar");
+    });
+    abrirConteudoBtns.forEach((btn) => {
+      btn.classList.remove("mostrar");
+      btn.classList.add("oculta");
+    });
+  }
 }
 
 // Inicialização
@@ -824,195 +885,93 @@ function inicializarApp() {
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM carregado");
 
-  const elements = {
-    aside: document.querySelector("aside"),
-    btnProgresso: document.getElementById("abrir-progresso"),
-    btnConteudo: document.getElementById("abrir-conteudo"),
-    conteudoDia: document.getElementById("conteudo-dia"),
-    progressoDia: document.getElementById("progresso-dia"),
-    progressoSemanal: document.getElementById("progresso-semanal"),
-    progressoMensal: document.getElementById("progresso-mensal"),
-    botaoVerDiario: document.getElementById("ver-diario"),
-    botaoVerSemanal: document.getElementById("ver-semanal"),
-    botaoVerMensal: document.getElementById("ver-mensal"),
-    botaoModoEscuro: document.getElementById("toggle-dark-mode"),
-    btnResetDias: document.getElementById("btn-reset-dias"),
-    btnResetSemana: document.getElementById("btn-reset-semana"),
-    btnResetMes: document.getElementById("btn-reset-mes"),
-  };
+  // Inicializar botões de alternância de aside
+  document
+    .querySelectorAll(".abrir-progresso, .abrir-conteudo")
+    .forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log(
+          `Botão ${
+            btn.classList.contains("abrir-progresso") ? "progresso" : "conteúdo"
+          } clicado`
+        );
+        alternarAside();
+      });
+    });
 
-  // Validação de elementos
-  Object.entries(elements).forEach(([key, el]) => {
-    if (!el) console.warn(`Elemento '${key}' não encontrado`);
+  // Inicializar botões de modo escuro
+  document.querySelectorAll(".toggle-dark-mode").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      btn.querySelector(".icon").src = isDark
+        ? "icone/sun.svg"
+        : "icone/moon.svg";
+      console.log("Modo escuro:", isDark);
+    });
   });
 
-  // Inicializar aside
-  if (elements.aside) {
-    elements.aside.classList.add("oculto");
-    elements.aside.classList.remove("mostrar");
-    console.log("Aside inicializado como oculto");
-  }
+  // Alternar visualização de progresso
+  const verDiario = document.getElementById("ver-diario");
+  const verSemanal = document.getElementById("ver-semanal");
+  const verMensal = document.getElementById("ver-mensal");
+  const progressoDia = document.getElementById("progresso-dia");
+  const progressoSemanal = document.getElementById("progresso-semanal");
+  const progressoMensal = document.getElementById("progresso-mensal");
 
-  // Modo escuro
-  if (elements.botaoModoEscuro) {
-    elements.botaoModoEscuro.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-      console.log("Modo escuro:", document.body.classList.contains("dark"));
-    });
-  }
-
-  // Alternar aside
-  function alternarAside() {
-    if (
-      !elements.aside ||
-      !elements.btnProgresso ||
-      !elements.btnConteudo ||
-      !elements.conteudoDia
-    ) {
-      console.error(
-        "Elementos necessários não encontrados para alternar aside"
-      );
-      return;
-    }
-
-    console.log(
-      "Alternando aside, classes atuais:",
-      elements.aside.classList.toString()
-    );
-    elements.aside.classList.toggle("mostrar");
-    elements.aside.classList.toggle("oculto");
-    console.log("Novas classes do aside:", elements.aside.classList.toString());
-
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile) {
-      if (elements.aside.classList.contains("mostrar")) {
-        elements.conteudoDia.style.display = "none";
-        elements.btnProgresso.style.display = "none";
-        elements.btnConteudo.style.display = "block";
-        if (elements.progressoDia)
-          elements.progressoDia.style.display = "block";
-        if (elements.progressoSemanal)
-          elements.progressoSemanal.style.display = "none";
-        if (elements.progressoMensal)
-          elements.progressoMensal.style.display = "none";
-        console.log("Mobile: Aside mostrado, conteudo-dia oculto");
-      } else {
-        elements.conteudoDia.style.display = "grid";
-        elements.btnProgresso.style.display = "block";
-        elements.btnConteudo.style.display = "none";
-        console.log("Mobile: Aside oculto, conteudo-dia mostrado");
-      }
-    } else {
-      elements.conteudoDia.style.display = "grid";
-      elements.btnProgresso.style.display = "block";
-      elements.btnConteudo.style.display = "none";
-      console.log("Desktop: Aside alternado, conteudo-dia mantido visível");
-
-      // Garantir que o dia atual esteja renderizado
-      const btnAtivo = document.querySelector(".menu button.ativo");
-      if (btnAtivo) {
-        const dia = btnAtivo.getAttribute("onclick")?.match(/'([^']+)'/)?.[1];
-        if (dia) {
-          console.log(`Re-renderizando ${dia} no desktop`);
-          mostrarDia(dia);
-        } else {
-          console.warn("Nenhum dia ativo encontrado");
-        }
-      } else {
-        console.warn("Nenhum botão ativo encontrado no menu");
-      }
-    }
-  }
-
-  if (elements.btnProgresso) {
-    elements.btnProgresso.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log("Botão progresso clicado");
-      alternarAside();
-    });
-  } else {
-    console.error("Botão #abrir-progresso não encontrado");
-  }
-
-  if (elements.btnConteudo) {
-    elements.btnConteudo.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log("Botão conteúdo clicado");
-      alternarAside();
-    });
-  } else {
-    console.error("Botão #abrir-conteudo não encontrado");
-  }
-
-  // Alternar progresso
-  if (elements.botaoVerDiario) {
-    elements.botaoVerDiario.addEventListener("click", () => {
+  if (verDiario) {
+    verDiario.addEventListener("click", () => {
       console.log("Ver diário clicado");
-      if (elements.progressoDia) elements.progressoDia.style.display = "block";
-      if (elements.progressoSemanal)
-        elements.progressoSemanal.style.display = "none";
-      if (elements.progressoMensal)
-        elements.progressoMensal.style.display = "none";
+      if (progressoDia) progressoDia.style.display = "block";
+      if (progressoSemanal) progressoSemanal.style.display = "none";
+      if (progressoMensal) progressoMensal.style.display = "none";
     });
   }
 
-  if (elements.botaoVerSemanal) {
-    elements.botaoVerSemanal.addEventListener("click", () => {
+  if (verSemanal) {
+    verSemanal.addEventListener("click", () => {
       console.log("Ver semanal clicado");
-      if (elements.progressoDia) elements.progressoDia.style.display = "none";
-      if (elements.progressoSemanal)
-        elements.progressoSemanal.style.display = "block";
-      if (elements.progressoMensal)
-        elements.progressoMensal.style.display = "none";
+      if (progressoDia) progressoDia.style.display = "none";
+      if (progressoSemanal) progressoSemanal.style.display = "block";
+      if (progressoMensal) progressoMensal.style.display = "none";
     });
   }
 
-  if (elements.botaoVerMensal) {
-    elements.botaoVerMensal.addEventListener("click", () => {
+  if (verMensal) {
+    verMensal.addEventListener("click", () => {
       console.log("Ver mensal clicado");
-      if (elements.progressoDia) elements.progressoDia.style.display = "none";
-      if (elements.progressoSemanal)
-        elements.progressoSemanal.style.display = "none";
-      if (elements.progressoMensal)
-        elements.progressoMensal.style.display = "block";
+      if (progressoDia) progressoDia.style.display = "none";
+      if (progressoSemanal) progressoSemanal.style.display = "none";
+      if (progressoMensal) progressoMensal.style.display = "block";
     });
   }
 
-  // Reset
-  if (elements.btnResetDias) {
-    elements.btnResetDias.addEventListener("click", () => {
+  // Reset de progresso
+  const btnResetDias = document.getElementById("btn-reset-dias");
+  const btnResetSemana = document.getElementById("btn-reset-semana");
+  const btnResetMes = document.getElementById("btn-reset-mes");
+
+  if (btnResetDias) {
+    btnResetDias.addEventListener("click", () => {
       console.log("Reset dias clicado");
       resetarProgresso("dias");
     });
   }
 
-  if (elements.btnResetSemana) {
-    elements.btnResetSemana.addEventListener("click", () => {
+  if (btnResetSemana) {
+    btnResetSemana.addEventListener("click", () => {
       console.log("Reset semanas clicado");
       resetarProgresso("semanas");
     });
   }
 
-  if (elements.btnResetMes) {
-    elements.btnResetMes.addEventListener("click", () => {
+  if (btnResetMes) {
+    btnResetMes.addEventListener("click", () => {
       console.log("Reset meses clicado");
       resetarProgresso("meses");
     });
   }
-
-  // Checkboxes
-  document.addEventListener("change", (e) => {
-    if (e.target.type === "checkbox") {
-      const container = e.target.closest(".exercicio");
-      container.classList.toggle("checked", e.target.checked);
-      salvarCheckboxes();
-      const btnAtivo = document.querySelector(".menu button.ativo");
-      if (btnAtivo) {
-        const dia = btnAtivo.getAttribute("onclick")?.match(/'([^']+)'/)?.[1];
-        if (dia) atualizarProgressoDia(dia);
-      }
-    }
-  });
 
   inicializarApp();
 });
