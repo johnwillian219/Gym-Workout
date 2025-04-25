@@ -243,6 +243,7 @@ main {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
 /* ============================
    6. Conteúdo
 ============================ */
@@ -375,6 +376,7 @@ main {
   height: auto;
   object-fit: cover;
 }
+
 /* ============================
    7. Aside
 ============================ */
@@ -460,32 +462,59 @@ main {
 }
 
 @media (max-width: 768px) {
+  .menu-mobile {
+    border-radius: 5px;
+  }
+
   .menu-mobile .top-bar h1 {
     margin: 0;
-    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    font-size: clamp(1.4rem, 4vw, 1.6rem);
+    font-weight: 700;
     background: linear-gradient(90deg, var(--accent), var(--accent-hover));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   .menu-mobile .top-bar div {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
   .menu-mobile .top-bar button {
-    background: none;
+    background: transparent;
     border: none;
+    padding: 0.75rem;
+    border-radius: 50%;
     cursor: pointer;
-    padding: 0.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .menu-mobile .top-bar button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: var(--transition);
+  }
+  .menu-mobile .top-bar button:hover::before {
+    opacity: 1;
+  }
+  .menu-mobile .top-bar button:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-hover);
+  }
+  .menu-mobile .top-bar button:active {
+    transform: scale(0.95);
   }
   .menu-mobile .top-bar button img {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
       hue-rotate(184deg) brightness(96%) contrast(95%);
     transition: var(--transition);
-  }
-  .menu-mobile .top-bar button:hover img {
-    transform: scale(1.1);
   }
   #aside-progresso.mostrar .menu-mobile {
     display: block;
@@ -781,6 +810,11 @@ main {
   .progresso-mensal .reset-mobile {
     display: block;
   }
+  body.dark .progresso-dia,
+  body.dark .progresso-semanal,
+  body.dark .progresso-mensal {
+    background: linear-gradient(135deg, #4b5464, #52555f);
+  }
 }
 
 @media (min-width: 769px) {
@@ -800,7 +834,7 @@ body.dark .progresso-mensal .alternar-progresso-mobile,
 body.dark .progresso-dia .reset-mobile,
 body.dark .progresso-semanal .reset-mobile,
 body.dark .progresso-mensal .reset-mobile {
-  background: linear-gradient(135deg, #4b5464, #353b48);
+  background: linear-gradient(135deg, #795e8b, #7a7ac5);
 }
 
 body.dark .aside-btn .alternar-progresso:hover,
@@ -820,6 +854,7 @@ body.dark .progresso-semanal .reset-mobile img,
 body.dark .progresso-mensal .reset-mobile img {
   filter: invert(0.9) brightness(0.9);
 }
+
 /* ============================
    8. Modo Escuro
 ============================ */
@@ -957,8 +992,19 @@ body.dark .aside-btn {
 }
 
 body.dark .menu-mobile {
-  background: var(--card-bg-dark);
+  background: linear-gradient(135deg, #2d3436, #353b48);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   border-bottom-color: #4b5464;
+}
+
+body.dark .menu-mobile .top-bar h1 {
+  background: linear-gradient(90deg, #74b9ff, #a29bfe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.dark .menu-mobile .top-bar button img {
+  filter: invert(0.9) brightness(0.9);
 }
 
 /* ============================
