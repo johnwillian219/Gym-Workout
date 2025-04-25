@@ -78,14 +78,6 @@
               </button>
             </div>
           </header>
-          <nav class="menu">
-            <button onclick="mostrarDia('segunda')">Segunda</button>
-            <button onclick="mostrarDia('terca')">Terça</button>
-            <button onclick="mostrarDia('quarta')">Quarta</button>
-            <button onclick="mostrarDia('quinta')">Quinta</button>
-            <button onclick="mostrarDia('sexta')">Sexta</button>
-            <button onclick="mostrarDia('sabado')">Sábado</button>
-          </nav>
         </div>
         <section class="progresso-dia" id="progresso-dia">
           <div class="aside-btn">
@@ -144,6 +136,13 @@
               ><span class="porcentagem">0%</span></span
             >
           </div>
+          <button
+            id="btn-reset-dias-mobile"
+            class="reset reset-mobile"
+            title="Reiniciar dias da semana"
+          >
+            <img src="icone/reset.svg" alt="Reiniciar dias" />
+          </button>
         </section>
         <section
           class="progresso-semanal"
@@ -230,6 +229,13 @@
               ><span class="porcentagem">0%</span></span
             >
           </div>
+          <button
+            id="btn-reset-semana-mobile"
+            class="reset reset-mobile"
+            title="Reiniciar semanas"
+          >
+            <img src="icone/reset.svg" alt="Reiniciar semanas" />
+          </button>
         </section>
         <section
           class="progresso-mensal"
@@ -324,6 +330,13 @@
               ><span class="porcentagem">0%</span></span
             >
           </div>
+          <button
+            id="btn-reset-mes-mobile"
+            class="reset reset-mobile"
+            title="Reiniciar meses"
+          >
+            <img src="icone/reset.svg" alt="Reiniciar meses" />
+          </button>
         </section>
       </aside>
     </div>

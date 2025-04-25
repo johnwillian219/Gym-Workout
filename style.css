@@ -252,16 +252,34 @@ main {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   width: 100%;
-  transition: opacity 0.4s var(--transition);
+  transition: grid-template-columns 0.3s var(--transition),
+    opacity 0.4s var(--transition);
+}
+
+@media (min-width: 769px) {
+  .layout:has(#aside-progresso.mostrar) .conteudo {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .layout:has(#aside-progresso.oculta) .conteudo {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .conteudo {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
   .conteudo {
     padding: 1rem;
+    grid-template-columns: 1fr;
   }
+
   .conteudo.oculta {
     display: none;
     opacity: 0;
@@ -357,7 +375,6 @@ main {
   height: auto;
   object-fit: cover;
 }
-
 /* ============================
    7. Aside
 ============================ */
@@ -371,7 +388,7 @@ main {
 
 @media (min-width: 769px) {
   #aside-progresso {
-    flex: 0 0 400px;
+    flex: 0 0 420px;
     max-height: calc(100vh - 4rem);
     overflow-y: auto;
     scrollbar-width: thin;
@@ -416,6 +433,7 @@ main {
     overflow-y: auto;
     transform: translateY(20px);
     opacity: 0;
+    padding: 0.75rem; /* Mantido para reduzir espaços laterais */
   }
   #aside-progresso.mostrar {
     display: flex;
@@ -596,6 +614,18 @@ main {
   transform: rotate(180deg);
 }
 
+@media (max-width: 768px) {
+  .aside-btn .reset {
+    display: none; /* Oculta .reset no .aside-btn no mobile */
+  }
+}
+
+@media (min-width: 769px) {
+  .aside-btn .reset {
+    display: block; /* Mantém .reset visível no desktop */
+  }
+}
+
 /* Progresso */
 .progresso-dia,
 .progresso-semanal,
@@ -603,15 +633,119 @@ main {
   margin-top: 1.5rem;
 }
 
-.progresso-dia:not([style*="display:none"]) {
+.progresso-dia:not([style*="display:none"]),
+.progresso-semanal:not([style*="display:none"]),
+.progresso-mensal:not([style*="display:none"]) {
   display: block;
 }
 
+.progresso-dia[style*="display:none"],
 .progresso-semanal[style*="display:none"],
 .progresso-mensal[style*="display:none"] {
   display: none;
 }
 
+@media (max-width: 768px) {
+  .progresso-dia,
+  .progresso-semanal,
+  .progresso-mensal {
+    padding: 1rem;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+  }
+  .progresso-dia .exercicio,
+  .progresso-semanal .exercicio,
+  .progresso-mensal .exercicio {
+    width: 100%;
+    margin-bottom: 0.75rem;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  .aside-btn {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Botão Reset Mobile (após barras) */
+.progresso-dia .reset-mobile,
+.progresso-semanal .reset-mobile,
+.progresso-mensal .reset-mobile {
+  background: linear-gradient(135deg, #e8ecef, #dfe6e9);
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  display: block;
+  margin: 1rem auto 0;
+  width: 100%;
+  height: auto;
+}
+
+.progresso-dia .reset-mobile img,
+.progresso-semanal .reset-mobile img,
+.progresso-mensal .reset-mobile img {
+  width: 100%;
+  height: 24px;
+  filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
+    hue-rotate(184deg) brightness(96%) contrast(95%);
+  transition: var(--transition);
+}
+
+.progresso-dia .reset-mobile:hover,
+.progresso-semanal .reset-mobile:hover,
+.progresso-mensal .reset-mobile:hover {
+  background: linear-gradient(135deg, #ff7675, #fab1a0);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+.progresso-dia .reset-mobile:hover img,
+.progresso-semanal .reset-mobile:hover img,
+.progresso-mensal .reset-mobile:hover img {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .progresso-dia .reset-mobile,
+  .progresso-semanal .reset-mobile,
+  .progresso-mensal .reset-mobile {
+    display: block; /* Visível no mobile */
+  }
+}
+
+@media (min-width: 769px) {
+  .progresso-dia .reset-mobile,
+  .progresso-semanal .reset-mobile,
+  .progresso-mensal .reset-mobile {
+    display: none; /* Oculto no desktop */
+  }
+}
+
+/* Modo Escuro para Reset */
+body.dark .aside-btn .reset,
+body.dark .progresso-dia .reset-mobile,
+body.dark .progresso-semanal .reset-mobile,
+body.dark .progresso-mensal .reset-mobile {
+  background: linear-gradient(135deg, #4b5464, #353b48);
+}
+
+body.dark .aside-btn .reset:hover,
+body.dark .progresso-dia .reset-mobile:hover,
+body.dark .progresso-semanal .reset-mobile:hover,
+body.dark .progresso-mensal .reset-mobile:hover {
+  background: linear-gradient(135deg, #ff7675, #fab1a0);
+}
+
+body.dark .aside-btn .reset img,
+body.dark .progresso-dia .reset-mobile img,
+body.dark .progresso-semanal .reset-mobile img,
+body.dark .progresso-mensal .reset-mobile img {
+  filter: invert(0.9) brightness(0.9);
+}
 /* ============================
    8. Modo Escuro
 ============================ */
@@ -781,16 +915,18 @@ body.dark .menu-mobile {
     position: relative;
   }
   .top-bar {
-    border-radius: 0;
+    border-radius: 5px;
     padding: 0.75rem 1rem;
   }
   .menu {
     grid-template-columns: repeat(3, 1fr);
-    border-radius: 0;
+    border-radius: 5px;
     padding: 0.75rem;
   }
   .conteudo {
-    border-radius: 0;
+    display: grid;
+    border-radius: 5px;
+    grid-template-columns: 1fr;
   }
   .progresso-dia,
   .progresso-semanal,
