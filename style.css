@@ -486,7 +486,30 @@ main {
   .menu-mobile {
     border-radius: 5px;
   }
+  .top-bar {
+    flex-direction: column; /* Empilha h1 e botões verticalmente */
+    align-items: center; /* Centraliza os itens horizontalmente */
 
+    padding: 1rem;
+    height: 130px;
+  }
+
+  .top-bar h1 {
+    margin-bottom: 1rem; /* Espaço entre h1 e botões */
+    text-align: center; /* Centraliza o texto do h1 */
+    width: 100%; /* Garante que o h1 ocupe toda a largura */
+  }
+
+  .top-bar button {
+    padding: 0.4rem 0.8rem; /* Botões menores */
+    font-size: 0.9rem;
+    margin-right: 1rem; /* Espaço entre botões */
+    border-radius: 50%; /* Bordas arredondadas */
+  }
+
+  .top-bar button:last-child {
+    margin-right: 0; /* Remove margem do último botão */
+  }
   .menu-mobile .top-bar h1 {
     margin: 0;
     font-size: clamp(1.4rem, 4vw, 1.6rem);
