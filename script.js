@@ -517,6 +517,147 @@ const exerciciosSemana = {
   ],
 };
 
+const exerciciosSemanaFeminino = {
+  segunda: [
+    {
+      nome: "Supino inclinado com halteres",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/supino_inclinado_halteres.gif",
+    },
+    {
+      nome: "Crucifixo com halteres",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/crucifixo_halteres.gif",
+    },
+    {
+      nome: "Elevação lateral",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/elevacao_lateral.gif",
+    },
+    {
+      nome: "Abdominal bicicleta",
+      tipo: "abdomen",
+      series: "3x20",
+      gif: "gift/abdominal_bicicleta.gif",
+    },
+    {
+      nome: "Prancha lateral",
+      tipo: "abdomen",
+      series: "3x30s",
+      gif: "gift/prancha_lateral.gif",
+    },
+  ],
+  terca: [
+    {
+      nome: "Puxada frontal",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/puxada_frontal.gif",
+    },
+    {
+      nome: "Rosca alternada com halteres",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/rosca_alternada.gif",
+    },
+    {
+      nome: "Russian twist",
+      tipo: "abdomen",
+      series: "3x20",
+      gif: "gift/russian_twist.webp",
+    },
+    {
+      nome: "Elevação pélvica",
+      tipo: "abdomen",
+      series: "3x20",
+      gif: "gift/elevacao_pelvica.gif",
+    },
+  ],
+  quarta: [
+    {
+      nome: "Agachamento sumô",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/agachamento_sumo.gif",
+    },
+    {
+      nome: "Cadeira extensora",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/cadeira_extensora.gif",
+    },
+    {
+      nome: "Abdominal em V",
+      tipo: "abdomen",
+      series: "3x20",
+      gif: "gift/abdominal_em_v.gif",
+    },
+  ],
+  quinta: [
+    {
+      nome: "Supino vertical com halteres",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/supino_vertical_halteres.gif",
+    },
+    {
+      nome: "Rosca francesa",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/rosca_francesa.gif",
+    },
+    {
+      nome: "Prancha com toque no ombro",
+      tipo: "abdomen",
+      series: "3x20",
+      gif: "gift/prancha_toque_ombro.gif",
+    },
+  ],
+  sexta: [
+    {
+      nome: "Afundo com halteres",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/afundo_halteres.gif",
+    },
+    {
+      nome: "Elevação de panturrilhas",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/elevacao_panturrilhas.gif",
+    },
+    {
+      nome: "Burpee",
+      tipo: "abdomen",
+      series: "3x15",
+      gif: "gift/burpee.webp",
+    },
+  ],
+  sabado: [
+    {
+      nome: "Remada curvada com halteres",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/remada_curvada_halteres.gif",
+    },
+    {
+      nome: "Desenvolvimento com halteres",
+      tipo: "musculacao",
+      series: "3x15",
+      gif: "gift/desenvolvimento_halteres.gif",
+    },
+    {
+      nome: "Abdominal crunch",
+      tipo: "abdomen",
+      series: "3x20",
+      gif: "gift/crunch_basic.gif",
+    },
+  ],
+};
+
 const gruposMuscularesSemana = {
   segunda: "(Push): Peito, Ombro e Tríceps",
   terca: "(Pull): Costas e Bíceps",
@@ -536,14 +677,39 @@ const dias = [
   "sabado",
 ];
 
-// Funções de Manipulação de DOM
+let generoAtivo = localStorage.getItem("generoAtivo") || "masculino";
+
+function setGenero(genero) {
+  generoAtivo = genero;
+  localStorage.setItem("generoAtivo", genero);
+  atualizarBotoesGenero();
+  const diaAtivo =
+    document
+      .querySelector(".menu button.ativo")
+      ?.getAttribute("onclick")
+      ?.match(/'([^']+)'/)?.[1] || "segunda";
+  mostrarDia(diaAtivo);
+}
+
+function atualizarBotoesGenero() {
+  document.querySelectorAll(".man, .women").forEach((btn) => {
+    btn.classList.remove("ativo");
+    if (btn.classList.contains(generoAtivo === "masculino" ? "man" : "women")) {
+      btn.classList.add("ativo");
+    }
+  });
+}
+
 function mostrarDia(dia) {
   const container = document.getElementById("conteudo-dia");
   if (!container)
     return console.error("Elemento '#conteudo-dia' não encontrado");
 
-  console.log(`Mostrando exercícios para ${dia}`);
-  const dados = exerciciosSemana[dia] || [];
+  console.log(`Mostrando exercícios para ${dia} (${generoAtivo})`);
+  const dados =
+    (generoAtivo === "masculino" ? exerciciosSemana : exerciciosSemanaFeminino)[
+      dia
+    ] || [];
   const abdomen = dados.filter((ex) => ex.tipo === "abdomen");
   const musculacao = dados.filter((ex) => ex.tipo === "musculacao");
 
@@ -552,7 +718,7 @@ function mostrarDia(dia) {
   if (abdomen.length) {
     container.innerHTML += `<h2>Abdômen & Elevação</h2>`;
     abdomen.forEach((ex, index) => {
-      const id = `${dia}-abdomen-${index}`;
+      const id = `${generoAtivo}-${dia}-abdomen-${index}`;
       container.innerHTML += `
         <div class="exercicio">
           <input type="checkbox" id="${id}" />
@@ -569,7 +735,7 @@ function mostrarDia(dia) {
     const grupoMuscular = gruposMuscularesSemana[dia] || "";
     container.innerHTML += `<h2>Musculação: ${grupoMuscular}</h2>`;
     musculacao.forEach((ex, index) => {
-      const id = `${dia}-musculacao-${index}`;
+      const id = `${generoAtivo}-${dia}-musculacao-${index}`;
       container.innerHTML += `
         <div class="exercicio">
           <input type="checkbox" id="${id}" />
@@ -587,7 +753,6 @@ function mostrarDia(dia) {
   atualizarMenuAtivo(dia);
   atualizarProgressoDia(dia);
 
-  // Adicionar eventos aos checkboxes
   document
     .querySelectorAll("#conteudo-dia input[type='checkbox']")
     .forEach((checkbox) => {
@@ -618,7 +783,6 @@ function atualizarMenuAtivo(dia) {
   if (btnAtivo) btnAtivo.classList.add("ativo");
 }
 
-// Funções de Progresso
 function atualizarProgressoDia(dia) {
   const checkboxes = document.querySelectorAll(
     "#conteudo-dia input[type='checkbox']"
@@ -640,18 +804,25 @@ function atualizarProgressoDia(dia) {
 
 function salvarProgressoDia(dia, porcentagem) {
   const dataHoje = new Date().toISOString().split("T")[0];
-  let historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
+  let historico = JSON.parse(
+    localStorage.getItem(`historicoTreino-${generoAtivo}`) || "[]"
+  );
 
   historico = historico.filter(
     (registro) => !(registro.data === dataHoje && registro.dia === dia)
   );
   historico.push({ data: dataHoje, dia, porcentagem });
   historico = historico.slice(-150);
-  localStorage.setItem("historicoTreino", JSON.stringify(historico));
+  localStorage.setItem(
+    `historicoTreino-${generoAtivo}`,
+    JSON.stringify(historico)
+  );
 }
 
 function atualizarSemanasEMeses() {
-  const historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
+  const historico = JSON.parse(
+    localStorage.getItem(`historicoTreino-${generoAtivo}`) || "[]"
+  );
   const hoje = new Date();
   const anoAtual = hoje.getFullYear();
 
@@ -727,17 +898,21 @@ function atualizarSemanasEMeses() {
   });
 }
 
-// Funções de Estado
 function salvarCheckboxes() {
   const estado = {};
   document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
     estado[checkbox.id] = checkbox.checked;
   });
-  localStorage.setItem("checkboxesEstado", JSON.stringify(estado));
+  localStorage.setItem(
+    `checkboxesEstado-${generoAtivo}`,
+    JSON.stringify(estado)
+  );
 }
 
 function carregarCheckboxes() {
-  const estado = JSON.parse(localStorage.getItem("checkboxesEstado") || "{}");
+  const estado = JSON.parse(
+    localStorage.getItem(`checkboxesEstado-${generoAtivo}`) || "{}"
+  );
   document.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
     if (estado[checkbox.id] !== undefined) {
       checkbox.checked = estado[checkbox.id];
@@ -745,7 +920,6 @@ function carregarCheckboxes() {
   });
 }
 
-// Funções de Modal e Reset
 function mostrarModal(tipo, callback) {
   const modal = document.getElementById("modal-confirmacao");
   const modalMensagem = document.getElementById("modal-mensagem");
@@ -769,7 +943,6 @@ function mostrarModal(tipo, callback) {
   modal.classList.remove("oculta");
   modal.classList.add("mostrar");
 
-  // Limpar eventos anteriores
   const modalSimClone = modalSim.cloneNode(true);
   const modalNaoClone = modalNao.cloneNode(true);
   const modalCancelarClone = modalCancelar.cloneNode(true);
@@ -777,7 +950,6 @@ function mostrarModal(tipo, callback) {
   modalNao.parentNode.replaceChild(modalNaoClone, modalNao);
   modalCancelar.parentNode.replaceChild(modalCancelarClone, modalCancelar);
 
-  // Adicionar novos eventos
   modalSimClone.addEventListener("click", () => {
     callback();
     modal.classList.remove("mostrar");
@@ -805,8 +977,8 @@ function resetarProgresso(tipo) {
         if (span) span.textContent = "0%";
       }
     });
-    localStorage.removeItem("historicoTreino");
-    localStorage.removeItem("checkboxesEstado");
+    localStorage.removeItem(`historicoTreino-${generoAtivo}`);
+    localStorage.removeItem(`checkboxesEstado-${generoAtivo}`);
   } else if (tipo === "semanas") {
     for (let i = 1; i <= 10; i++) {
       const barra = document.getElementById(`semana-${i}`);
@@ -816,7 +988,7 @@ function resetarProgresso(tipo) {
         if (span) span.textContent = "0%";
       }
     }
-    localStorage.removeItem("historicoTreino");
+    localStorage.removeItem(`historicoTreino-${generoAtivo}`);
   } else if (tipo === "meses") {
     for (let i = 1; i <= 12; i++) {
       const barra = document.getElementById(`mes-${i}`);
@@ -826,7 +998,7 @@ function resetarProgresso(tipo) {
         if (span) span.textContent = "0%";
       }
     }
-    localStorage.removeItem("historicoTreino");
+    localStorage.removeItem(`historicoTreino-${generoAtivo}`);
   }
   atualizarSemanasEMeses();
   const btnAtivo = document.querySelector(".menu button.ativo");
@@ -836,7 +1008,6 @@ function resetarProgresso(tipo) {
   }
 }
 
-// Função para Alternar Aside
 function alternarAside() {
   const aside = document.getElementById("aside-progresso");
   const conteudo = document.getElementById("conteudo-dia");
@@ -879,12 +1050,10 @@ function alternarAside() {
   }
 }
 
-// Inicialização
 function inicializarApp() {
   const hoje = new Date().getDay();
   const diaHoje = dias[hoje] === "domingo" ? "segunda" : dias[hoje];
 
-  // Limpar localStorage obsoleto
   [
     "historicoDias",
     "exercicios-segunda",
@@ -896,7 +1065,6 @@ function inicializarApp() {
     localStorage.removeItem(key);
   });
 
-  // Inicializar barras de progresso
   for (let i = 1; i <= 10; i++) {
     const barra = document.getElementById(`semana-${i}`);
     if (barra) {
@@ -920,21 +1088,34 @@ function inicializarApp() {
     }
   }
 
-  // Carregar progresso inicial
-  const historico = JSON.parse(localStorage.getItem("historicoTreino") || "[]");
+  const historico = JSON.parse(
+    localStorage.getItem(`historicoTreino-${generoAtivo}`) || "[]"
+  );
   if (new Set(historico.map((r) => `${r.data}-${r.dia}`)).size >= 3) {
     atualizarSemanasEMeses();
   }
 
-  // Mostrar dia inicial
+  atualizarBotoesGenero();
   mostrarDia(diaHoje);
 }
 
-// Eventos
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM carregado");
 
-  // Inicializar botões de alternância de aside
+  document.querySelectorAll(".man").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      console.log("Botão masculino clicado");
+      setGenero("masculino");
+    });
+  });
+
+  document.querySelectorAll(".women").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      console.log("Botão feminino clicado");
+      setGenero("feminino");
+    });
+  });
+
   document
     .querySelectorAll(".abrir-progresso, .abrir-conteudo")
     .forEach((btn) => {
@@ -949,7 +1130,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-  // Inicializar botões de modo escuro
   document.querySelectorAll(".toggle-dark-mode").forEach((btn) => {
     btn.addEventListener("click", () => {
       document.body.classList.toggle("dark");
@@ -958,7 +1138,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Alternar visualização de progresso
   const progressoDia = document.getElementById("progresso-dia");
   const progressoSemanal = document.getElementById("progresso-semanal");
   const progressoMensal = document.getElementById("progresso-mensal");
@@ -996,7 +1175,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Reset de progresso com modal
   const resetButtons = [
     { id: "btn-reset-dias", mobileId: "btn-reset-dias-mobile", tipo: "dias" },
     {
@@ -1015,7 +1193,6 @@ document.addEventListener("DOMContentLoaded", () => {
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         console.log(`Botão reset ${tipo} clicado`);
-        // Determinar a seção ativa
         let secaoAtiva = "dias";
         if (progressoSemanal.style.display === "block") {
           secaoAtiva = "semanas";
@@ -1027,10 +1204,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Definir visualização padrão
   const btnSemanal = document.getElementById("ver-semanal");
   if (btnSemanal) {
-    btnSemanal.click(); // Simula clique para abrir progresso semanal
+    btnSemanal.click();
   }
 
   inicializarApp();
