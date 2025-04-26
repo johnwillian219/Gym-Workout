@@ -723,7 +723,7 @@ main {
 .progresso-dia .alternar-progresso-mobile,
 .progresso-semanal .alternar-progresso-mobile,
 .progresso-mensal .alternar-progresso-mobile {
-  background: linear-gradient(135deg, #e8ecef, #dfe6e9);
+  background: linear-gradient(135deg, var(--accent), #74b9ff);
   color: var(--text-light);
   border: none;
   padding: 0.75rem 1.25rem;
@@ -767,7 +767,7 @@ main {
 .progresso-dia .reset-mobile,
 .progresso-semanal .reset-mobile,
 .progresso-mensal .reset-mobile {
-  background: linear-gradient(135deg, #e8ecef, #dfe6e9);
+  background: linear-gradient(135deg, var(--accent), #74b9ff);
   border: none;
   padding: 0.75rem;
   border-radius: 8px;
@@ -834,14 +834,11 @@ body.dark .progresso-mensal .alternar-progresso-mobile,
 body.dark .progresso-dia .reset-mobile,
 body.dark .progresso-semanal .reset-mobile,
 body.dark .progresso-mensal .reset-mobile {
-  background: linear-gradient(135deg, #795e8b, #7a7ac5);
+  background: linear-gradient(135deg, var(--accent), #74b9ff);
 }
 
 body.dark .aside-btn .alternar-progresso:hover,
 body.dark .aside-btn .reset:hover,
-body.dark .progresso-dia .alternar-progresso-mobile:hover,
-body.dark .progresso-semanal .alternar-progresso-mobile:hover,
-body.dark .progresso-mensal .alternar-progresso-mobile:hover,
 body.dark .progresso-dia .reset-mobile:hover,
 body.dark .progresso-semanal .reset-mobile:hover,
 body.dark .progresso-mensal .reset-mobile:hover {
@@ -881,7 +878,6 @@ body.dark .top-bar h1 {
 
 body.dark .conteudo {
   background: var(--card-bg-dark);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 body.dark .conteudo h2 {
@@ -952,14 +948,13 @@ body.dark .top-bar .icon {
   filter: invert(0.9) brightness(0.9);
 }
 
-body.dark .abrir-conteudo {
-  background: var(--accent-hover);
-  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+body.dark .top-bar .icon:hover {
+  filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(630%)
+    hue-rotate(184deg) brightness(96%) contrast(95%);
 }
-
-body.dark .abrir-conteudo:hover {
-  background: var(--accent);
-  box-shadow: 0 6px 16px rgba(9, 132, 227, 0.3);
+body.dark .top-bar button::before {
+  background: linear-gradient(135deg, #77a4b4, #a1a2a5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 body.dark .aside-btn .titulo-progresso,
