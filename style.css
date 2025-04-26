@@ -1073,3 +1073,114 @@ body.dark .menu-mobile .top-bar button img {
     font-size: clamp(1.4rem, 4vw, 1.6rem);
   }
 }
+
+/* ============================
+   10. Modal de Confirmação
+============================ */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal.mostrar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal.oculta {
+  display: none;
+}
+
+.modal-conteudo {
+  background: var(--card-bg-light);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+.modal-conteudo h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.modal-conteudo p {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+.modal-botoes {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal-botoes button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#modal-sim {
+  background: linear-gradient(135deg, #00b894, #55efc4);
+  color: white;
+}
+
+#modal-sim:hover {
+  background: linear-gradient(135deg, #55efc4, #00b894);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+#modal-nao,
+#modal-cancelar {
+  background: linear-gradient(135deg, #e8ecef, #dfe6e9);
+  color: var(--text-light);
+}
+
+#modal-nao:hover,
+#modal-cancelar:hover {
+  background: linear-gradient(135deg, #dfe6e9, #e8ecef);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+body.dark .modal-conteudo {
+  background: var(--card-bg-dark);
+}
+
+body.dark .modal-conteudo p {
+  color: var(--text-dark);
+}
+
+body.dark #modal-nao,
+body.dark #modal-cancelar {
+  background: linear-gradient(135deg, #4b5464, #353b48);
+  color: var(--text-dark);
+}
+
+body.dark #modal-nao:hover,
+body.dark #modal-cancelar:hover {
+  background: linear-gradient(135deg, #353b48, #4b5464);
+}

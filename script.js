@@ -745,7 +745,56 @@ function carregarCheckboxes() {
   });
 }
 
-// Funções de Reset
+// Funções de Modal e Reset
+function mostrarModal(tipo, callback) {
+  const modal = document.getElementById("modal-confirmacao");
+  const modalMensagem = document.getElementById("modal-mensagem");
+  const modalSim = document.getElementById("modal-sim");
+  const modalNao = document.getElementById("modal-nao");
+  const modalCancelar = document.getElementById("modal-cancelar");
+
+  if (!modal || !modalMensagem || !modalSim || !modalNao || !modalCancelar) {
+    console.error("Elementos do modal não encontrados");
+    return;
+  }
+
+  const mensagens = {
+    dias: "Deseja reiniciar o seu progresso diário?",
+    semanas: "Deseja reiniciar o seu progresso semanal?",
+    meses: "Deseja reiniciar o seu progresso mensal?",
+  };
+
+  modalMensagem.textContent =
+    mensagens[tipo] || "Deseja reiniciar o progresso?";
+  modal.classList.remove("oculta");
+  modal.classList.add("mostrar");
+
+  // Limpar eventos anteriores
+  const modalSimClone = modalSim.cloneNode(true);
+  const modalNaoClone = modalNao.cloneNode(true);
+  const modalCancelarClone = modalCancelar.cloneNode(true);
+  modalSim.parentNode.replaceChild(modalSimClone, modalSim);
+  modalNao.parentNode.replaceChild(modalNaoClone, modalNao);
+  modalCancelar.parentNode.replaceChild(modalCancelarClone, modalCancelar);
+
+  // Adicionar novos eventos
+  modalSimClone.addEventListener("click", () => {
+    callback();
+    modal.classList.remove("mostrar");
+    modal.classList.add("oculta");
+  });
+
+  modalNaoClone.addEventListener("click", () => {
+    modal.classList.remove("mostrar");
+    modal.classList.add("oculta");
+  });
+
+  modalCancelarClone.addEventListener("click", () => {
+    modal.classList.remove("mostrar");
+    modal.classList.add("oculta");
+  });
+}
+
 function resetarProgresso(tipo) {
   if (tipo === "dias") {
     dias.slice(1).forEach((dia) => {
@@ -947,7 +996,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Reset de progresso
+  // Reset de progresso com modal
   const resetButtons = [
     { id: "btn-reset-dias", mobileId: "btn-reset-dias-mobile", tipo: "dias" },
     {
@@ -965,8 +1014,15 @@ document.addEventListener("DOMContentLoaded", () => {
     ].filter(Boolean);
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        console.log(`Reset ${tipo} clicado`);
-        resetarProgresso(tipo);
+        console.log(`Botão reset ${tipo} clicado`);
+        // Determinar a seção ativa
+        let secaoAtiva = "dias";
+        if (progressoSemanal.style.display === "block") {
+          secaoAtiva = "semanas";
+        } else if (progressoMensal.style.display === "block") {
+          secaoAtiva = "meses";
+        }
+        mostrarModal(secaoAtiva, () => resetarProgresso(tipo));
       });
     });
   });
