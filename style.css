@@ -211,7 +211,7 @@ main {
   }
 
   .top-bar h1 {
-    margin-bottom: 0.75rem;
+    margin-bottom: 1.2rem;
     text-align: center;
     width: 100%;
     font-size: clamp(1.4rem, 4vw, 1.6rem);
@@ -219,8 +219,8 @@ main {
 
   .top-bar div {
     display: flex;
-    gap: 0.75rem;
-    justify-content: center; /* Centraliza os botões */
+    gap: 1.2rem;
+    justify-content: space-between; /* Centraliza os botões */
   }
 
   .top-bar button {
@@ -555,10 +555,13 @@ body.dark .top-bar button:hover::before {
 
 @media (max-width: 768px) {
   .menu-mobile {
-    border-radius: 5px;
+    border-radius: 20px;
+  }
+  .menu-mobile .top-bar {
+    border-radius: 20px;
   }
   .menu-mobile .top-bar h1 {
-    margin: 0;
+    margin-bottom: 0.5rem;
     font-size: clamp(1.4rem, 4vw, 1.6rem);
     font-weight: 700;
     background: linear-gradient(90deg, var(--accent), var(--accent-hover));
@@ -567,8 +570,8 @@ body.dark .top-bar button:hover::before {
   }
   .menu-mobile .top-bar div {
     display: flex;
-    gap: 0.75rem;
-    justify-content: center;
+    gap: 1.2rem;
+    justify-content: space-between;
   }
   .menu-mobile .top-bar button {
     background: rgba(0, 0, 0, 0.05);
@@ -1126,7 +1129,7 @@ body.dark .menu-mobile .top-bar button img {
     position: relative;
   }
   .top-bar {
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 0.75rem 1rem;
   }
   .menu {
