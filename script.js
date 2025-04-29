@@ -1369,13 +1369,13 @@ function resetarProgresso(tipo) {
     if (dia) mostrarDia(dia);
   }
 }
-
+let ultimoConteudoAtivo = "conteudo-dia"; // Por padrão, o conteúdo principal
 function alternarAside() {
   const aside = document.getElementById("aside-progresso");
+  const conteudoDia = document.getElementById("conteudo-dia");
   const drinks = document.getElementById("drinks");
   const comidas = document.getElementById("comidas");
   const proteinas = document.getElementById("proteinas");
-  const conteudoDia = document.getElementById("conteudo-dia");
 
   if (!aside) {
     console.error("Elemento '#aside-progresso' não encontrado");
@@ -1391,14 +1391,14 @@ function alternarAside() {
     aside.classList.remove("mostrar");
     aside.classList.add("oculta");
 
-    // Certifique-se de que o conteúdo ativo continua visível
-    if (drinks && drinks.classList.contains("mostrar")) {
+    // Exibir o último conteúdo ativo
+    if (ultimoConteudoAtivo === "drinks" && drinks) {
       drinks.classList.remove("oculta");
       drinks.classList.add("mostrar");
-    } else if (comidas && comidas.classList.contains("mostrar")) {
+    } else if (ultimoConteudoAtivo === "comidas" && comidas) {
       comidas.classList.remove("oculta");
       comidas.classList.add("mostrar");
-    } else if (proteinas && proteinas.classList.contains("mostrar")) {
+    } else if (ultimoConteudoAtivo === "proteinas" && proteinas) {
       proteinas.classList.remove("oculta");
       proteinas.classList.add("mostrar");
     } else if (conteudoDia) {
@@ -1408,23 +1408,6 @@ function alternarAside() {
   }
 }
 // Função para mostrar a página de bebidas
-function mostrarDrinks() {
-  const conteudoDia = document.getElementById("conteudo-dia");
-  const drinks = document.getElementById("drinks");
-  const comidas = document.getElementById("comidas");
-  const proteinas = document.getElementById("proteinas");
-
-  // Mostrar a div #drinks
-  if (drinks) {
-    drinks.classList.remove("oculta");
-    drinks.classList.add("mostrar");
-  }
-
-  // Ocultar outras seções
-  if (conteudoDia) conteudoDia.classList.add("oculta");
-  if (comidas) comidas.classList.add("oculta");
-  if (proteinas) proteinas.classList.add("oculta");
-}
 function mostrarProteinas() {
   const conteudoDia = document.getElementById("conteudo-dia");
   const drinks = document.getElementById("drinks");
@@ -1435,6 +1418,7 @@ function mostrarProteinas() {
   if (proteinas) {
     proteinas.classList.remove("oculta");
     proteinas.classList.add("mostrar");
+    ultimoConteudoAtivo = "proteinas"; // Atualiza o último conteúdo ativo
   }
 
   // Ocultar outras seções
@@ -1443,29 +1427,43 @@ function mostrarProteinas() {
   if (comidas) comidas.classList.add("oculta");
 }
 
+function mostrarDrinks() {
+  const conteudoDia = document.getElementById("conteudo-dia");
+  const drinks = document.getElementById("drinks");
+  const comidas = document.getElementById("comidas");
+  const proteinas = document.getElementById("proteinas");
+
+  // Mostrar a div #drinks
+  if (drinks) {
+    drinks.classList.remove("oculta");
+    drinks.classList.add("mostrar");
+    ultimoConteudoAtivo = "drinks"; // Atualiza o último conteúdo ativo
+  }
+
+  // Ocultar outras seções
+  if (conteudoDia) conteudoDia.classList.add("oculta");
+  if (comidas) comidas.classList.add("oculta");
+  if (proteinas) proteinas.classList.add("oculta");
+}
+
 // Função para mostrar a página de comidas
 function mostrarComidas() {
   const conteudoDia = document.getElementById("conteudo-dia");
   const drinks = document.getElementById("drinks");
   const comidas = document.getElementById("comidas");
   const proteinas = document.getElementById("proteinas");
-  const aside = document.getElementById("aside-progresso");
 
   // Mostrar a div #comidas
   if (comidas) {
     comidas.classList.remove("oculta");
     comidas.classList.add("mostrar");
+    ultimoConteudoAtivo = "comidas"; // Atualiza o último conteúdo ativo
   }
 
   // Ocultar outras seções
   if (conteudoDia) conteudoDia.classList.add("oculta");
   if (drinks) drinks.classList.add("oculta");
   if (proteinas) proteinas.classList.add("oculta");
-
-  // Não fechar o aside, se já estiver aberto
-  if (aside && aside.classList.contains("mostrar")) {
-    return;
-  }
 }
 
 function inicializarApp() {
