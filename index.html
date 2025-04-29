@@ -36,7 +36,7 @@
           </div>
           <div>
             <button
-              onclick="mostrarComidas()"
+              onclick="mostrarComidas();"
               class="food"
               title="Mostrar comidas recomendadas"
               aria-label="Mostrar comidas recomendadas"
@@ -74,14 +74,7 @@
                 class="icon"
               />
             </button>
-            <button
-              id="abrir-conteudo"
-              title="Mostrar conteúdo"
-              class="oculta abrir-conteudo"
-              href="#drinks"
-            >
-              <img src="icone/treino.svg" alt="Ícone de Treino" class="icon" />
-            </button>
+
             <button
               id="toggle-dark-mode"
               title="Alternar modo claro/escuro"
@@ -178,6 +171,7 @@
 
             <div>
               <button
+                onclick="mostrarComidas();"
                 class="food"
                 title="Mostrar comidas recomendadas"
                 aria-label="Mostrar comidas recomendadas"
@@ -185,6 +179,7 @@
                 <img src="icone/food.svg" alt="Ícone de comida" class="icon" />
               </button>
               <button
+                onclick="mostrarDrinks()"
                 class="drink"
                 title="Mostrar bebidas recomendadas"
                 aria-label="Mostrar bebidas recomendadas"
@@ -192,6 +187,7 @@
                 <img src="icone/drink.svg" alt="Ícone de bebida" class="icon" />
               </button>
               <button
+                onclick="mostrarProteinas()"
                 class="protein"
                 title="Mostrar proteínas recomendadas"
                 aria-label="Mostrar proteínas recomendadas"

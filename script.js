@@ -1372,153 +1372,99 @@ function resetarProgresso(tipo) {
 
 function alternarAside() {
   const aside = document.getElementById("aside-progresso");
-  const conteudo = document.getElementById("conteudo-dia");
-  const abrirProgressoBtns = document.querySelectorAll(".abrir-progresso");
-  const abrirConteudoBtns = document.querySelectorAll(".abrir-conteudo");
+  const drinks = document.getElementById("drinks");
+  const comidas = document.getElementById("comidas");
+  const proteinas = document.getElementById("proteinas");
+  const conteudoDia = document.getElementById("conteudo-dia");
 
-  if (!aside || !conteudo) {
-    console.error(
-      "Elementos '#aside-progresso' ou '#conteudo-dia' não encontrados"
-    );
+  if (!aside) {
+    console.error("Elemento '#aside-progresso' não encontrado");
     return;
   }
 
   if (aside.classList.contains("oculta")) {
+    // Mostrar o aside
     aside.classList.remove("oculta");
     aside.classList.add("mostrar");
-    conteudo.classList.remove("mostrar");
-    conteudo.classList.add("oculta");
-    abrirProgressoBtns.forEach((btn) => {
-      btn.classList.remove("mostrar");
-      btn.classList.add("oculta");
-    });
-    abrirConteudoBtns.forEach((btn) => {
-      btn.classList.remove("oculta");
-      btn.classList.add("mostrar");
-    });
   } else {
+    // Ocultar o aside
     aside.classList.remove("mostrar");
     aside.classList.add("oculta");
-    conteudo.classList.remove("oculta");
-    conteudo.classList.add("mostrar");
-    abrirProgressoBtns.forEach((btn) => {
-      btn.classList.remove("oculta");
-      btn.classList.add("mostrar");
-    });
-    abrirConteudoBtns.forEach((btn) => {
-      btn.classList.remove("mostrar");
-      btn.classList.add("oculta");
-    });
+
+    // Certifique-se de que o conteúdo ativo continua visível
+    if (drinks && drinks.classList.contains("mostrar")) {
+      drinks.classList.remove("oculta");
+      drinks.classList.add("mostrar");
+    } else if (comidas && comidas.classList.contains("mostrar")) {
+      comidas.classList.remove("oculta");
+      comidas.classList.add("mostrar");
+    } else if (proteinas && proteinas.classList.contains("mostrar")) {
+      proteinas.classList.remove("oculta");
+      proteinas.classList.add("mostrar");
+    } else if (conteudoDia) {
+      conteudoDia.classList.remove("oculta");
+      conteudoDia.classList.add("mostrar");
+    }
   }
 }
 // Função para mostrar a página de bebidas
 function mostrarDrinks() {
-  // Ocultar a div #conteudo-dia
   const conteudoDia = document.getElementById("conteudo-dia");
-  if (conteudoDia) {
-    conteudoDia.classList.add("oculta");
-    conteudoDia.classList.remove("mostrar");
-  }
-
-  // Ocultar o menu
-  const menu = document.querySelector("nav.menu");
-  if (menu) {
-    menu.classList.add("oculta");
-  }
+  const drinks = document.getElementById("drinks");
+  const comidas = document.getElementById("comidas");
+  const proteinas = document.getElementById("proteinas");
 
   // Mostrar a div #drinks
-  const drinks = document.getElementById("drinks");
   if (drinks) {
     drinks.classList.remove("oculta");
     drinks.classList.add("mostrar");
   }
 
-  // Ocultar a div #comidas
+  // Ocultar outras seções
+  if (conteudoDia) conteudoDia.classList.add("oculta");
+  if (comidas) comidas.classList.add("oculta");
+  if (proteinas) proteinas.classList.add("oculta");
+}
+function mostrarProteinas() {
+  const conteudoDia = document.getElementById("conteudo-dia");
+  const drinks = document.getElementById("drinks");
   const comidas = document.getElementById("comidas");
-  if (comidas) {
-    comidas.classList.add("oculta");
-    comidas.classList.remove("mostrar");
+  const proteinas = document.getElementById("proteinas");
+
+  // Mostrar a div #proteinas
+  if (proteinas) {
+    proteinas.classList.remove("oculta");
+    proteinas.classList.add("mostrar");
   }
 
-  // Ocultar a div #proteinas
-  const proteinas = document.getElementById("proteinas");
-  if (proteinas) {
-    proteinas.classList.add("oculta");
-    proteinas.classList.remove("mostrar");
-  }
+  // Ocultar outras seções
+  if (conteudoDia) conteudoDia.classList.add("oculta");
+  if (drinks) drinks.classList.add("oculta");
+  if (comidas) comidas.classList.add("oculta");
 }
 
 // Função para mostrar a página de comidas
 function mostrarComidas() {
-  // Ocultar a div #conteudo-dia
   const conteudoDia = document.getElementById("conteudo-dia");
-  if (conteudoDia) {
-    conteudoDia.classList.add("oculta");
-    conteudoDia.classList.remove("mostrar");
-  }
-
-  // Ocultar o menu
-  const menu = document.querySelector("nav.menu");
-  if (menu) {
-    menu.classList.add("oculta");
-  }
+  const drinks = document.getElementById("drinks");
+  const comidas = document.getElementById("comidas");
+  const proteinas = document.getElementById("proteinas");
+  const aside = document.getElementById("aside-progresso");
 
   // Mostrar a div #comidas
-  const comidas = document.getElementById("comidas");
   if (comidas) {
     comidas.classList.remove("oculta");
     comidas.classList.add("mostrar");
   }
 
-  // Ocultar a div #drinks
-  const drinks = document.getElementById("drinks");
-  if (drinks) {
-    drinks.classList.add("oculta");
-    drinks.classList.remove("mostrar");
-  }
+  // Ocultar outras seções
+  if (conteudoDia) conteudoDia.classList.add("oculta");
+  if (drinks) drinks.classList.add("oculta");
+  if (proteinas) proteinas.classList.add("oculta");
 
-  // Ocultar a div #proteinas
-  const proteinas = document.getElementById("proteinas");
-  if (proteinas) {
-    proteinas.classList.add("oculta");
-    proteinas.classList.remove("mostrar");
-  }
-}
-
-// Função para mostrar a página de proteínas
-function mostrarProteinas() {
-  // Ocultar a div #conteudo-dia
-  const conteudoDia = document.getElementById("conteudo-dia");
-  if (conteudoDia) {
-    conteudoDia.classList.add("oculta");
-    conteudoDia.classList.remove("mostrar");
-  }
-
-  // Ocultar o menu
-  const menu = document.querySelector("nav.menu");
-  if (menu) {
-    menu.classList.add("oculta");
-  }
-
-  // Ocultar a div #drinks
-  const drinks = document.getElementById("drinks");
-  if (drinks) {
-    drinks.classList.add("oculta");
-    drinks.classList.remove("mostrar");
-  }
-
-  // Ocultar a div #comidas
-  const comidas = document.getElementById("comidas");
-  if (comidas) {
-    comidas.classList.add("oculta");
-    comidas.classList.remove("mostrar");
-  }
-
-  // Mostrar a div #proteinas
-  const proteinas = document.getElementById("proteinas");
-  if (proteinas) {
-    proteinas.classList.remove("oculta");
-    proteinas.classList.add("mostrar");
+  // Não fechar o aside, se já estiver aberto
+  if (aside && aside.classList.contains("mostrar")) {
+    return;
   }
 }
 
@@ -1672,11 +1618,11 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
         console.log(
-          `Botão ${
+          `Botão clicado: ${
             btn.classList.contains("abrir-progresso") ? "progresso" : "conteúdo"
-          } clicado`
+          }`
         );
-        alternarAside();
+        alternarAside(); // Apenas alterna o aside
       });
     });
 
