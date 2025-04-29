@@ -1411,6 +1411,116 @@ function alternarAside() {
     });
   }
 }
+// Função para mostrar a página de bebidas
+function mostrarDrinks() {
+  // Ocultar a div #conteudo-dia
+  const conteudoDia = document.getElementById("conteudo-dia");
+  if (conteudoDia) {
+    conteudoDia.classList.add("oculta");
+    conteudoDia.classList.remove("mostrar");
+  }
+
+  // Ocultar o menu
+  const menu = document.querySelector("nav.menu");
+  if (menu) {
+    menu.classList.add("oculta");
+  }
+
+  // Mostrar a div #drinks
+  const drinks = document.getElementById("drinks");
+  if (drinks) {
+    drinks.classList.remove("oculta");
+    drinks.classList.add("mostrar");
+  }
+
+  // Ocultar a div #comidas
+  const comidas = document.getElementById("comidas");
+  if (comidas) {
+    comidas.classList.add("oculta");
+    comidas.classList.remove("mostrar");
+  }
+
+  // Ocultar a div #proteinas
+  const proteinas = document.getElementById("proteinas");
+  if (proteinas) {
+    proteinas.classList.add("oculta");
+    proteinas.classList.remove("mostrar");
+  }
+}
+
+// Função para mostrar a página de comidas
+function mostrarComidas() {
+  // Ocultar a div #conteudo-dia
+  const conteudoDia = document.getElementById("conteudo-dia");
+  if (conteudoDia) {
+    conteudoDia.classList.add("oculta");
+    conteudoDia.classList.remove("mostrar");
+  }
+
+  // Ocultar o menu
+  const menu = document.querySelector("nav.menu");
+  if (menu) {
+    menu.classList.add("oculta");
+  }
+
+  // Mostrar a div #comidas
+  const comidas = document.getElementById("comidas");
+  if (comidas) {
+    comidas.classList.remove("oculta");
+    comidas.classList.add("mostrar");
+  }
+
+  // Ocultar a div #drinks
+  const drinks = document.getElementById("drinks");
+  if (drinks) {
+    drinks.classList.add("oculta");
+    drinks.classList.remove("mostrar");
+  }
+
+  // Ocultar a div #proteinas
+  const proteinas = document.getElementById("proteinas");
+  if (proteinas) {
+    proteinas.classList.add("oculta");
+    proteinas.classList.remove("mostrar");
+  }
+}
+
+// Função para mostrar a página de proteínas
+function mostrarProteinas() {
+  // Ocultar a div #conteudo-dia
+  const conteudoDia = document.getElementById("conteudo-dia");
+  if (conteudoDia) {
+    conteudoDia.classList.add("oculta");
+    conteudoDia.classList.remove("mostrar");
+  }
+
+  // Ocultar o menu
+  const menu = document.querySelector("nav.menu");
+  if (menu) {
+    menu.classList.add("oculta");
+  }
+
+  // Ocultar a div #drinks
+  const drinks = document.getElementById("drinks");
+  if (drinks) {
+    drinks.classList.add("oculta");
+    drinks.classList.remove("mostrar");
+  }
+
+  // Ocultar a div #comidas
+  const comidas = document.getElementById("comidas");
+  if (comidas) {
+    comidas.classList.add("oculta");
+    comidas.classList.remove("mostrar");
+  }
+
+  // Mostrar a div #proteinas
+  const proteinas = document.getElementById("proteinas");
+  if (proteinas) {
+    proteinas.classList.remove("oculta");
+    proteinas.classList.add("mostrar");
+  }
+}
 
 function inicializarApp() {
   const hoje = new Date().getDay();
@@ -1468,6 +1578,45 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
       console.log("Botão masculino clicado");
       setGenero("masculino");
+
+      // Verificar se a página de bebidas está ativa
+      const drinks = document.getElementById("drinks");
+      if (drinks && drinks.classList.contains("mostrar")) {
+        drinks.classList.add("oculta");
+        drinks.classList.remove("mostrar");
+      }
+
+      // Verificar se a página de comidas está ativa
+      const comidas = document.getElementById("comidas");
+      if (comidas && comidas.classList.contains("mostrar")) {
+        comidas.classList.add("oculta");
+        comidas.classList.remove("mostrar");
+      }
+
+      // Verificar se a página de proteínas está ativa
+      const proteinas = document.getElementById("proteinas");
+      if (proteinas && proteinas.classList.contains("mostrar")) {
+        proteinas.classList.add("oculta");
+        proteinas.classList.remove("mostrar");
+      }
+
+      // Mostrar exercícios
+      const conteudoDia = document.getElementById("conteudo-dia");
+      if (conteudoDia) {
+        conteudoDia.classList.remove("oculta");
+        conteudoDia.classList.add("mostrar");
+      }
+
+      // Mostrar o menu
+      const menu = document.querySelector("nav.menu");
+      if (menu) {
+        menu.classList.remove("oculta");
+      }
+
+      // Exibir os exercícios do dia atual
+      const hoje = new Date().getDay();
+      const diaHoje = dias[hoje] === "domingo" ? "segunda" : dias[hoje];
+      mostrarDia(diaHoje);
     });
   });
 
@@ -1475,6 +1624,45 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
       console.log("Botão feminino clicado");
       setGenero("feminino");
+
+      // Verificar se a página de bebidas está ativa
+      const drinks = document.getElementById("drinks");
+      if (drinks && drinks.classList.contains("mostrar")) {
+        drinks.classList.add("oculta");
+        drinks.classList.remove("mostrar");
+      }
+
+      // Verificar se a página de comidas está ativa
+      const comidas = document.getElementById("comidas");
+      if (comidas && comidas.classList.contains("mostrar")) {
+        comidas.classList.add("oculta");
+        comidas.classList.remove("mostrar");
+      }
+
+      // Verificar se a página de proteínas está ativa
+      const proteinas = document.getElementById("proteinas");
+      if (proteinas && proteinas.classList.contains("mostrar")) {
+        proteinas.classList.add("oculta");
+        proteinas.classList.remove("mostrar");
+      }
+
+      // Mostrar exercícios
+      const conteudoDia = document.getElementById("conteudo-dia");
+      if (conteudoDia) {
+        conteudoDia.classList.remove("oculta");
+        conteudoDia.classList.add("mostrar");
+      }
+
+      // Mostrar o menu
+      const menu = document.querySelector("nav.menu");
+      if (menu) {
+        menu.classList.remove("oculta");
+      }
+
+      // Exibir os exercícios do dia atual
+      const hoje = new Date().getDay();
+      const diaHoje = dias[hoje] === "domingo" ? "segunda" : dias[hoje];
+      mostrarDia(diaHoje);
     });
   });
 

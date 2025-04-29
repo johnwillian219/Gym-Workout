@@ -36,6 +36,7 @@
           </div>
           <div>
             <button
+              onclick="mostrarComidas()"
               class="food"
               title="Mostrar comidas recomendadas"
               aria-label="Mostrar comidas recomendadas"
@@ -43,6 +44,7 @@
               <img src="icone/food.svg" alt="Ícone de comida" class="icon" />
             </button>
             <button
+              onclick="mostrarDrinks()"
               class="drink"
               title="Mostrar bebidas recomendadas"
               aria-label="Mostrar bebidas recomendadas"
@@ -50,6 +52,7 @@
               <img src="icone/drink.svg" alt="Ícone de bebida" class="icon" />
             </button>
             <button
+              onclick="mostrarProteinas()"
               class="protein"
               title="Mostrar proteínas recomendadas"
               aria-label="Mostrar proteínas recomendadas"
@@ -75,6 +78,7 @@
               id="abrir-conteudo"
               title="Mostrar conteúdo"
               class="oculta abrir-conteudo"
+              href="#drinks"
             >
               <img src="icone/treino.svg" alt="Ícone de Treino" class="icon" />
             </button>
@@ -85,7 +89,10 @@
             >
               <img src="icone/moon.svg" alt="Modo escuro" class="icon" />
             </button>
+
+            <!--ainda o menu nao foi configurado-->
             <button
+              onclick="abrirMenuLateral()"
               class="menu-side-desktop"
               title="Mostrar menu lateral"
               aria-label="Mostrar menu lateral"
@@ -104,6 +111,37 @@
         </nav>
         <main>
           <div id="conteudo-dia" class="conteudo mostrar"></div>
+
+          <div id="drinks" class="drinks oculta">
+            <h2>Bebidas Recomendadas</h2>
+            <ul id="lista-bebidas">
+              <li>Água</li>
+              <li>Suco Natural</li>
+              <li>Chá Verde</li>
+              <li>Água de Coco</li>
+              <li>Shake de Proteína</li>
+            </ul>
+          </div>
+          <div id="comidas" class="comidas oculta">
+            <h2>Comidas Recomendadas</h2>
+            <ul id="lista-comidas">
+              <li>Frutas</li>
+              <li>Vegetais</li>
+              <li>Carnes Magras</li>
+              <li>Grãos Integrais</li>
+              <li>Oleaginosas</li>
+            </ul>
+          </div>
+          <div id="proteinas" class="proteinas oculta">
+            <h2>Proteínas Recomendadas</h2>
+            <ul id="lista-proteinas">
+              <li>Peito de Frango</li>
+              <li>Peixe</li>
+              <li>Ovos</li>
+              <li>Tofu</li>
+              <li>Quinoa</li>
+            </ul>
+          </div>
         </main>
       </div>
       <aside id="aside-progresso" class="oculta">

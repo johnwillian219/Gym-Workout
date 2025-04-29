@@ -1391,3 +1391,10 @@ body.dark #modal-nao:hover,
 body.dark #modal-cancelar:hover {
   background: linear-gradient(135deg, #353b48, #4b5464);
 }
+
+/** ============================
+   11. Outros Estilos botoes e menu lateral
+============================ */
+.oculta {
+  display: none;
+}
