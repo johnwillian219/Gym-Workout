@@ -550,223 +550,130 @@ body.dark .top-bar button:hover::before {
 }
 
 /* Ajustes para Telas Pequenas (até 500px) - Novo Breakpoint */
+/* Ajustes para Telas Pequenas (até 500px) */
 @media (max-width: 500px) {
-  /* Top Bar Principal */
-  .top-bar {
-    flex-direction: column; /* Empilha as divs quando não há espaço suficiente */
-    gap: 0.8rem; /* Espaço entre as linhas */
-    padding: 0.5rem; /* Padding uniforme */
+  .container {
+    margin: 0;
   }
 
-  .top-bar .whoareyou {
-    width: 100%; /* Ocupa a largura total */
-    justify-content: space-between; /* Distribui os elementos */
+  #aside-progresso.mostrar .menu-mobile .top-bar {
+    display: none !important; /* Oculta o top-bar dentro do menu-mobile */
   }
 
-  .top-bar .others-buttons {
-    width: 100%; /* Ocupa a largura total */
-    grid-template-columns: repeat(
-      5,
-      minmax(40px, 1fr)
-    ); /* Mantém o layout de grade */
-    gap: 0.5rem;
-  }
-
-  .top-bar .menu-side {
-    display: block; /* Exibe o menu-side */
-  }
-
-  .top-bar .menu-side-desktop {
-    display: none !important; /* Oculta o menu-side-desktop */
-  }
-
-  /* Menu Mobile Top Bar */
-  .menu-mobile .top-bar {
-    flex-direction: column; /* Empilha as divs quando não há espaço suficiente */
-    gap: 0.5rem; /* Espaço entre as linhas */
-    padding: 0.5rem; /* Padding uniforme */
-  }
-
-  .menu-mobile .top-bar .whoareyou {
-    width: 100%; /* Ocupa a largura total */
-    justify-content: space-between; /* Distribui os elementos */
-  }
-
-  .menu-mobile .top-bar div:not(.whoareyou) {
-    width: 100%; /* Ocupa a largura total */
-    grid-template-columns: repeat(
-      5,
-      minmax(40px, 1fr)
-    ); /* Mantém o layout de grade */
-    gap: 0.5rem;
-  }
-
-  .menu-mobile .top-bar .menu-side {
-    display: block; /* Exibe o menu-side */
-  }
-
-  .menu-mobile .top-bar .menu-side-desktop {
-    display: none !important; /* Oculta o menu-side-desktop */
-  }
-}
-
-/* Ajustes para Telas Muito Pequenas (até 400px) */
-@media (max-width: 400px) {
   .top-bar {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Três colunas iguais */
-    grid-template-rows: auto auto; /* Duas linhas automáticas */
     gap: 1rem; /* Espaçamento entre os itens */
     align-items: center; /* Alinha os itens verticalmente */
     justify-items: center; /* Centraliza os itens horizontalmente */
-    padding: 1rem;
+    position: sticky; /* Mantém o top-bar fixo no topo */
+    top: 0;
+    z-index: 101; /* Garante que o top-bar fique acima do aside */
+    background: linear-gradient(135deg, #bebbbb 0%, #f1f3f5 100%);
+    box-shadow: var(--shadow);
   }
 
-  .whoareyou {
-    grid-column: span 3; /* Ocupa todas as colunas na primeira linha */
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem; /* Espaçamento entre os botões */
-  }
-
+  .whoareyou,
   .others-buttons {
-    grid-column: span 3; /* Ocupa todas as colunas na segunda linha */
     display: flex;
-    justify-content: space-between;
-    gap: 1rem; /* Espaçamento entre os botões */
+    justify-content: space-between; /* Distribui os botões */
+    gap: 0.5rem; /* Adiciona espaçamento entre os botões */
     margin: 0;
     padding: 0;
   }
 
   .top-bar .whoareyou .titulo {
-    grid-column: 1 / 2; /* Ocupa a primeira coluna */
-    font-size: clamp(1.1rem, 3vw, 2rem); /* Reduz o tamanho da fonte */
-    text-align: left; /* Alinha o texto à esquerda */
-    margin: 0; /* Remove margens extras */
+    font-size: clamp(1.5rem, 3.2vw, 2rem); /* Ajusta o tamanho da fonte */
+    text-align: center;
+    padding: 1rem; /* Adiciona padding */
+  }
+
+  .top-bar button {
+    width: 60px; /* Ajusta o tamanho dos botões */
+    height: 60px;
+    padding: 0.4rem;
+  }
+
+  .top-bar .icon {
+    width: 30px; /* Ajusta o tamanho dos ícones */
+    height: 30px;
+  }
+
+  .menu-mobile .top-bar button {
+    width: 50px; /* Ajusta o tamanho dos botões no menu mobile */
+    height: 50px;
+  }
+
+  .menu-mobile .top-bar .icon {
+    width: 25px; /* Ajusta o tamanho dos ícones no menu mobile */
+    height: 25px;
+  }
+
+  #aside-progresso {
+    margin-top: 6rem; /* Ajusta o espaçamento superior */
+  }
+}
+
+/* Ajustes para Telas Muito Pequenas (até 400px) */
+@media (max-width: 400px) {
+  .container {
+    margin: 0;
+  }
+
+  #aside-progresso.mostrar .menu-mobile .top-bar {
+    display: none !important; /* Oculta o top-bar dentro do menu-mobile */
+  }
+
+  .top-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Três colunas iguais */
+    gap: 1rem; /* Espaçamento entre os itens */
+    align-items: center; /* Alinha os itens verticalmente */
+    justify-items: center; /* Centraliza os itens horizontalmente */
+    position: sticky; /* Mantém o top-bar fixo no topo */
+    top: 0;
+    z-index: 101; /* Garante que o top-bar fique acima do aside */
+    background: linear-gradient(135deg, #bebbbb 0%, #f1f3f5 100%);
+    box-shadow: var(--shadow);
+  }
+
+  .whoareyou,
+  .others-buttons {
+    display: flex;
+    justify-content: space-between; /* Distribui os botões */
+    gap: 0; /* Remove espaçamento extra */
+    margin: 0;
     padding: 0;
   }
 
-  .top-bar .whoareyou .man {
-    grid-column: 2 / 3; /* Coluna 2 */
+  .top-bar .whoareyou .titulo {
+    font-size: clamp(1.5rem, 3.2vw, 2rem); /* Ajusta o tamanho da fonte */
+    text-align: center;
+    padding: 1rem; /* Adiciona padding */
   }
 
-  .top-bar .whoareyou .women {
-    grid-column: 3 / 4; /* Coluna 3 */
+  .top-bar button {
+    width: 70px; /* Tamanho dos botões */
+    height: 70px;
+    padding: 0.3rem;
   }
 
-  .top-bar .whoareyou .menu-side {
-    grid-column: 4 / 5; /* Coluna 4 */
+  .top-bar .icon {
+    width: 35px; /* Tamanho dos ícones */
+    height: 35px;
   }
 
-  .top-bar .others-buttons .food {
-    grid-column: 2 / 3; /* Alinha abaixo de .man */
+  .menu-mobile .top-bar button {
+    width: 60px; /* Ajusta o tamanho dos botões no menu mobile */
+    height: 60px;
   }
 
-  .top-bar .others-buttons .drink {
-    grid-column: 3 / 4; /* Alinha abaixo de .women */
-  }
-
-  .top-bar .others-buttons .protein {
-    grid-column: 4 / 5; /* Alinha abaixo de .menu-side */
-  }
-
-  .top-bar .others-buttons #abrir-progresso {
-    grid-column: 2 / 3; /* Alinha abaixo de .man na próxima linha */
-    grid-row: 2; /* Segunda linha */
-  }
-
-  .top-bar .others-buttons #toggle-dark-mode {
-    grid-column: 3 / 4; /* Alinha abaixo de .women na próxima linha */
-    grid-row: 2; /* Segunda linha */
-  }
-
-  .top-bar .others-buttons .menu-side {
-    display: none; /* Oculta o botão menu-side em .others-buttons */
-  }
-
-  /* Menu Mobile Top Bar */
-  .menu-mobile .top-bar {
-    display: flex;
-    flex-direction: column; /* Empilha as seções verticalmente */
-    gap: 0.5rem; /* Espaço entre as linhas */
-    padding: 0.5rem; /* Padding uniforme */
-  }
-
-  .menu-mobile .top-bar .whoareyou,
-  .menu-mobile .top-bar div:not(.whoareyou) {
-    display: grid;
-    width: 100%;
-    grid-template-columns: 2fr 1fr 1fr 1fr; /* Ajustado para alinhar melhor */
-    gap: 0.5rem; /* Espaço entre os elementos da grade */
-    margin: 0; /* Remove margens extras */
-    padding: 0; /* Remove padding extra */
-    justify-items: center; /* Centraliza os itens em cada célula */
-    align-items: center; /* Centraliza verticalmente */
-  }
-
-  .menu-mobile .top-bar .whoareyou .titulo {
-    grid-column: 1 / 2; /* Ocupa a primeira coluna */
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Reduz o tamanho da fonte */
-    text-align: left; /* Alinha o texto à esquerda */
-    margin: 0; /* Remove margens extras */
-  }
-
-  .menu-mobile .top-bar .whoareyou .man {
-    grid-column: 2 / 3; /* Coluna 2 */
-  }
-
-  .menu-mobile .top-bar .whoareyou .women {
-    grid-column: 3 / 4; /* Coluna 3 */
-  }
-
-  .menu-mobile .top-bar .whoareyou .menu-side {
-    grid-column: 4 / 5; /* Coluna 4 */
-  }
-
-  .menu-mobile .top-bar div:not(.whoareyou) .food {
-    grid-column: 2 / 3; /* Alinha abaixo de .man */
-  }
-
-  .menu-mobile .top-bar div:not(.whoareyou) .drink {
-    grid-column: 3 / 4; /* Alinha abaixo de .women */
-  }
-
-  .menu-mobile .top-bar div:not(.whoareyou) .protein {
-    grid-column: 4 / 5; /* Alinha abaixo de .menu-side */
-  }
-
-  .menu-mobile .top-bar div:not(.whoareyou) .abrir-progresso {
-    grid-column: 2 / 3; /* Alinha abaixo de .man na próxima linha */
-    grid-row: 2; /* Segunda linha */
-  }
-
-  .menu-mobile .top-bar div:not(.whoareyou) .toggle-dark-mode {
-    grid-column: 3 / 4; /* Alinha abaixo de .women na próxima linha */
-    grid-row: 2; /* Segunda linha */
-  }
-
-  .menu-mobile .top-bar div:not(.whoareyou) .menu-side {
-    display: none; /* Oculta o botão menu-side em div:not(.whoareyou) */
-  }
-
-  /* Ajustes nos Botões */
-  .top-bar .whoareyou .man,
-  .top-bar .whoareyou .women,
-  .top-bar .whoareyou .menu-side,
-  .top-bar .others-buttons button,
-  .menu-mobile .top-bar .whoareyou .man,
-  .menu-mobile .top-bar .whoareyou .women,
-  .menu-mobile .top-bar .whoareyou .menu-side,
-  .menu-mobile .top-bar div:not(.whoareyou) button {
-    width: 40px; /* Reduz a largura dos botões */
-    height: 40px; /* Reduz a altura dos botões */
-    padding: 0.3rem; /* Reduz o padding */
-  }
-
-  .top-bar .icon,
   .menu-mobile .top-bar .icon {
-    width: 20px; /* Reduz o tamanho dos ícones */
-    height: 20px;
+    width: 30px; /* Ajusta o tamanho dos ícones no menu mobile */
+    height: 30px;
+  }
+  #aside-progresso {
+    margin-top: 7rem;
   }
 }
 
