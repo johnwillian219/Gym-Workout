@@ -1413,6 +1413,8 @@ function mostrarProteinas() {
   const drinks = document.getElementById("drinks");
   const comidas = document.getElementById("comidas");
   const proteinas = document.getElementById("proteinas");
+  const menu = document.querySelector("nav.menu"); // Seleciona o menu
+  const aside = document.getElementById("aside-progresso"); // Seleciona o aside
 
   // Mostrar a div #proteinas
   if (proteinas) {
@@ -1425,6 +1427,17 @@ function mostrarProteinas() {
   if (conteudoDia) conteudoDia.classList.add("oculta");
   if (drinks) drinks.classList.add("oculta");
   if (comidas) comidas.classList.add("oculta");
+  if (menu) menu.classList.add("oculta");
+
+  // Fechar o aside apenas em dispositivos móveis
+  if (
+    window.innerWidth <= 768 &&
+    aside &&
+    aside.classList.contains("mostrar")
+  ) {
+    aside.classList.remove("mostrar");
+    aside.classList.add("oculta");
+  }
 }
 
 function mostrarDrinks() {
@@ -1432,6 +1445,8 @@ function mostrarDrinks() {
   const drinks = document.getElementById("drinks");
   const comidas = document.getElementById("comidas");
   const proteinas = document.getElementById("proteinas");
+  const menu = document.querySelector("nav.menu"); // Seleciona o menu
+  const aside = document.getElementById("aside-progresso"); // Seleciona o aside
 
   // Mostrar a div #drinks
   if (drinks) {
@@ -1444,6 +1459,17 @@ function mostrarDrinks() {
   if (conteudoDia) conteudoDia.classList.add("oculta");
   if (comidas) comidas.classList.add("oculta");
   if (proteinas) proteinas.classList.add("oculta");
+  if (menu) menu.classList.add("oculta");
+
+  // Fechar o aside apenas em dispositivos móveis
+  if (
+    window.innerWidth <= 768 &&
+    aside &&
+    aside.classList.contains("mostrar")
+  ) {
+    aside.classList.remove("mostrar");
+    aside.classList.add("oculta");
+  }
 }
 
 // Função para mostrar a página de comidas
@@ -1452,6 +1478,8 @@ function mostrarComidas() {
   const drinks = document.getElementById("drinks");
   const comidas = document.getElementById("comidas");
   const proteinas = document.getElementById("proteinas");
+  const menu = document.querySelector("nav.menu"); // Seleciona o menu
+  const aside = document.getElementById("aside-progresso"); // Seleciona o aside
 
   // Mostrar a div #comidas
   if (comidas) {
@@ -1464,6 +1492,17 @@ function mostrarComidas() {
   if (conteudoDia) conteudoDia.classList.add("oculta");
   if (drinks) drinks.classList.add("oculta");
   if (proteinas) proteinas.classList.add("oculta");
+  if (menu) menu.classList.add("oculta");
+
+  // Fechar o aside apenas em dispositivos móveis
+  if (
+    window.innerWidth <= 768 &&
+    aside &&
+    aside.classList.contains("mostrar")
+  ) {
+    aside.classList.remove("mostrar");
+    aside.classList.add("oculta");
+  }
 }
 
 function inicializarApp() {
@@ -1607,6 +1646,26 @@ document.addEventListener("DOMContentLoaded", () => {
       const hoje = new Date().getDay();
       const diaHoje = dias[hoje] === "domingo" ? "segunda" : dias[hoje];
       mostrarDia(diaHoje);
+    });
+  });
+
+  document.querySelectorAll(".man, .women").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const aside = document.getElementById("aside-progresso");
+
+      // Fechar o aside apenas em dispositivos móveis
+      if (
+        window.innerWidth <= 768 &&
+        aside &&
+        aside.classList.contains("mostrar")
+      ) {
+        aside.classList.remove("mostrar");
+        aside.classList.add("oculta");
+      }
+
+      // Atualizar o gênero
+      const genero = btn.classList.contains("man") ? "masculino" : "feminino";
+      setGenero(genero);
     });
   });
 
