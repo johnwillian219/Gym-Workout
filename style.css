@@ -146,59 +146,6 @@ main {
   gap: 0.75rem;
 }
 
-@media (max-width: 768px) {
-  .top-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.5rem 0.75rem;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .top-bar .whoareyou {
-    width: 100%;
-    justify-content: flex-start;
-    margin-left: 0.25rem;
-    margin-bottom: 0.5rem;
-    gap: 0.5rem;
-  }
-
-  .top-bar .whoareyou .titulo {
-    font-size: clamp(1.2rem, 4vw, 1.4rem);
-    text-align: left;
-  }
-
-  .top-bar .menu-side {
-    display: block;
-  }
-
-  .top-bar div:not(.whoareyou) {
-    gap: 0.8rem;
-    justify-content: flex-start;
-    margin-left: 0.25rem;
-    flex-wrap: wrap;
-  }
-
-  .top-bar .menu-side-desktop {
-    display: none;
-  }
-}
-
-@media (max-width: 400px) {
-  .top-bar .whoareyou {
-    gap: 0.3rem;
-  }
-
-  .top-bar div:not(.whoareyou) {
-    gap: 0.6rem;
-  }
-
-  .top-bar .whoareyou .titulo {
-    font-size: clamp(1.1rem, 3.5vw, 1.3rem);
-  }
-}
-
 .top-bar button {
   background: transparent;
   border: none;
@@ -347,6 +294,507 @@ body.dark .top-bar button:hover::before {
     var(--accent),
     var(--accent-hover)
   ) !important;
+}
+
+/* Menu Mobile */
+.menu-mobile {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .menu-mobile {
+    display: none !important;
+  }
+
+  .top-bar {
+    flex-direction: row; /* Garante layout lado a lado em telas grandes */
+  }
+
+  .top-bar .whoareyou .menu-side {
+    display: none !important; /* Oculta o menu-side em telas grandes */
+  }
+
+  .top-bar .menu-side-desktop {
+    display: block !important; /* Exibe o menu-side-desktop em telas grandes */
+  }
+}
+
+/* Ajustes para Dispositivos Móveis (401px a 768px) */
+@media (max-width: 768px) {
+  /* Top Bar Principal */
+  .top-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Três colunas iguais */
+    grid-template-rows: auto auto; /* Duas linhas automáticas */
+    gap: 1rem; /* Espaçamento entre os itens */
+    align-items: center; /* Alinha os itens verticalmente */
+    justify-items: center; /* Centraliza os itens horizontalmente */
+    padding: 1rem;
+  }
+
+  .whoareyou {
+    grid-column: span 3; /* Ocupa todas as colunas na primeira linha */
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem; /* Espaçamento entre os botões */
+    padding: 0;
+  }
+
+  .others-buttons {
+    grid-column: span 3; /* Ocupa todas as colunas na segunda linha */
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem; /* Espaçamento entre os botões */
+    padding: 0;
+    margin: 0; /* Remove margens extras */
+  }
+  .top-bar .whoareyou .titulo {
+    font-size: clamp(1.2rem, 3.2vw, 2rem);
+    margin: 0; /* Remove margens extras */
+    text-align: left; /* Alinha o texto à esquerda */
+    padding: 0; /* Remove padding extra */
+  }
+
+  .top-bar .menu-side {
+    display: block; /* Exibe o menu-side por padrão */
+  }
+
+  .top-bar .menu-side-desktop {
+    display: none !important; /* Oculta o menu-side-desktop */
+  }
+
+  .top-bar .others-buttons .menu-side {
+    display: none; /* Oculta o botão menu-side em .others-buttons */
+  }
+
+  /* Menu Mobile Top Bar */
+  .menu-mobile {
+    border-radius: 8px;
+  }
+
+  .menu-mobile .top-bar {
+    width: 100%;
+    display: flex;
+    flex-direction: row; /* Por padrão, tenta manter as divs lado a lado */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem; /* Ajuste no padding */
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .menu-mobile .top-bar .whoareyou {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    margin-right: 1rem;
+  }
+
+  .menu-mobile .top-bar .whoareyou .titulo {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    margin-right: 0.5rem;
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) {
+    display: grid;
+    grid-template-columns: repeat(
+      5,
+      minmax(40px, 1fr)
+    ); /* Colunas proporcionais */
+    gap: 0.5rem;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) .menu-side {
+    display: none; /* Oculta o botão menu-side em div:not(.whoareyou) */
+  }
+
+  .menu-mobile .top-bar .menu-side-desktop {
+    display: none !important; /* Oculta o menu-side-desktop */
+  }
+
+  /* Estilização Comum dos Botões (Top Bar e Menu Mobile) */
+  .top-bar .whoareyou .man,
+  .top-bar .whoareyou .women,
+  .top-bar .whoareyou .menu-side,
+  .top-bar .others-buttons button,
+  .menu-mobile .top-bar .whoareyou .man,
+  .menu-mobile .top-bar .whoareyou .women,
+  .menu-mobile .top-bar .whoareyou .menu-side,
+  .menu-mobile .top-bar div:not(.whoareyou) button {
+    background: rgba(0, 0, 0, 0.03);
+    border: none;
+    width: 50px; /* Largura fixa para consistência */
+    height: 50px; /* Altura fixa para consistência */
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza o conteúdo do botão */
+    box-sizing: border-box; /* Inclui padding no tamanho total */
+  }
+
+  .top-bar .others-buttons button.food,
+  .top-bar .others-buttons button.drink,
+  .top-bar .others-buttons button.protein,
+  .menu-mobile .top-bar div:not(.whoareyou) button.food,
+  .menu-mobile .top-bar div:not(.whoareyou) button.drink,
+  .menu-mobile .top-bar div:not(.whoareyou) button.protein {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .top-bar .others-buttons button.food:hover,
+  .top-bar .others-buttons button.drink:hover,
+  .top-bar .others-buttons button.protein:hover,
+  .menu-mobile .top-bar div:not(.whoareyou) button.food:hover,
+  .menu-mobile .top-bar div:not(.whoareyou) button.drink:hover,
+  .menu-mobile .top-bar div:not(.whoareyou) button.protein:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  .top-bar button::before,
+  .menu-mobile .top-bar button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: var(--transition);
+  }
+
+  .top-bar button:hover::before,
+  .menu-mobile .top-bar button:hover::before {
+    opacity: 1;
+  }
+
+  .top-bar button:hover,
+  .menu-mobile .top-bar button:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .top-bar button:active,
+  .menu-mobile .top-bar button:active {
+    transform: scale(0.95);
+  }
+
+  .top-bar .icon,
+  .menu-mobile .top-bar .icon {
+    width: 24px; /* Ajustado para consistência */
+    height: 24px;
+    filter: brightness(0) saturate(100%) invert(25%) sepia(90%) saturate(700%)
+      hue-rotate(190deg) brightness(95%) contrast(100%);
+    transition: var(--transition);
+    object-fit: contain; /* Garante que os ícones não sejam distorcidos */
+  }
+
+  #aside-progresso.mostrar .menu-mobile {
+    display: block;
+  }
+
+  #aside-progresso.oculta .menu-mobile {
+    display: none;
+  }
+
+  /* Estilos para o modo escuro */
+  body.dark .top-bar,
+  body.dark .menu-mobile .top-bar {
+    background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  body.dark .top-bar button,
+  body.dark .menu-mobile .top-bar button {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  body.dark .top-bar .others-buttons button.food,
+  body.dark .top-bar .others-buttons button.drink,
+  body.dark .top-bar .others-buttons button.protein,
+  body.dark .menu-mobile .top-bar div:not(.whoareyou) button.food,
+  body.dark .menu-mobile .top-bar div:not(.whoareyou) button.drink,
+  body.dark .menu-mobile .top-bar div:not(.whoareyou) button.protein {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  body.dark .top-bar .others-buttons button.food:hover,
+  body.dark .top-bar .others-buttons button.drink:hover,
+  body.dark .top-bar .others-buttons button.protein:hover,
+  body.dark .menu-mobile .top-bar div:not(.whoareyou) button.food:hover,
+  body.dark .menu-mobile .top-bar div:not(.whoareyou) button.drink:hover,
+  body.dark .menu-mobile .top-bar div:not(.whoareyou) button.protein:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  body.dark .top-bar .whoareyou .titulo,
+  body.dark .menu-mobile .top-bar .whoareyou .titulo {
+    background: linear-gradient(90deg, #74b9ff, #a29bfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  body.dark .top-bar .icon,
+  body.dark .menu-mobile .top-bar .icon {
+    filter: invert(0.9) brightness(0.9);
+  }
+}
+
+/* Ajustes para Telas Pequenas (até 500px) - Novo Breakpoint */
+@media (max-width: 500px) {
+  /* Top Bar Principal */
+  .top-bar {
+    flex-direction: column; /* Empilha as divs quando não há espaço suficiente */
+    gap: 0.8rem; /* Espaço entre as linhas */
+    padding: 0.5rem; /* Padding uniforme */
+  }
+
+  .top-bar .whoareyou {
+    width: 100%; /* Ocupa a largura total */
+    justify-content: space-between; /* Distribui os elementos */
+  }
+
+  .top-bar .others-buttons {
+    width: 100%; /* Ocupa a largura total */
+    grid-template-columns: repeat(
+      5,
+      minmax(40px, 1fr)
+    ); /* Mantém o layout de grade */
+    gap: 0.5rem;
+  }
+
+  .top-bar .menu-side {
+    display: block; /* Exibe o menu-side */
+  }
+
+  .top-bar .menu-side-desktop {
+    display: none !important; /* Oculta o menu-side-desktop */
+  }
+
+  /* Menu Mobile Top Bar */
+  .menu-mobile .top-bar {
+    flex-direction: column; /* Empilha as divs quando não há espaço suficiente */
+    gap: 0.5rem; /* Espaço entre as linhas */
+    padding: 0.5rem; /* Padding uniforme */
+  }
+
+  .menu-mobile .top-bar .whoareyou {
+    width: 100%; /* Ocupa a largura total */
+    justify-content: space-between; /* Distribui os elementos */
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) {
+    width: 100%; /* Ocupa a largura total */
+    grid-template-columns: repeat(
+      5,
+      minmax(40px, 1fr)
+    ); /* Mantém o layout de grade */
+    gap: 0.5rem;
+  }
+
+  .menu-mobile .top-bar .menu-side {
+    display: block; /* Exibe o menu-side */
+  }
+
+  .menu-mobile .top-bar .menu-side-desktop {
+    display: none !important; /* Oculta o menu-side-desktop */
+  }
+}
+
+/* Ajustes para Telas Muito Pequenas (até 400px) */
+@media (max-width: 400px) {
+  .top-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Três colunas iguais */
+    grid-template-rows: auto auto; /* Duas linhas automáticas */
+    gap: 1rem; /* Espaçamento entre os itens */
+    align-items: center; /* Alinha os itens verticalmente */
+    justify-items: center; /* Centraliza os itens horizontalmente */
+    padding: 1rem;
+  }
+
+  .whoareyou {
+    grid-column: span 3; /* Ocupa todas as colunas na primeira linha */
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem; /* Espaçamento entre os botões */
+  }
+
+  .others-buttons {
+    grid-column: span 3; /* Ocupa todas as colunas na segunda linha */
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem; /* Espaçamento entre os botões */
+    margin: 0;
+    padding: 0;
+  }
+
+  .top-bar .whoareyou .titulo {
+    grid-column: 1 / 2; /* Ocupa a primeira coluna */
+    font-size: clamp(1.1rem, 3vw, 2rem); /* Reduz o tamanho da fonte */
+    text-align: left; /* Alinha o texto à esquerda */
+    margin: 0; /* Remove margens extras */
+    padding: 0;
+  }
+
+  .top-bar .whoareyou .man {
+    grid-column: 2 / 3; /* Coluna 2 */
+  }
+
+  .top-bar .whoareyou .women {
+    grid-column: 3 / 4; /* Coluna 3 */
+  }
+
+  .top-bar .whoareyou .menu-side {
+    grid-column: 4 / 5; /* Coluna 4 */
+  }
+
+  .top-bar .others-buttons .food {
+    grid-column: 2 / 3; /* Alinha abaixo de .man */
+  }
+
+  .top-bar .others-buttons .drink {
+    grid-column: 3 / 4; /* Alinha abaixo de .women */
+  }
+
+  .top-bar .others-buttons .protein {
+    grid-column: 4 / 5; /* Alinha abaixo de .menu-side */
+  }
+
+  .top-bar .others-buttons #abrir-progresso {
+    grid-column: 2 / 3; /* Alinha abaixo de .man na próxima linha */
+    grid-row: 2; /* Segunda linha */
+  }
+
+  .top-bar .others-buttons #toggle-dark-mode {
+    grid-column: 3 / 4; /* Alinha abaixo de .women na próxima linha */
+    grid-row: 2; /* Segunda linha */
+  }
+
+  .top-bar .others-buttons .menu-side {
+    display: none; /* Oculta o botão menu-side em .others-buttons */
+  }
+
+  /* Menu Mobile Top Bar */
+  .menu-mobile .top-bar {
+    display: flex;
+    flex-direction: column; /* Empilha as seções verticalmente */
+    gap: 0.5rem; /* Espaço entre as linhas */
+    padding: 0.5rem; /* Padding uniforme */
+  }
+
+  .menu-mobile .top-bar .whoareyou,
+  .menu-mobile .top-bar div:not(.whoareyou) {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 2fr 1fr 1fr 1fr; /* Ajustado para alinhar melhor */
+    gap: 0.5rem; /* Espaço entre os elementos da grade */
+    margin: 0; /* Remove margens extras */
+    padding: 0; /* Remove padding extra */
+    justify-items: center; /* Centraliza os itens em cada célula */
+    align-items: center; /* Centraliza verticalmente */
+  }
+
+  .menu-mobile .top-bar .whoareyou .titulo {
+    grid-column: 1 / 2; /* Ocupa a primeira coluna */
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Reduz o tamanho da fonte */
+    text-align: left; /* Alinha o texto à esquerda */
+    margin: 0; /* Remove margens extras */
+  }
+
+  .menu-mobile .top-bar .whoareyou .man {
+    grid-column: 2 / 3; /* Coluna 2 */
+  }
+
+  .menu-mobile .top-bar .whoareyou .women {
+    grid-column: 3 / 4; /* Coluna 3 */
+  }
+
+  .menu-mobile .top-bar .whoareyou .menu-side {
+    grid-column: 4 / 5; /* Coluna 4 */
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) .food {
+    grid-column: 2 / 3; /* Alinha abaixo de .man */
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) .drink {
+    grid-column: 3 / 4; /* Alinha abaixo de .women */
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) .protein {
+    grid-column: 4 / 5; /* Alinha abaixo de .menu-side */
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) .abrir-progresso {
+    grid-column: 2 / 3; /* Alinha abaixo de .man na próxima linha */
+    grid-row: 2; /* Segunda linha */
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) .toggle-dark-mode {
+    grid-column: 3 / 4; /* Alinha abaixo de .women na próxima linha */
+    grid-row: 2; /* Segunda linha */
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) .menu-side {
+    display: none; /* Oculta o botão menu-side em div:not(.whoareyou) */
+  }
+
+  /* Ajustes nos Botões */
+  .top-bar .whoareyou .man,
+  .top-bar .whoareyou .women,
+  .top-bar .whoareyou .menu-side,
+  .top-bar .others-buttons button,
+  .menu-mobile .top-bar .whoareyou .man,
+  .menu-mobile .top-bar .whoareyou .women,
+  .menu-mobile .top-bar .whoareyou .menu-side,
+  .menu-mobile .top-bar div:not(.whoareyou) button {
+    width: 40px; /* Reduz a largura dos botões */
+    height: 40px; /* Reduz a altura dos botões */
+    padding: 0.3rem; /* Reduz o padding */
+  }
+
+  .top-bar .icon,
+  .menu-mobile .top-bar .icon {
+    width: 20px; /* Reduz o tamanho dos ícones */
+    height: 20px;
+  }
+}
+
+/* Ajustes para Telas Maiores que 500px e Menores que 768px */
+@media (min-width: 501px) and (max-width: 768px) {
+  .top-bar {
+    flex-direction: row; /* Mantém as divs lado a lado */
+  }
+
+  .top-bar .whoareyou .menu-side {
+    display: none !important; /* Oculta o menu-side quando há espaço */
+  }
+
+  .top-bar .menu-side-desktop {
+    display: block !important; /* Exibe o menu-side-desktop */
+  }
+
+  .menu-mobile .top-bar {
+    flex-direction: row; /* Mantém as divs lado a lado */
+  }
+
+  .menu-mobile .top-bar .whoareyou .menu-side {
+    display: none !important; /* Oculta o menu-side quando há espaço */
+  }
+
+  .menu-mobile .top-bar .menu-side-desktop {
+    display: block !important; /* Exibe o menu-side-desktop */
+  }
 }
 
 /* ============================
@@ -634,144 +1082,6 @@ body.dark .top-bar button:hover::before {
   font-size: clamp(1.2rem, 3.5vw, 1.4rem);
   font-weight: 600;
   color: var(--accent);
-}
-
-/* Menu Mobile */
-.menu-mobile {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .menu-mobile {
-    border-radius: 8px;
-  }
-  .menu-mobile .top-bar {
-    border-radius: 8px;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.5rem 0.75rem;
-    background: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  .menu-mobile .top-bar .whoareyou {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    justify-content: flex-start;
-    margin-left: 0.25rem;
-    margin-bottom: 0.5rem;
-  }
-  .menu-mobile .top-bar .whoareyou .titulo {
-    font-size: clamp(1.2rem, 4vw, 1.4rem);
-    font-weight: 700;
-    background: linear-gradient(90deg, var(--accent), var(--accent-hover));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-right: auto;
-  }
-  .menu-mobile .top-bar .whoareyou .man,
-  .menu-mobile .top-bar .whoareyou .women,
-  .menu-mobile .top-bar .whoareyou .menu-side {
-    background: transparent;
-    border: none;
-    padding: 0.65rem;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-  }
-  .menu-mobile .top-bar div:not(.whoareyou) {
-    display: flex;
-    gap: 0.8rem;
-    justify-content: flex-start;
-    margin-left: 0.25rem;
-    flex-wrap: wrap;
-  }
-  .menu-mobile .top-bar button {
-    background: rgba(0, 0, 0, 0.03);
-    border: none;
-    padding: 0.65rem;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-    margin-top: 0;
-  }
-  .menu-mobile .top-bar button.food,
-  .menu-mobile .top-bar button.drink,
-  .menu-mobile .top-bar button.protein {
-    background: rgba(0, 0, 0, 0.03);
-  }
-  .menu-mobile .top-bar button.food:hover,
-  .menu-mobile .top-bar button.drink:hover,
-  .menu-mobile .top-bar button.protein:hover {
-    background: rgba(0, 0, 0, 0.08);
-  }
-  .menu-mobile .top-bar button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transition: var(--transition);
-  }
-  .menu-mobile .top-bar button:hover::before {
-    opacity: 1;
-  }
-  .menu-mobile .top-bar button:hover {
-    transform: scale(1.1);
-    box-shadow: var(--shadow-hover);
-  }
-  .menu-mobile .top-bar button:active {
-    transform: scale(0.95);
-  }
-  .menu-mobile .top-bar button img {
-    width: 30px;
-    height: 30px;
-    filter: brightness(0) saturate(100%) invert(25%) sepia(90%) saturate(700%)
-      hue-rotate(190deg) brightness(95%) contrast(100%);
-    transition: var(--transition);
-  }
-  #aside-progresso.mostrar .menu-mobile {
-    display: block;
-  }
-  #aside-progresso.oculta .menu-mobile {
-    display: none;
-  }
-  body.dark .menu-mobile .top-bar button {
-    background: rgba(255, 255, 255, 0.08);
-    margin-top: 0;
-  }
-  body.dark .menu-mobile .top-bar button.food,
-  body.dark .menu-mobile .top-bar button.drink,
-  body.dark .menu-mobile .top-bar button.protein {
-    background: rgba(255, 255, 255, 0.08);
-  }
-  body.dark .menu-mobile .top-bar button.food:hover,
-  body.dark .menu-mobile .top-bar button.drink:hover,
-  body.dark .menu-mobile .top-bar button.protein:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
-  body.dark .menu-mobile .top-bar .whoareyou .titulo {
-    background: linear-gradient(90deg, #74b9ff, #a29bfe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  body.dark .menu-mobile .top-bar button img {
-    filter: invert(0.9) brightness(0.9);
-  }
-}
-
-@media (min-width: 769px) {
-  .menu-mobile {
-    display: none !important;
-  }
 }
 
 /* Barra de Progresso */
@@ -1400,7 +1710,7 @@ body.dark #modal-cancelar:hover {
   background: linear-gradient(135deg, #353b48, #4b5464);
 }
 
-/** ============================
+/* ============================
    11. Outros Estilos botoes e menu lateral
 ============================ */
 .oculta {
