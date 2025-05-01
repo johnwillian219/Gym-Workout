@@ -556,47 +556,45 @@ body.dark .top-bar button:hover::before {
     margin: 0;
   }
 
-  #aside-progresso.mostrar .menu-mobile .top-bar {
-    display: none !important; /* Oculta o top-bar dentro do menu-mobile */
-  }
-
   .top-bar {
+    width: 100%; /* Garante que o top-bar ocupe toda a largura */
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Três colunas iguais */
     gap: 1rem; /* Espaçamento entre os itens */
     align-items: center; /* Alinha os itens verticalmente */
     justify-items: center; /* Centraliza os itens horizontalmente */
-    position: sticky; /* Mantém o top-bar fixo no topo */
+    padding: 0; /* Remove padding extra */
+    margin: 0; /* Remove margens extras */
     top: 0;
     z-index: 101; /* Garante que o top-bar fique acima do aside */
-    background: linear-gradient(135deg, #bebbbb 0%, #f1f3f5 100%);
-    box-shadow: var(--shadow);
+    background: linear-gradient(135deg, #bebbbb 0%, #969a9e 100%);
+    box-shadow: none; /* Remove a sombra que pode criar a ilusão de margem */
+    border-radius: 0; /* Remove bordas arredondadas */
   }
 
-  .whoareyou,
+  .top-bar .whoareyou,
   .others-buttons {
     display: flex;
-    justify-content: space-between; /* Distribui os botões */
-    gap: 0.5rem; /* Adiciona espaçamento entre os botões */
-    margin: 0;
-    padding: 0;
+    justify-content: space-between; /* Distribui os itens uniformemente */
+    align-items: center; /* Alinha os itens verticalmente */
+    width: 100%; /* Garante que os elementos ocupem toda a largura */
   }
 
   .top-bar .whoareyou .titulo {
     font-size: clamp(1.5rem, 3.2vw, 2rem); /* Ajusta o tamanho da fonte */
-    text-align: center;
-    padding: 1rem; /* Adiciona padding */
+    text-align: left;
+    padding: 0; /* Remove o padding do título para evitar espaço extra */
   }
 
   .top-bar button {
-    width: 60px; /* Ajusta o tamanho dos botões */
-    height: 60px;
+    width: 75px; /* Ajusta o tamanho dos botões */
+    height: 75px;
     padding: 0.4rem;
   }
 
   .top-bar .icon {
-    width: 30px; /* Ajusta o tamanho dos ícones */
-    height: 30px;
+    width: 35px; /* Ajusta o tamanho dos ícones */
+    height: 35px;
   }
 
   .menu-mobile .top-bar button {
@@ -604,13 +602,11 @@ body.dark .top-bar button:hover::before {
     height: 50px;
   }
 
-  .menu-mobile .top-bar .icon {
-    width: 25px; /* Ajusta o tamanho dos ícones no menu mobile */
-    height: 25px;
-  }
-
   #aside-progresso {
     margin-top: 6rem; /* Ajusta o espaçamento superior */
+  }
+  #aside-progresso.mostrar .menu-mobile .top-bar {
+    display: none !important; /* Oculta o top-bar dentro do menu-mobile */
   }
 }
 
@@ -630,10 +626,9 @@ body.dark .top-bar button:hover::before {
     gap: 1rem; /* Espaçamento entre os itens */
     align-items: center; /* Alinha os itens verticalmente */
     justify-items: center; /* Centraliza os itens horizontalmente */
-    position: sticky; /* Mantém o top-bar fixo no topo */
     top: 0;
     z-index: 101; /* Garante que o top-bar fique acima do aside */
-    background: linear-gradient(135deg, #bebbbb 0%, #f1f3f5 100%);
+    background: linear-gradient(135deg, #bebbbb 0%, #a9afb4 100%);
     box-shadow: var(--shadow);
   }
 
@@ -663,15 +658,6 @@ body.dark .top-bar button:hover::before {
     height: 35px;
   }
 
-  .menu-mobile .top-bar button {
-    width: 60px; /* Ajusta o tamanho dos botões no menu mobile */
-    height: 60px;
-  }
-
-  .menu-mobile .top-bar .icon {
-    width: 30px; /* Ajusta o tamanho dos ícones no menu mobile */
-    height: 30px;
-  }
   #aside-progresso {
     margin-top: 7rem;
   }
@@ -680,7 +666,44 @@ body.dark .top-bar button:hover::before {
 /* Ajustes para Telas Maiores que 500px e Menores que 768px */
 @media (min-width: 501px) and (max-width: 768px) {
   .top-bar {
-    flex-direction: row; /* Mantém as divs lado a lado */
+    background: linear-gradient(135deg, #bebbbb 0%, #a9afb4 100%);
+
+    display: flex; /* Mantém layout flex */
+    flex-direction: row; /* Garante que .whoareyou e .others-buttons fiquem lado a lado */
+    flex-wrap: nowrap; /* Impede quebras de linha */
+    gap: 0.5rem; /* Reduz o espaçamento entre .whoareyou e .others-buttons */
+    align-items: center; /* Alinha os itens verticalmente */
+    padding: 0.75rem 0; /* Remove padding lateral */
+    width: 100%; /* Garante largura total */
+    margin: 0; /* Remove margens extras */
+    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+    scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
+  }
+
+  .top-bar::-webkit-scrollbar {
+    display: none; /* Oculta a barra de rolagem no Chrome/Safari */
+  }
+
+  .top-bar .whoareyou {
+    display: flex;
+    flex-direction: row; /* Garante que os botões dentro de .whoareyou fiquem em uma linha */
+    flex-wrap: nowrap; /* Impede quebras de linha */
+    gap: 0.5rem; /* Reduz o espaçamento entre os botões */
+    padding: 0;
+    flex: 1; /* Permite que .whoareyou ocupe o espaço disponível */
+    margin-right: 0.5rem; /* Pequena margem à direita para separar de .others-buttons */
+    align-items: center;
+  }
+
+  .top-bar .whoareyou .titulo {
+    font-size: clamp(
+      1rem,
+      2vw,
+      1.2rem
+    ); /* Reduz o tamanho da fonte para caber melhor */
+    margin: 0; /* Remove margens extras */
+    text-align: left; /* Alinha o texto à esquerda */
+    padding: 0; /* Remove padding extra */
   }
 
   .top-bar .whoareyou .menu-side {
@@ -691,8 +714,59 @@ body.dark .top-bar button:hover::before {
     display: block !important; /* Exibe o menu-side-desktop */
   }
 
+  .top-bar .others-buttons {
+    display: flex; /* Mantém layout flex */
+    flex-direction: row; /* Garante que os botões fiquem em uma linha */
+    flex-wrap: nowrap; /* Impede quebras de linha */
+    gap: 0.5rem; /* Reduz o espaçamento entre os botões */
+    padding: 0;
+    margin: 0; /* Remove margens extras */
+    align-items: center;
+  }
+
+  .top-bar .others-buttons button {
+    width: 60px; /* Ajusta o tamanho dos botões para caberem em uma linha */
+    height: 60px;
+    padding: 0.4rem;
+    flex-shrink: 0; /* Impede que os botões encolham */
+  }
+
+  .top-bar .others-buttons .icon {
+    width: 35px; /* Ajusta o tamanho dos ícones */
+    height: 35px;
+  }
+
+  /* Ajustes para o menu-mobile */
   .menu-mobile .top-bar {
+    display: flex; /* Mantém layout flex */
     flex-direction: row; /* Mantém as divs lado a lado */
+    flex-wrap: nowrap; /* Impede quebras de linha */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0; /* Remove padding lateral */
+    width: 100%;
+    margin: 0;
+    overflow-x: auto; /* Adiciona rolagem horizontal se necessário */
+    scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
+  }
+
+  .menu-mobile .top-bar::-webkit-scrollbar {
+    display: none; /* Oculta a barra de rolagem no Chrome/Safari */
+  }
+
+  .menu-mobile .top-bar .whoareyou {
+    display: flex;
+    flex-direction: row; /* Garante que os botões fiquem em uma linha */
+    flex-wrap: nowrap; /* Impede quebras de linha */
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    margin-right: 0.5rem;
+  }
+
+  .menu-mobile .top-bar .whoareyou .titulo {
+    font-size: clamp(0.9rem, 2vw, 1.1rem); /* Reduz o tamanho da fonte */
+    margin-right: 0.5rem;
   }
 
   .menu-mobile .top-bar .whoareyou .menu-side {
@@ -702,8 +776,36 @@ body.dark .top-bar button:hover::before {
   .menu-mobile .top-bar .menu-side-desktop {
     display: block !important; /* Exibe o menu-side-desktop */
   }
-}
 
+  .menu-mobile .top-bar div:not(.whoareyou) {
+    display: flex; /* Muda de grid para flex */
+    flex-direction: row; /* Garante que os botões fiquem em uma linha */
+    flex-wrap: nowrap; /* Impede quebras de linha */
+    gap: 0.5rem; /* Reduz o espaçamento entre os botões */
+    align-items: center;
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) button {
+    width: 48px; /* Ajusta o tamanho dos botões */
+    height: 48px;
+    padding: 0.4rem;
+    flex-shrink: 0; /* Impede que os botões encolham */
+  }
+
+  .menu-mobile .top-bar div:not(.whoareyou) .icon {
+    width: 22px; /* Ajusta o tamanho dos ícones */
+    height: 22px;
+  }
+}
+@media (min-width: 700px) and (max-width: 1024px) {
+  .conteudo {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ) !important; /* Dois exercícios por linha */
+    gap: 1.5rem; /* Espaçamento entre os itens */
+  }
+}
 /* ============================
    5. Menu
 ============================ */
