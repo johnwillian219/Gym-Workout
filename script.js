@@ -1145,6 +1145,25 @@ function atualizarMenuAtivo(dia) {
   if (btnAtivo) btnAtivo.classList.add("ativo");
 }
 
+function ativarBotao(botaoAtivo) {
+  // Remove a classe 'ativo' de todos os botões
+  const botoes = document.querySelectorAll(".others-buttons button");
+  botoes.forEach((botao) => botao.classList.remove("ativo"));
+
+  // Adiciona a classe 'ativo' ao botão clicado
+  botaoAtivo.classList.add("ativo");
+}
+function toggleProgresso() {
+  const aside = document.getElementById("aside-progresso");
+  const botaoProgresso = document.getElementById("abrir-progresso");
+
+  // Verifica se o aside está oculto
+  if (aside.classList.contains("oculta")) {
+    botaoProgresso.classList.add("ativo"); // Ativa o botão de progresso
+  } else {
+    botaoProgresso.classList.remove("ativo"); // Remove o modo ativo do botão
+  }
+}
 function atualizarProgressoDia(dia) {
   const checkboxes = document.querySelectorAll(
     "#conteudo-dia input[type='checkbox']"
@@ -1376,6 +1395,7 @@ function alternarAside() {
   const drinks = document.getElementById("drinks");
   const comidas = document.getElementById("comidas");
   const proteinas = document.getElementById("proteinas");
+  const botaoProgresso = document.getElementById("abrir-progresso"); // Certifique-se de selecionar o botão corretamente
 
   if (!aside) {
     console.error("Elemento '#aside-progresso' não encontrado");
@@ -1386,10 +1406,12 @@ function alternarAside() {
     // Mostrar o aside
     aside.classList.remove("oculta");
     aside.classList.add("mostrar");
+    ativarBotao(botaoProgresso); // Ativar o botão de progresso
   } else {
     // Ocultar o aside
     aside.classList.remove("mostrar");
     aside.classList.add("oculta");
+    botaoProgresso.classList.remove("ativo"); // Desativar o botão de progresso
 
     // Exibir o último conteúdo ativo
     if (ultimoConteudoAtivo === "drinks" && drinks) {

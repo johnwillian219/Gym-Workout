@@ -13,6 +13,7 @@
           <div class="whoareyou">
             <h1 class="titulo">PowerUp</h1>
             <button
+              onclick="ativarBotao(this);"
               class="man"
               title="Mostrar treino masculino"
               aria-label="Mostrar treino masculino"
@@ -20,6 +21,7 @@
               <img src="icone/man.svg" alt="Ícone de homem" class="icon" />
             </button>
             <button
+              onclick="ativarBotao(this);"
               class="women"
               title="Mostrar treino feminino"
               aria-label="Mostrar treino feminino"
@@ -36,7 +38,7 @@
           </div>
           <div class="others-buttons">
             <button
-              onclick="mostrarComidas();"
+              onclick="ativarBotao(this); mostrarComidas();"
               class="food"
               title="Mostrar comidas recomendadas"
               aria-label="Mostrar comidas recomendadas"
@@ -44,7 +46,7 @@
               <img src="icone/food.svg" alt="Ícone de comida" class="icon" />
             </button>
             <button
-              onclick="mostrarDrinks()"
+              onclick="ativarBotao(this); mostrarDrinks();"
               class="drink"
               title="Mostrar bebidas recomendadas"
               aria-label="Mostrar bebidas recomendadas"
@@ -52,7 +54,7 @@
               <img src="icone/drink.svg" alt="Ícone de bebida" class="icon" />
             </button>
             <button
-              onclick="mostrarProteinas()"
+              onclick="ativarBotao(this); mostrarProteinas();"
               class="protein"
               title="Mostrar proteínas recomendadas"
               aria-label="Mostrar proteínas recomendadas"
@@ -64,6 +66,7 @@
               />
             </button>
             <button
+              onclick="toggleProgresso();"
               id="abrir-progresso"
               title="Mostrar progresso"
               class="mostrar abrir-progresso"

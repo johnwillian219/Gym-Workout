@@ -27,7 +27,7 @@ body {
   --text-light: #2d3436;
   --text-dark: #dfe6e9;
   --card-bg-light: #ffffff;
-  --card-bg-dark: #2d3436;
+  --card-bg-dark: #414b4e;
   --accent: #0984e3;
   --accent-hover: #6c5ce7;
   --progress-bg: #e0e0e0;
@@ -118,7 +118,28 @@ main {
 .top-bar .menu-side {
   display: none;
 }
+/* Classe genérica para botões ativos */
+button.ativo {
+  background: linear-gradient(
+    135deg,
+    var(--accent),
+    var(--accent-hover)
+  ) !important;
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+  border: none;
+  color: white;
+  transition: var(--transition);
+}
 
+button.ativo .icon {
+  filter: brightness(0) invert(1);
+}
+
+/* Adicionando hover para consistência */
+button.ativo:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(108, 92, 231, 0.5);
+}
 .top-bar .whoareyou .titulo {
   font-size: clamp(1.8rem, 5vw, 2.2rem);
   font-weight: 700;
@@ -239,7 +260,7 @@ main {
 
 /* Modo escuro para a top-bar */
 body.dark .top-bar {
-  background: linear-gradient(135deg, #2d3436, #353b48);
+  background: linear-gradient(135deg, #616263, #353b48);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
@@ -380,7 +401,6 @@ body.dark .top-bar button:hover::before {
     align-items: center;
     padding: 0.75rem 1rem; /* Ajuste no padding */
     border-radius: 8px;
-    background: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
   }
 
@@ -567,7 +587,6 @@ body.dark .top-bar button:hover::before {
     margin: 0; /* Remove margens extras */
     top: 0;
     z-index: 101; /* Garante que o top-bar fique acima do aside */
-    background: linear-gradient(135deg, #bebbbb 0%, #969a9e 100%);
     box-shadow: none; /* Remove a sombra que pode criar a ilusão de margem */
     border-radius: 0; /* Remove bordas arredondadas */
   }
@@ -628,7 +647,6 @@ body.dark .top-bar button:hover::before {
     justify-items: center; /* Centraliza os itens horizontalmente */
     top: 0;
     z-index: 101; /* Garante que o top-bar fique acima do aside */
-    background: linear-gradient(135deg, #bebbbb 0%, #a9afb4 100%);
     box-shadow: var(--shadow);
   }
 
@@ -666,8 +684,6 @@ body.dark .top-bar button:hover::before {
 /* Ajustes para Telas Maiores que 500px e Menores que 768px */
 @media (min-width: 501px) and (max-width: 768px) {
   .top-bar {
-    background: linear-gradient(135deg, #bebbbb 0%, #a9afb4 100%);
-
     display: flex; /* Mantém layout flex */
     flex-direction: row; /* Garante que .whoareyou e .others-buttons fiquem lado a lado */
     flex-wrap: nowrap; /* Impede quebras de linha */
@@ -946,13 +962,15 @@ body.dark .top-bar button:hover::before {
   padding: 1.5rem;
   position: relative;
   transition: var(--transition);
-  box-shadow: var(--shadow);
-  border: 1px solid #e9ecef;
+  box-shadow: 0 20px 40px rgba(18, 168, 38, 0.15),
+    0 10px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow with deeper spread */
+  border: 0.5px solid #1e7cdb;
 }
 
 .exercicio:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px rgba(18, 168, 38, 0.25),
+    0 15px 30px rgba(0, 0, 0, 0.15); /* Bolder hover shadow for elevation */
 }
 
 .exercicio p {
@@ -1430,7 +1448,7 @@ body.dark .container {
 
 body.dark .menu-mobile button.man.ativo,
 body.dark .menu-mobile button.women.ativo {
-  background: linear-gradient(135deg, #74b9ff, #a29bfe) !important;
+  background: linear-gradient(135deg, #62abf5, #a29bfe) !important;
 }
 
 body.dark .menu-mobile button.man.ativo .icon,
@@ -1452,6 +1470,7 @@ body.dark .exercicio {
   background: linear-gradient(135deg, #353b48, #2d3436);
   border-color: #4b5464;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border: 1px solid #42464d;
 }
 
 body.dark .exercicio p {
@@ -1463,13 +1482,14 @@ body.dark .exercicio strong {
 }
 
 body.dark .exercicio.checked {
-  background: linear-gradient(135deg, #2d6a4f, #40916c);
-  border-color: #52b788;
-  box-shadow: 0 8px 24px rgba(82, 183, 136, 0.3);
+  border-color: #81c784; /* Verde suave */
+  box-shadow: 0 10px 25px rgba(129, 199, 132, 0.3),
+    0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra mais refinada */
+  transition: background 0.3s ease, box-shadow 0.3s ease; /* Transição suave */
 }
 
 body.dark .exercicio.checked strong {
-  color: #52b788;
+  color: #81c784; /* Verde suave para harmonizar com o border-color */
 }
 
 body.dark #aside-progresso {
@@ -1478,12 +1498,16 @@ body.dark #aside-progresso {
 }
 
 body.dark .menu {
-  background: linear-gradient(135deg, #353b48, #2d3436);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  background: var(--card-bg-dark);
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 body.dark .menu button {
-  background: linear-gradient(135deg, #4b5464, #353b48);
+  background: linear-gradient(135deg, #84a0d1, #4a76db);
+  border: 1px solid #6f7580;
+  font-weight: bolder;
 }
 
 body.dark .menu button:hover {
