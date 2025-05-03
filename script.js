@@ -1058,6 +1058,48 @@ function atualizarBotoesGenero() {
     }
   });
 }
+function toggleProgresso(event) {
+  if (event) event.stopPropagation(); // Verifica se event existe antes de chamar stopPropagation
+  const menuLateral = document.getElementById("menu-lateral");
+  const asideProgresso = document.getElementById("aside-progresso");
+  const botaoProgresso = document.getElementById("abrir-progresso");
+
+  if (menuLateral && asideProgresso && botaoProgresso) {
+    if (asideProgresso.classList.contains("mostrar")) {
+      // Fechar o progresso
+      asideProgresso.classList.remove("mostrar");
+      asideProgresso.classList.add("oculta");
+      botaoProgresso.classList.remove("ativo");
+    } else {
+      // Abrir o progresso e ocultar o menu-lateral
+      asideProgresso.classList.add("mostrar");
+      asideProgresso.classList.remove("oculta");
+      menuLateral.classList.add("oculta");
+      menuLateral.classList.remove("mostrar");
+      botaoProgresso.classList.add("ativo");
+    }
+  }
+}
+
+function toggleMenuLateral(event) {
+  if (event) event.stopPropagation(); // Verifica se event existe antes de chamar stopPropagation
+  const menuLateral = document.getElementById("menu-lateral");
+  const asideProgresso = document.getElementById("aside-progresso");
+
+  if (menuLateral && asideProgresso) {
+    if (!menuLateral.classList.contains("mostrar")) {
+      // Abrir o menu-lateral e ocultar o progresso
+      menuLateral.classList.add("mostrar");
+      menuLateral.classList.remove("oculta");
+      asideProgresso.classList.add("oculta");
+      asideProgresso.classList.remove("mostrar");
+    } else {
+      // Fechar o menu-lateral
+      menuLateral.classList.remove("mostrar");
+      menuLateral.classList.add("oculta");
+    }
+  }
+}
 
 function mostrarDia(dia) {
   const container = document.getElementById("conteudo-dia");
