@@ -1100,6 +1100,26 @@ function toggleMenuLateral(event) {
     }
   }
 }
+function toggleMenuLateralMobile() {
+  const menuLateral = document.getElementById("menu-lateral");
+
+  if (!menuLateral) {
+    console.error("Elemento '#menu-lateral' não encontrado.");
+    return;
+  }
+
+  console.log("Antes da alteração:", menuLateral.classList);
+
+  if (menuLateral.classList.contains("mostrar")) {
+    menuLateral.classList.remove("mostrar");
+    menuLateral.classList.add("oculta");
+  } else {
+    menuLateral.classList.add("mostrar");
+    menuLateral.classList.remove("oculta");
+  }
+
+  console.log("Depois da alteração:", menuLateral.classList);
+}
 
 function mostrarDia(dia) {
   const container = document.getElementById("conteudo-dia");

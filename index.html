@@ -29,6 +29,7 @@
               <img src="icone/female.svg" alt="Ícone de mulher" class="icon" />
             </button>
             <button
+              onclick="ativarBotao(this); toggleMenuLateral();"
               class="menu-side"
               title="Mostrar menu lateral"
               aria-label="Mostrar menu lateral"
@@ -161,7 +162,7 @@
                   />
                 </button>
                 <button
-                  onclick="ativarBotao(this); toggleMenuLateral();"
+                  onclick="toggleMenuLateralMobile();"
                   class="menu-side"
                   title="Mostrar menu lateral"
                   aria-label="Mostrar menu lateral"
@@ -509,7 +510,11 @@
         </div>
       </aside>
       <!-- Menu Lateral -->
-      <nav class="menu-lateral" id="menu-lateral" aria-label="Menu Lateral">
+      <nav
+        class="menu-lateral oculta"
+        id="menu-lateral"
+        aria-label="Menu Lateral"
+      >
         <h3>Menu Lateral</h3>
         <ul>
           <li>
@@ -533,6 +538,6 @@
         </div>
       </div>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
   </body>
 </html>
