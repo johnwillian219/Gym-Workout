@@ -29,7 +29,7 @@
               <img src="icone/female.svg" alt="Ícone de mulher" class="icon" />
             </button>
             <button
-              onclick="ativarBotao(this); toggleMenuLateral();"
+              onclick="ativarBotao(this); toggleMenuLateral(event);"
               class="menu-side"
               title="Mostrar menu lateral"
               aria-label="Mostrar menu lateral"
@@ -67,7 +67,7 @@
               />
             </button>
             <button
-              onclick="toggleProgresso();"
+              onclick="toggleProgresso(event);"
               id="abrir-progresso"
               title="Mostrar progresso"
               class="mostrar abrir-progresso"
@@ -86,7 +86,7 @@
               <img src="icone/moon.svg" alt="Modo escuro" class="icon" />
             </button>
             <button
-              onclick="ativarBotao(this); toggleMenuLateral();"
+              onclick="ativarBotao(this); toggleMenuLateral(event);"
               class="menu-side-desktop"
               title="Mostrar menu lateral"
               aria-label="Mostrar menu lateral"
@@ -208,7 +208,7 @@
                   />
                 </button>
                 <button
-                  onclick="toggleProgresso();"
+                  onclick="toggleProgresso(event);"
                   class="mostrar abrir-progresso"
                   title="Mostrar progresso"
                 >
